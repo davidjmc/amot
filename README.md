@@ -1,2 +1,2 @@
-# amot
+# AMoT
 Adaptive Middleware of Things
