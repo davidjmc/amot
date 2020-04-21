@@ -14,6 +14,8 @@ class AMoTBroker(Component):
 
     def __init__(self):
         super().__init__()
+        self.subscriber_manager = SubscriberManager()
+        self.notify_consumer = NotificationConsumer()
 
     def run(self, *args):
         invocation = args[0]
@@ -45,15 +47,15 @@ class AMoTBroker(Component):
 
     def subscriber(self, topic, ip, port):
         subscriber_address = (ip, port)
-        SubscriberManager().add_subscriber(self.subscribers, topic, subscriber_address)
+        self.subscriber_manager.add_subscriber(self.subscribers, topic, subscriber_address)
 
     def notify(self, topic):
-        subscribers = SubscriberManager().filter_subscribers(self.subscribers, topic)
+        subscribers = self.subscriber_manager.filter_subscribers(self.subscribers, topic)
 
         if subscribers is not None:
             if self.topics[topic] is not None:
                 for subscriber in subscribers:
-                    NotificationConsumer().notify_subscriber(subscriber, self.topics[topic][0])
+                    self.notify_consumer.notify_subscriber(subscriber, self.topics[topic][0])
                 self.topics[topic].popleft()
 
 

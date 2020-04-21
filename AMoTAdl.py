@@ -18,3 +18,23 @@ Starter = {
 Adaptability = {
     'Type': None
 }
+
+# ADL used in the AMoT Broker
+# Components = {
+#     'ServerRequestHandler': 'ServerRequestHandler',
+#     'Invoker': 'Invoker',
+#     'AMoTBroker': 'AMoTBroker'
+# }
+#
+# Attachments = {
+#     'ServerRequestHandler': 'Invoker',
+#     'Invoker': 'AMoTBroker'
+# }
+#
+# Starter = {
+#     'ServerRequestHandler'
+# }
+#
+# Adaptability = {
+#     'Type': None
+# }
