@@ -14,8 +14,9 @@ amot_broker_port = 60000
 amot_client_ip = '192.168.1.9'
 amot_client_port = 60001
 
-# Client type
-client_type = None
+# client_type = None -> When used for the AMoT Client
+# client_type = 'Subscriber' -> When used for the AMoT Broker
+client_type = 'Subscriber'
 
 
 class AMoTEngine:
@@ -110,8 +111,6 @@ class SubscriberHandler:
         self.handler_sock = None
 
     def notify_handler(self, ip, port):
-        buffer_size = 536
-        data = b''
 
         try:
             self.handler_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -123,25 +122,31 @@ class SubscriberHandler:
                 print('Starting up on {} port {}'.format(*handler_address))
                 self.handler_sock.listen(1)
             except OSError as e:
-                print('Bind failed.', e)
+                print('SubscriberHandler Bind Error: ', e)
 
         except OSError as e:
-            print(e)
+            print('SubscriberHandler Socket Error: ', e)
 
         while True:
+            buffer_size = 536
+            data = b''
+
             try:
                 conn, client = self.handler_sock.accept()
-                print('Connected by', client)
+                # print('Connected by', client)
 
                 while True:
                     part = conn.recv(buffer_size)
                     data += part
+
                     if len(part) < buffer_size:
                         break
-                    message = pickle.loads(data)
-                    print('<Message> :: ' + message)
+
+                message = pickle.loads(data)
+                print('<Message> :: ' + message)
+                conn.close()
             except OSError as e:
-                print(e)
+                print('Error when receiving data on the SubscriberHandler: ', e)
 
 
 if __name__ == '__main__':
