@@ -11,21 +11,20 @@ Attachments = {
     'Requestor': 'ClientRequestHandler'
 }
 
-Functions = {
+Roles = {
     # 'publisher',
     'subscriber'
 }
 
-SubscriberTopics = {
-    'hello'
+SubscriberConfigs = {
+    'timeout': 5000,
+    'topics': ['hello'],
+    'port': 60001
 }
 
-SubscriberTimeLimit = 5000
-
 Configs = {
-    'serverIP': '192.168.0.102',
+    'serverHost': '192.168.0.102',
     'serverPort': 60000,
-    'listenPort': 60001,
 }
 
 Starter = {
