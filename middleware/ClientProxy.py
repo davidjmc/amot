@@ -1,4 +1,4 @@
-from AMoTEngine import Component, amot_client_ip, amot_client_port
+from AMoTEngine import Component
 
 
 class ClientProxy(Component):
@@ -13,7 +13,11 @@ class ClientProxy(Component):
             message = {'Topic': args[1], 'Message': args[2]}
             invocation = {'Operation': args[0], 'Message': message}
         elif args[0] is 'Subscribe':
-            message = {'Source': amot_client_ip, 'SPort': amot_client_port, 'Topic': args[1]}
+            message = {
+                'Source': self.engine.subscriber_configs['host'], 
+                'SPort': self.engine.subscriber_configs['port'], 
+                'Topic': args[1]
+            }
             invocation = {'Operation': args[0], 'Message': message}
         elif args[0] is 'Adapt':
             invocation = {'Operation': args[0], 'Topic': args[1]}

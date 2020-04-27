@@ -1,6 +1,6 @@
 import socket
 
-from AMoTEngine import Component, amot_broker_ip, amot_broker_port
+from AMoTEngine import Component
 
 
 class ServerRequestHandler(Component):
@@ -17,7 +17,7 @@ class ServerRequestHandler(Component):
             if self.server_sock is None:
                 self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                self.address = socket.getaddrinfo(amot_broker_ip, amot_broker_port)[0][-1]
+                self.address = socket.getaddrinfo(self.engine.server_cfg['host'], self.engine.server_cfg['port'])[0][-1]
 
                 try:
                     self.server_sock.bind(self.address)

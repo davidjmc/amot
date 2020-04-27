@@ -14,10 +14,6 @@ amot_broker_port = 60000
 amot_client_ip = '192.168.1.9'
 amot_client_port = 60001
 
-# client_type = None -> When used for the AMoT Client
-# client_type = 'Subscriber' -> When used for the AMoT Broker
-client_type = 'Subscriber'
-
 
 class AMoTEngine:
     def __init__(self):
@@ -25,7 +21,11 @@ class AMoTEngine:
         self.attachments = None
         self.starter = None
         self.adaptability = None
+        self.roles = None
+        self.subscriber_configs = {}
+        self.configs = {}
         self.current_components = {}
+        self.server_cfg = {}
 
     def deploy_components(self):
         adl_cfg = dict()
@@ -35,6 +35,11 @@ class AMoTEngine:
         self.attachments = adl_cfg['Attachments']
         self.starter = adl_cfg['Starter']
         self.adaptability = adl_cfg['Adaptability']
+        self.roles = adl_cfg['Roles']
+        self.subscriber_configs = adl_cfg['SubscriberConfigs']
+        self.configs = adl_cfg['Configs']
+        self.server_cfg['host'] = self.configs['serverHost']
+        self.server_cfg['port'] = self.configs['serverPort']
 
     def load_components(self):
         for component in self.components:
@@ -48,11 +53,18 @@ class AMoTEngine:
         external_class = self.current_components[external_class_name]
         return external_class.set_engine(self)
 
+    def check_roles(self):
+        if 'subscriber' in self.roles:
+            self.server_cfg['host'] = self.subscriber_configs['host']
+            self.server_cfg['port'] = self.subscriber_configs['port']
+            AMoTSubscriber().set_engine(self).run()
+
     def run(self):
         global last_adaptation
         try:
             self.deploy_components()
             self.load_components()
+            self.check_roles()
             # self.connect()
         except OSError as e:
             self.restart_and_reconnect()
@@ -66,9 +78,6 @@ class AMoTEngine:
                     if self.adaptability['Type'] is not None:
                         if (time.time() - last_adaptation) > adaptation_interval:
                             last_adaptation = time.time()
-
-                if client_type is 'Subscriber':
-                    SubscriberHandler().notify_handler(amot_client_ip, amot_client_port)
 
             except OSError as e:
                 self.restart_and_reconnect()
@@ -106,48 +115,13 @@ class Component:
         self.external().run('Subscribe', topic)
 
 
-class SubscriberHandler:
+class AMoTSubscriber(Component):
     def __init__(self):
-        self.handler_sock = None
+        super().__init__()
 
-    def notify_handler(self, ip, port):
-
-        try:
-            self.handler_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.handler_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            handler_address = socket.getaddrinfo(ip, port)[0][-1]
-
-            try:
-                self.handler_sock.bind(handler_address)
-                print('Starting up on {} port {}'.format(*handler_address))
-                self.handler_sock.listen(1)
-            except OSError as e:
-                print('SubscriberHandler Bind Error: ', e)
-
-        except OSError as e:
-            print('SubscriberHandler Socket Error: ', e)
-
-        while True:
-            buffer_size = 536
-            data = b''
-
-            try:
-                conn, client = self.handler_sock.accept()
-                # print('Connected by', client)
-
-                while True:
-                    part = conn.recv(buffer_size)
-                    data += part
-
-                    if len(part) < buffer_size:
-                        break
-
-                message = pickle.loads(data)
-                print('<Message> :: ' + message)
-                conn.close()
-            except OSError as e:
-                print('Error when receiving data on the SubscriberHandler: ', e)
-
+    def run(self):
+        for topic in self.engine.subscriber_configs['topics']:
+            self.subscribe(topic)
 
 if __name__ == '__main__':
     AMoTEngine().run()
