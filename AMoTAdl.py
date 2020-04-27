@@ -1,4 +1,8 @@
 Components = {
+    'ServerRequestHandler': 'ServerRequestHandler',
+    'Invoker': 'Invoker',
+    'AMoTBroker': 'AMoTBroker',
+
     'AMoTClient': 'AMoTClient',
     'ClientProxy': 'ClientProxy',
     'Requestor': 'Requestor',
@@ -6,7 +10,14 @@ Components = {
 }
 
 Attachments = {
+    'ServerRequestHandler': 'Invoker',
+    'Invoker': 'AMoTBroker',
+
     'AMoTClient': 'ClientProxy',
+    'ClientProxy': 'Requestor',
+    'Requestor': 'ClientRequestHandler',
+
+    'AMoTSubscriber': 'ClientProxy',
     'ClientProxy': 'Requestor',
     'Requestor': 'ClientRequestHandler'
 }
@@ -18,8 +29,10 @@ Roles = {
 
 SubscriberConfigs = {
     'timeout': 5000,
-    'topics': ['hello'],
-    'port': 60001
+    'topics': ['Hello'],
+    'host': '192.168.0.102',
+    'port': 60001,
+    'component': 'AMoTSubscriber'
 }
 
 Configs = {
@@ -28,7 +41,7 @@ Configs = {
 }
 
 Starter = {
-    #'AMoTPublisher', 'ServerRequestHandler'
+    # 'AMoTPublisher', 'ServerRequestHandler'
     'AMoTClient'
 }
 
