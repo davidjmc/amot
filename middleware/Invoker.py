@@ -9,5 +9,7 @@ class Invoker(Component):
 
     def run(self, *args):
         data = args[0]
+        if data is None:
+            return
         invocation = pickle.loads(data)
         self.external().run(invocation)

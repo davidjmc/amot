@@ -17,7 +17,8 @@ class ServerRequestHandler(Component):
             if self.server_sock is None:
                 self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                self.address = socket.getaddrinfo(self.engine.server_cfg['host'], self.engine.server_cfg['port'])[0][-1]
+                self.server_sock.settimeout(self.engine.listen_cfg['timeout'])
+                self.address = socket.getaddrinfo(self.engine.listen_cfg['host'], self.engine.listen_cfg['port'])[0][-1]
 
                 try:
                     self.server_sock.bind(self.address)

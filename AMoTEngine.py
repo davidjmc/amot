@@ -25,7 +25,7 @@ class AMoTEngine:
         self.subscriber_configs = {}
         self.configs = {}
         self.current_components = {}
-        self.server_cfg = {}
+        self.listen_cfg = {}
 
     def deploy_components(self):
         adl_cfg = dict()
@@ -38,14 +38,16 @@ class AMoTEngine:
         self.roles = adl_cfg['Roles']
         self.subscriber_configs = adl_cfg['SubscriberConfigs']
         self.configs = adl_cfg['Configs']
-        self.server_cfg['host'] = self.configs['serverHost']
-        self.server_cfg['port'] = self.configs['serverPort']
+        # improve this -> how?
+        self.listen_cfg['host'] = self.configs['serverHost']
+        self.listen_cfg['port'] = self.configs['serverPort']
+        self.listen_cfg['timeout'] = None
 
     def load_components(self):
         for component in self.components:
             component_file = self.components.get(component)
-            component_class = getattr(__import__(component_file), component)
-            self.current_components[component] = component_class()
+            component_instance = getattr(__import__(component_file), component)
+            self.current_components[component] = component_instance().set_engine(self)
 
     def attached(self, component):
         class_name = component.__class__.__name__
@@ -55,8 +57,10 @@ class AMoTEngine:
 
     def check_roles(self):
         if 'subscriber' in self.roles:
-            self.server_cfg['host'] = self.subscriber_configs['host']
-            self.server_cfg['port'] = self.subscriber_configs['port']
+            self.listen_cfg['host'] = self.subscriber_configs['host']
+            self.listen_cfg['port'] = self.subscriber_configs['port']
+            if self.subscriber_configs['timeout'] is not None:
+                self.listen_cfg['timeout'] = self.subscriber_configs['timeout'] / 1000.0
             AMoTSubscriber().set_engine(self).run()
 
     def run(self):
@@ -72,8 +76,9 @@ class AMoTEngine:
         while True:
             try:
                 for component in self.starter:
-                    component_class = self.current_components[component]
-                    component_class.set_engine(self).run()
+                    print('Engine running component ', component)
+                    component_instance = self.current_components[component]
+                    component_instance.run()
 
                     if self.adaptability['Type'] is not None:
                         if (time.time() - last_adaptation) > adaptation_interval:
