@@ -47,8 +47,9 @@ class AMoTBroker(Component):
 
     def subscriber(self, topic, ip, port):
         subscriber_address = (ip, port)
-        self.subscriber_manager.add_subscriber(self.subscribers, topic, subscriber_address)
+        self.subscribers = self.subscriber_manager.add_subscriber(self.subscribers, topic, subscriber_address)
 
+    # Notify the subscribers by topics
     def notify(self, topic):
         subscribers = self.subscriber_manager.filter_subscribers(self.subscribers, topic)
 
@@ -64,11 +65,10 @@ class SubscriberManager:
     @staticmethod
     def add_subscriber(subscribers, topic, address):
         if topic in subscribers.keys():
-            if subscribers[topic].__contains__(address) is None:
+            if address != subscribers[topic]:
                 subscribers[topic].append(address)
         else:
-            subscribers[topic] = deque([address], maxlen=1)
-
+            subscribers[topic] = deque([address], maxlen=20)
         return subscribers
 
     def remove_subscriber(self):

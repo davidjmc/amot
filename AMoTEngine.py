@@ -27,6 +27,18 @@ class AMoTEngine:
         self.current_components = {}
         self.listen_cfg = {}
 
+    def set_configuration(self):
+        amot_cfg = dict()
+        cfg_file = 'AMoTConfig.py'
+        exec(open(cfg_file).read(), amot_cfg)
+        self.roles = amot_cfg['Roles']
+        self.subscriber_configs = amot_cfg['SubscriberConfigs']
+        self.configs = amot_cfg['ServerConfigs']
+        # improve this -> how?
+        self.listen_cfg['host'] = self.configs['host']
+        self.listen_cfg['port'] = self.configs['port']
+        self.listen_cfg['timeout'] = None
+
     def deploy_components(self):
         adl_cfg = dict()
         adl_file = 'AMoTAdl.py'
@@ -35,13 +47,6 @@ class AMoTEngine:
         self.attachments = adl_cfg['Attachments']
         self.starter = adl_cfg['Starter']
         self.adaptability = adl_cfg['Adaptability']
-        self.roles = adl_cfg['Roles']
-        self.subscriber_configs = adl_cfg['SubscriberConfigs']
-        self.configs = adl_cfg['Configs']
-        # improve this -> how?
-        self.listen_cfg['host'] = self.configs['serverHost']
-        self.listen_cfg['port'] = self.configs['serverPort']
-        self.listen_cfg['timeout'] = None
 
     def load_components(self):
         for component in self.components:
@@ -66,6 +71,7 @@ class AMoTEngine:
     def run(self):
         global last_adaptation
         try:
+            self.set_configuration()
             self.deploy_components()
             self.load_components()
             self.check_roles()
@@ -76,12 +82,13 @@ class AMoTEngine:
         while True:
             try:
                 for component in self.starter:
-                    print('Engine running component ', component)
+                    # print('Engine running component ', component)
                     component_instance = self.current_components[component]
                     component_instance.run()
 
                     if self.adaptability['Type'] is not None:
                         if (time.time() - last_adaptation) > adaptation_interval:
+                            # starts adaptation
                             last_adaptation = time.time()
 
             except OSError as e:
@@ -127,6 +134,7 @@ class AMoTSubscriber(Component):
     def run(self):
         for topic in self.engine.subscriber_configs['topics']:
             self.subscribe(topic)
+
 
 if __name__ == '__main__':
     AMoTEngine().run()

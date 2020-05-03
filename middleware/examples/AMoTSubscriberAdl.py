@@ -24,12 +24,12 @@ Roles = {
 SubscriberConfigs = {
     'timeout': None,
     'topics': ['Hello'],
-    'host': '192.168.0.102',
+    'host': '192.168.1.9',
     'port': 60001
 }
 
 Configs = {
-    'serverHost': '192.168.0.102',
+    'serverHost': '192.168.1.9',
     'serverPort': 60000,
 }
 
