@@ -7,5 +7,5 @@ class AMoTApp(Component):
         self.count = 0
 
     def run(self, *args):
-        print(args)
+        print(args[0])
         pass

@@ -3,6 +3,7 @@ server:
 	rm -rf AMoTBroker/*
 	cp middleware/examples/AMoTServerAdl.py AMoTBroker/AMoTAdl.py
 	cp AMoTEngine.py AMoTBroker/
+	cp AMoTConfig.py AMoTBroker/
 	cp pickle.py AMoTBroker/
 	cp broker-server/AMoTBroker.py AMoTBroker/
 	cp middleware/Invoker.py AMoTBroker/
@@ -14,6 +15,7 @@ publisher:
 	rm -rf AMoTPublisher/*
 	cp middleware/examples/AMoTPublisherAdl.py AMoTPublisher/AMoTAdl.py
 	cp AMoTEngine.py AMoTPublisher/
+	cp AMoTConfig.py AMoTPublisher/
 	cp pickle.py AMoTPublisher/
 	cp middleware/Requestor.py AMoTPublisher/
 	cp middleware/ClientRequestHandler.py AMoTPublisher/
@@ -25,6 +27,7 @@ subscriber:
 	rm -rf AMoTSubscriber/*
 	cp middleware/examples/AMoTSubscriberAdl.py AMoTSubscriber/AMoTAdl.py
 	cp AMoTEngine.py AMoTSubscriber/
+	cp AMoTConfig.py AMoTSubscriber/
 	cp pickle.py AMoTSubscriber/
 	cp middleware/Invoker.py AMoTSubscriber/
 	cp middleware/ServerRequestHandler.py AMoTSubscriber/
@@ -38,6 +41,7 @@ publisher_subscriber:
 	rm -rf AMoTPublisherSubscriber/*
 	cp middleware/examples/AMoTPublisherSubscriberAdl.py AMoTPublisherSubscriber/AMoTAdl.py
 	cp AMoTEngine.py AMoTPublisherSubscriber/
+	cp AMoTConfig.py AMoTPublisherSubscriber/
 	cp pickle.py AMoTPublisherSubscriber/
 	cp middleware/Invoker.py AMoTPublisherSubscriber/
 	cp middleware/ServerRequestHandler.py AMoTPublisherSubscriber/
