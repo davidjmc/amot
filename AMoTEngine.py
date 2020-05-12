@@ -7,11 +7,11 @@ last_adaptation = 0
 adaptation_interval = 1
 
 # AMoT-Broker IP Address and Port
-amot_broker_ip = '192.168.1.9'
+amot_broker_ip = '192.168.0.102'
 amot_broker_port = 60000
 
 # Own AMoT-Client IP Address and Port
-amot_client_ip = '192.168.1.9'
+amot_client_ip = '192.168.0.102'
 amot_client_port = 60001
 
 

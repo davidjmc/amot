@@ -22,10 +22,10 @@ class ClientRequestHandler(Component):
             if self.port == 0:
                 self.port = 60000
 
-        try:
-            self.connect()
-        except OSError as e:
-            print('Error: ' + str(e) + 'Couldnt connect with socket-server')
+            try:
+                self.connect()
+            except OSError as e:
+                print('Error: ' + str(e) + 'Couldnt connect with socket-server')
 
         self.send()
 

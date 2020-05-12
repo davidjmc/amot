@@ -6,7 +6,7 @@ class AMoTClient(Component):
     def __init__(self):
         super().__init__()
         self.count = 0
-        self.sensor = dht.DHT11(machine.Pin(2))
+        # self.sensor = dht.DHT11(machine.Pin(2))
 
     def run(self):
 
@@ -16,9 +16,9 @@ class AMoTClient(Component):
         self.count += 1
 
         # Test publisher application running on the device (thing)
-        temp, hum = self.read_sensor()
-        msg = 'Temperature: {} and Humidity: {}'.format(temp, hum)
-        self.publish(topic, msg)
+        # temp, hum = self.read_sensor()
+        # msg = 'Temperature: {} and Humidity: {}'.format(temp, hum)
+        # self.publish(topic, msg)
 
     def read_sensor(self):
         try:

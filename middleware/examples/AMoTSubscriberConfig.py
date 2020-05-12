@@ -4,7 +4,7 @@ Roles = {
 
 SubscriberConfigs = {
     'timeout': None,
-    'topics': ['temperature'],
+    'topics': ['Hello'],
     'host': '192.168.0.102',
     'port': 60001
 }

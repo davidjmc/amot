@@ -1,5 +1,5 @@
 Roles = {
-    'subscriber'
+    'publisher'
 }
 
 SubscriberConfigs = {
@@ -11,6 +11,6 @@ SubscriberConfigs = {
 
 # AMoT-Server IP Address and Port
 ServerConfigs = {
-    'host': '192.168.0.102',
-    'port': 60000
+    'serverHost': '192.168.0.102',
+    'serverPort': 60000
 }
