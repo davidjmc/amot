@@ -1,5 +1,5 @@
 Roles = {
-    'subscriber'
+    'server'
 }
 
 SubscriberConfigs = {

@@ -25,6 +25,7 @@ class AMoTClient(Component):
         # temp, hum = self.read_sensor()
         # msg = 'Temperature: {} and Humidity: {}'.format(temp, hum)
         # self.publish(topic, msg)
+
     @staticmethod
     def temp_hum_sensor():
         try:
