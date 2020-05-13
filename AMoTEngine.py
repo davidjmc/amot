@@ -2,18 +2,6 @@ import pickle
 import socket
 import time
 
-# Adaptation Check Interval
-last_adaptation = 0
-adaptation_interval = 1
-
-# AMoT-Broker IP Address and Port
-amot_broker_ip = '192.168.1.9'
-amot_broker_port = 60000
-
-# Own AMoT-Client IP Address and Port
-amot_client_ip = '192.168.1.9'
-amot_client_port = 60001
-
 
 class AMoTEngine:
     def __init__(self):
@@ -69,12 +57,12 @@ class AMoTEngine:
             AMoTSubscriber().set_engine(self).run()
 
     def run(self):
-        global last_adaptation
+        # global last_adaptation
         try:
             self.set_configuration()
             self.deploy_components()
             self.load_components()
-            self.check_roles()
+            # self.check_roles()
             # self.connect()
         except OSError as e:
             self.restart_and_reconnect()
@@ -82,19 +70,19 @@ class AMoTEngine:
         while True:
             try:
                 for component in self.starter:
-                    # print('Engine running component ', component)
+                    print('Engine running component ', component)
                     component_instance = self.current_components[component]
                     component_instance.run()
 
-                    if self.adaptability['Type'] is not None:
-                        if (time.time() - last_adaptation) > adaptation_interval:
-                            # starts adaptation
-                            last_adaptation = time.time()
+                    # if self.adaptability['Type'] is not None:
+                    #     if (time.time() - last_adaptation) > adaptation_interval:
+                    #         # starts adaptation
+                    #         last_adaptation = time.time()
 
             except OSError as e:
                 self.restart_and_reconnect()
 
-            time.sleep(1)
+            # time.sleep(1)
 
     @staticmethod
     def restart_and_reconnect():
@@ -121,10 +109,10 @@ class Component:
         return self.engine.attached(self)
 
     def publish(self, topic, message):
-        self.external().run('Publish', topic, message)
+        self.external().run(b'Publish', topic, message)
 
     def subscribe(self, topic):
-        self.external().run('Subscribe', topic)
+        self.external().run(b'Subscribe', topic)
 
 
 class AMoTSubscriber(Component):

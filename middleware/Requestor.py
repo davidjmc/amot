@@ -12,8 +12,8 @@ class Requestor(Component):
         invocation = args[0]
         data = pickle.dumps(invocation)
         package = {
-            'Destination': self.engine.configs['serverHost'], 
-            'DPort': self.engine.configs['serverPort'], 
+            'Destination': self.engine.configs['serverHost'],
+            'DPort': self.engine.configs['serverPort'],
             'Payload': data
         }
         self.external().run(package)
