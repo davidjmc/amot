@@ -1,6 +1,4 @@
-import select
-import socket
-import queue
+import socket, select
 
 from AMoTEngine import Component
 
@@ -11,9 +9,9 @@ class ServerRequestHandler(Component):
         self.server_sock = None
         self.address = None
         self.connection = None
+        self.message = None
         self.sources = []
         self.destinations = []
-        self.message = None
         self.messages_queues = {}
 
     def run(self, *args):
@@ -57,22 +55,24 @@ class ServerRequestHandler(Component):
                         if len(part) < buffer_size:
                             break
                 except OSError as e:
+                    self.sources.remove(s)
                     break
+
                 if data:
                     self.message = data
                     break
                 else:
-                    s.close()
                     self.sources.remove(s)
                     break
 
+        # self.receive()
         self.external().run(self.message)
 
 # import socket
-
+#
 # from AMoTEngine import Component
-
-
+#
+#
 # class ServerRequestHandler(Component):
 #     def __init__(self):
 #         super().__init__()
@@ -81,7 +81,7 @@ class ServerRequestHandler(Component):
 #         self.address = None
 #         self.connection = None
 #         self.message = None
-
+#
 #     def run(self, *args):
 #         try:
 #             if self.server_sock is None:
@@ -90,22 +90,22 @@ class ServerRequestHandler(Component):
 #                 self.server_sock.settimeout(self.engine.listen_cfg['timeout'])
 #                 self.address = socket.getaddrinfo(self.engine.listen_cfg['host'],
 #                                                   self.engine.listen_cfg['port'])[0][-1]
-
+#
 #                 try:
 #                     self.server_sock.bind(self.address)
 #                     print('<Starting up on {} port {}'.format(*self.address))
 #                     self.server_sock.listen(5)
 #                 except OSError as e:
 #                     print('ServerRequestHandler Bind Error: ', e)
-
+#
 #             print(self.server_sock)
-
+#
 #         except OSError as e:
 #             print('ServerRequestHandler Socket Error: ', e)
-
+#
 #         self.receive()
 #         self.external().run(self.message)
-
+#
 #     def receive(self):
 #         buffer_size = 536
 #         data = b''
