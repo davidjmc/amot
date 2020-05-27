@@ -1,4 +1,5 @@
 import time
+import random as r
 
 from AMoTEngine import Component
 
@@ -29,8 +30,8 @@ class AMoTClient(Component):
     @staticmethod
     def temp_hum_sensor():
         try:
-            temp = 30.54
-            hum = 29.0
+            temp = 30.0 * r.random()
+            hum = 30.0 * r.random()
             if (isinstance(temp, float) and isinstance(hum, float)) or (isinstance(temp, int) and isinstance(hum, int)):
                 temp = b'%3.1f' % temp
                 hum = b'%.1f' % hum

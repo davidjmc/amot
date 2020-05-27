@@ -1,16 +1,17 @@
-Roles = {
+Component = {
     'server'
 }
 
-SubscriberConfigs = {
-    'timeout': None,
-    'topics': ['temperature'],
-    'host': '192.168.0.102',
-    'port': 60001
-}
+Publisher = {}
+
+Subscriber = {}
 
 # AMoT-Server IP Address and Port
-ServerConfigs = {
+Server = {
     'host': '192.168.0.102',
     'port': 60000
+}
+
+Adaptation = {
+    'timeout': None
 }

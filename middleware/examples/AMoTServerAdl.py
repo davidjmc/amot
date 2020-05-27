@@ -1,12 +1,20 @@
 Components = {
     'ServerRequestHandler': 'ServerRequestHandler',
     'Invoker': 'Invoker',
-    'AMoTBroker': 'AMoTBroker'
+    'AMoTBroker': 'AMoTBroker',
+    
+    'ClientProxy': 'ClientProxy',
+    'Requestor': 'Requestor',
+    'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {
     'ServerRequestHandler': 'Invoker',
-    'Invoker': 'AMoTBroker'
+    'Invoker': 'AMoTBroker',
+
+    'AMoTBroker': 'ClientProxy',
+    'ClientProxy': 'Requestor',
+    'Requestor': 'ClientRequestHandler'
 }
 
 Roles = {

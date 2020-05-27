@@ -8,6 +8,9 @@ server:
 	cp broker-server/AMoTBroker.py AMoTBroker/
 	cp middleware/Invoker.py AMoTBroker/
 	cp middleware/ServerRequestHandler.py AMoTBroker/
+	cp middleware/Requestor.py AMoTBroker/
+	cp middleware/ClientRequestHandler.py AMoTBroker/
+	cp middleware/ClientProxy.py AMoTBroker/
 
 
 publisher:
@@ -26,7 +29,7 @@ subscriber:
 	mkdir -p AMoTSubscriber
 	rm -rf AMoTSubscriber/*
 	cp middleware/examples/AMoTSubscriberAdl.py AMoTSubscriber/AMoTAdl.py
-	cp middleware/examples/AMoTSubscriberConfig.py AMoTPublisher/AMoTConfig.py
+	cp middleware/examples/AMoTSubscriberConfig.py AMoTSubscriber/AMoTConfig.py
 	cp AMoTEngine.py AMoTSubscriber/
 	cp pickle.py AMoTSubscriber/
 	cp middleware/Invoker.py AMoTSubscriber/

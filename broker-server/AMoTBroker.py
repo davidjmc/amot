@@ -18,20 +18,24 @@ class AMoTBroker(Component):
         self.notify_consumer = NotificationConsumer()
 
     def run(self, *args):
-        invocation = args[0]
-        operation = invocation['Operation']
-        message = invocation['Message']
+        request = args[0]
+        operation = request.op
+        topic = request.topic
+        message = request.message
+        print(message)
 
-        if operation is 'Publish':
-            self.publish(message['Topic'], message['Message'])
-            self.notify(message['Topic'])
-        elif operation is 'Subscribe':
-            self.subscriber(message['Topic'], message['Source'], message['SPort'])
-        elif operation is 'Adapt':
+        if operation == b'Publish':
+            self.publish(topic, message)
+            self.notify_subscribers(topic)
+        elif operation == b'Subscribe':
+            ip_port = message.split(b' ')
+            print(ip_port)
+            self.subscriber(topic, ip_port[0], int(ip_port[1]))
+        elif operation == b'Adapt':
             invocation = {'Operation': args[0], 'Topic': args[1]}
             self.external().run(invocation)
         else:
-            print('Notification engine :: Operation ' + args[0]['Operation'] + 'is not implemented by AMoT Engine')
+            print('Notification engine :: Operation ' + str(args[0]['Operation']) + 'is not implemented by AMoT Engine')
 
     def publish(self, topic, message):
         ret = False
@@ -40,7 +44,7 @@ class AMoTBroker(Component):
             if self.topics[topic].__contains__(message):
                 ret = True
         else:
-            self.topics[topic] = deque([message], maxlen=1)
+            self.topics[topic] = deque([message], maxlen=20)
             if self.topics[topic].__contains__(message):
                 ret = True
         return ret
@@ -50,13 +54,14 @@ class AMoTBroker(Component):
         self.subscribers = self.subscriber_manager.add_subscriber(self.subscribers, topic, subscriber_address)
 
     # Notify the subscribers by topics
-    def notify(self, topic):
+    def notify_subscribers(self, topic):
         subscribers = self.subscriber_manager.filter_subscribers(self.subscribers, topic)
+        print(subscribers)
 
         if subscribers is not None:
             if self.topics[topic] is not None:
-                for subscriber in subscribers:
-                    self.notify_consumer.notify_subscriber(subscriber, self.topics[topic][0])
+                non_notification = self.notify_consumer.notify_subscriber(subscribers, topic, self.topics[topic][0], self)
+                self.subscribers = self.subscriber_manager.remove_subscriber(self.subscribers, topic, non_notification)
                 self.topics[topic].popleft()
 
 
@@ -65,14 +70,19 @@ class SubscriberManager:
     @staticmethod
     def add_subscriber(subscribers, topic, address):
         if topic in subscribers.keys():
-            if address != subscribers[topic]:
+            if address not in subscribers[topic]:
                 subscribers[topic].append(address)
         else:
             subscribers[topic] = deque([address], maxlen=20)
         return subscribers
 
-    def remove_subscriber(self):
-        pass
+    @staticmethod
+    def remove_subscriber(subscribers, topic, subs):
+        if topic in subscribers.keys():
+            for subscriber in subs:
+                if subscriber in subscribers[topic]:
+                    subscribers[topic].remove(subscriber)
+        return subscribers
 
     @staticmethod
     def filter_subscribers(subscribers, topic):
@@ -85,15 +95,23 @@ class SubscriberManager:
 class NotificationConsumer:
 
     @staticmethod
-    def notify_subscriber(subscriber, message):
-        sock = socket.socket()
-        try:
-            sock.connect(subscriber)
-            data = pickle.dumps(message)
-            sock.sendall(data)
-            sock.close()
-        except OSError as e:
-            print('Error when sending data on the NotificationConsumer: ', e)
-
-
-
+    def notify_subscriber(subscribers, topic, message, pog):
+        non_subscribers_notification = []
+        for subscriber in subscribers:
+            sent = pog.notify(topic, message, subscriber[0], subscriber[1])
+            if not sent:
+                print('Error when sending data on the NotificationConsumer')
+                non_subscribers_notification.append(subscriber)
+            # try:
+            # except OSError as e:
+            # sock = socket.socket()
+            # try:
+            #     sock.connect(subscriber)
+            #     data = pickle.dumps(message)
+            #     sent = sock.sendall(data)
+            #     print(sent)
+            #     sock.close()
+            # except OSError as e:
+            #     print('Error when sending data on the NotificationConsumer: ', e)
+            #     non_subscribers_notification.append(subscriber)
+        return non_subscribers_notification

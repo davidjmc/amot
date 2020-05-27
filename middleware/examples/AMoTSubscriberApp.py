@@ -7,5 +7,7 @@ class AMoTApp(Component):
         self.count = 0
 
     def run(self, *args):
-        print(args[0])
+        package = args[0]
+        print(package.topic)
+        print(package.message)
         pass

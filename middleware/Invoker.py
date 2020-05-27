@@ -1,15 +1,27 @@
-import pickle
-
 from AMoTEngine import Component
 
-
 class Invoker(Component):
-    def __init__(self):
-        super().__init__()
+    def _init_(self):
+        super()._init_()
 
     def run(self, *args):
-        data = args[0]
-        if data is None:
+        package = args[0]
+        request = None
+        if package is None:
             return
-        invocation = pickle.loads(data)
-        self.external().run(invocation)
+
+        if b'Publish' in package:
+            invocation = package.split(b' ', 2)
+            request = self.Request(invocation[0], invocation[1], invocation[2])
+        elif b'Subscribe' in package:
+            invocation = package.split(b' ', 2)
+            request = self.Request(invocation[0], invocation[1], invocation[2])
+        elif b'Notify' in package:
+            invocation = package.split(b' ', 2)
+            request = self.Request(invocation[0], invocation[1], invocation[2])
+        else:
+            print('Notification engine :: Operation is not implemented by AMoT Engine')
+
+        # invocation = pickle.loads(data)
+        # self.external().run(package)
+        self.external().run(request)

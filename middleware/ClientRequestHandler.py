@@ -17,7 +17,7 @@ class ClientRequestHandler(Component):
         package = args[0]
         self.data = package['Payload']
 
-        if self.sock is None:
+        if self.sock is None or self.engine.keep_alive is False:
             self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             self.server = package['Destination']
             self.port = package['DPort']
@@ -32,8 +32,17 @@ class ClientRequestHandler(Component):
             except OSError as e:
                 print('Error: ' + str(e) + 'Couldnt connect with socket-server')
 
-        self.send()
+        return self.send()
 
     def send(self):
-        self.sock.sendall(self.data)
+        try:
+            self.sock.sendall(self.data)
+            if self.engine.keep_alive is False:
+                self.sock.close()
+            return True
+        except OSError as e:
+            print('Cant send data')
+            self.sock.close()
+            self.sock = None
+            return False
         # self.sock.close()

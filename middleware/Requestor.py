@@ -1,5 +1,3 @@
-import pickle
-
 from AMoTEngine import Component
 
 
@@ -14,15 +12,12 @@ class Requestor(Component):
 
         self.pkg = request.op
         self.pkg += b' ' + request.topic
-        message = [m for m in request.args]
-        self.pkg += b' ' + b' '.join(message)
-
-        # data = pickle.dumps(invocation)
+        self.pkg += b' ' + request.message
 
         package = {
-            'Destination': self.engine.server_config['serverHost'],
-            'DPort': self.engine.server_config['serverPort'],
+            'Destination': args[1],
+            'DPort': args[2],
             'Payload': self.pkg
         }
 
-        self.external().run(package)
+        return self.external().run(package)
