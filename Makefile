@@ -42,7 +42,7 @@ publisher_subscriber:
 	mkdir -p generated/amot-publisher-subscriber
 	rm -rf generated/amot-publisher-subscriber/*
 	cp middleware/examples/publisherSubscriberAdl.py generated/amot-publisher-subscriber/adl.py
-	cp engine.py generated/amot-publisher-subscriber/
+	cp AMoTEngine.py generated/amot-publisher-subscriber/
 	cp config.py generated/amot-publisher-subscriber/
 	cp pickle.py generated/amot-publisher-subscriber/
 	cp middleware/Invoker.py generated/amot-publisher-subscriber/
@@ -60,7 +60,7 @@ all:
 	$(MAKE) server
 	$(MAKE) publisher
 	$(MAKE) subscriber
-# 	$(MAKE) publisher_subscriber
+	$(MAKE) publisher_subscriber
 
 run-server:
 	cd generated/amot-server && python3 AMoTEngine.py
@@ -70,3 +70,6 @@ run-publisher:
 
 run-subscriber:
 	cd generated/amot-subscriber && python3 AMoTEngine.py
+
+run-published-subscriber:
+	cd generated/amot-publisher-subscriber && python3 AMoTEngine.py
