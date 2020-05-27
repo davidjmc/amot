@@ -2,7 +2,7 @@ server:
 	mkdir -p AMoTBroker
 	rm -rf AMoTBroker/*
 	cp middleware/examples/AMoTServerAdl.py AMoTBroker/AMoTAdl.py
-	cp middleware/examples/AMoTServerConfig.py AMoTPublisher/AMoTConfig.py
+	cp middleware/examples/AMoTServerConfig.py AMoTBroker/AMoTConfig.py
 	cp AMoTEngine.py AMoTBroker/
 	cp pickle.py AMoTBroker/
 	cp broker-server/AMoTBroker.py AMoTBroker/
