@@ -1,24 +1,18 @@
 Components = {
-    'ServerRequestHandler': 'ServerRequestHandler',
-    'Invoker': 'Invoker',
-    'AMoTBroker': 'AMoTBroker',
-    
+    'Client': 'Client',
     'ClientProxy': 'ClientProxy',
     'Requestor': 'Requestor',
     'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {
-    'ServerRequestHandler': 'Invoker',
-    'Invoker': 'AMoTBroker',
-
-    'AMoTBroker': 'ClientProxy',
+    'Client': 'ClientProxy',
     'ClientProxy': 'Requestor',
     'Requestor': 'ClientRequestHandler'
 }
 
 Roles = {
-    'server'
+    'publisher'
 }
 
 SubscriberConfigs = { }
@@ -29,7 +23,7 @@ Configs = {
 }
 
 Starter = {
-    'ServerRequestHandler'
+    'Client'
 }
 
 Adaptability = {

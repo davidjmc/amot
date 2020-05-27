@@ -6,7 +6,7 @@ from AMoTEngine import Component
 topic = b'temperature'
 
 
-class AMoTClient(Component):
+class Client(Component):
     def __init__(self):
         super().__init__()
         self.count = 0

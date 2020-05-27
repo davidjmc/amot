@@ -5,7 +5,7 @@ from collections import deque
 from AMoTEngine import Component
 
 
-class AMoTBroker(Component):
+class QueueServer(Component):
     # topics where messages are posted
     topics = {}
 

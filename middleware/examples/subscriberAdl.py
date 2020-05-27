@@ -1,5 +1,5 @@
 Components = {
-    'AMoTApp': 'AMoTApp',
+    'App': 'App',
     'ServerRequestHandler': 'ServerRequestHandler',
     'Invoker': 'Invoker',
 
@@ -10,7 +10,7 @@ Components = {
 
 Attachments = {
     'ServerRequestHandler': 'Invoker',
-    'Invoker': 'AMoTApp',
+    'Invoker': 'App',
     
     'AMoTSubscriber': 'ClientProxy',
     'ClientProxy': 'Requestor',

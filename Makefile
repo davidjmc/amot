@@ -1,61 +1,72 @@
 server:
-	mkdir -p AMoTBroker
-	rm -rf AMoTBroker/*
-	cp middleware/examples/AMoTServerAdl.py AMoTBroker/AMoTAdl.py
-	cp middleware/examples/AMoTServerConfig.py AMoTBroker/AMoTConfig.py
-	cp AMoTEngine.py AMoTBroker/
-	cp pickle.py AMoTBroker/
-	cp broker-server/AMoTBroker.py AMoTBroker/
-	cp middleware/Invoker.py AMoTBroker/
-	cp middleware/ServerRequestHandler.py AMoTBroker/
-	cp middleware/Requestor.py AMoTBroker/
-	cp middleware/ClientRequestHandler.py AMoTBroker/
-	cp middleware/ClientProxy.py AMoTBroker/
-
+	mkdir -p amot-server
+	rm -rf amot-server/*
+	cp middleware/examples/serverAdl.py amot-server/adl.py
+	cp middleware/examples/serverConfig.py amot-server/config.py
+	cp AMoTEngine.py amot-server/
+	cp pickle.py amot-server/
+	cp queue-server/QueueServer.py amot-server/
+	cp middleware/Invoker.py amot-server/
+	cp middleware/ServerRequestHandler.py amot-server/
+	cp middleware/Requestor.py amot-server/
+	cp middleware/ClientRequestHandler.py amot-server/
+	cp middleware/ClientProxy.py amot-server/
 
 publisher:
-	mkdir -p AMoTPublisher
-	rm -rf AMoTPublisher/*
-	cp middleware/examples/AMoTPublisherAdl.py AMoTPublisher/AMoTAdl.py
-	cp middleware/examples/AMoTPublisherConfig.py AMoTPublisher/AMoTConfig.py
-	cp AMoTEngine.py AMoTPublisher/
-	cp pickle.py AMoTPublisher/
-	cp middleware/Requestor.py AMoTPublisher/
-	cp middleware/ClientRequestHandler.py AMoTPublisher/
-	cp middleware/ClientProxy.py AMoTPublisher/
-	cp middleware/examples/AMoTPublisherApp.py AMoTPublisher/AMoTClient.py
+	mkdir -p amot-publisher
+	rm -rf amot-publisher/*
+	cp middleware/examples/publisherAdl.py amot-publisher/adl.py
+	cp middleware/examples/publisherConfig.py amot-publisher/config.py
+	cp AMoTEngine.py amot-publisher/
+	cp pickle.py amot-publisher/
+	cp middleware/Requestor.py amot-publisher/
+	cp middleware/ClientRequestHandler.py amot-publisher/
+	cp middleware/ClientProxy.py amot-publisher/
+	cp middleware/examples/publisherApp.py amot-publisher/Client.py
 
 subscriber:
-	mkdir -p AMoTSubscriber
-	rm -rf AMoTSubscriber/*
-	cp middleware/examples/AMoTSubscriberAdl.py AMoTSubscriber/AMoTAdl.py
-	cp middleware/examples/AMoTSubscriberConfig.py AMoTSubscriber/AMoTConfig.py
-	cp AMoTEngine.py AMoTSubscriber/
-	cp pickle.py AMoTSubscriber/
-	cp middleware/Invoker.py AMoTSubscriber/
-	cp middleware/ServerRequestHandler.py AMoTSubscriber/
-	cp middleware/Requestor.py AMoTSubscriber/
-	cp middleware/ClientRequestHandler.py AMoTSubscriber/
-	cp middleware/ClientProxy.py AMoTSubscriber/
-	cp middleware/examples/AMoTSubscriberApp.py AMoTSubscriber/AMoTApp.py
+	mkdir -p amot-subscriber
+	rm -rf amot-subscriber/*
+	cp middleware/examples/subscriberAdl.py amot-subscriber/adl.py
+	cp middleware/examples/subscriberConfig.py amot-subscriber/config.py
+	cp AMoTEngine.py amot-subscriber/
+	cp pickle.py amot-subscriber/
+	cp middleware/Invoker.py amot-subscriber/
+	cp middleware/ServerRequestHandler.py amot-subscriber/
+	cp middleware/Requestor.py amot-subscriber/
+	cp middleware/ClientRequestHandler.py amot-subscriber/
+	cp middleware/ClientProxy.py amot-subscriber/
+	cp middleware/examples/subscriberApp.py amot-subscriber/App.py
 
 publisher_subscriber:
-	mkdir -p AMoTPublisherSubscriber
-	rm -rf AMoTPublisherSubscriber/*
-	cp middleware/examples/AMoTPublisherSubscriberAdl.py AMoTPublisherSubscriber/AMoTAdl.py
-	cp AMoTEngine.py AMoTPublisherSubscriber/
-	cp AMoTConfig.py AMoTPublisherSubscriber/
-	cp pickle.py AMoTPublisherSubscriber/
-	cp middleware/Invoker.py AMoTPublisherSubscriber/
-	cp middleware/ServerRequestHandler.py AMoTPublisherSubscriber/
-	cp middleware/Requestor.py AMoTPublisherSubscriber/
-	cp middleware/ClientRequestHandler.py AMoTPublisherSubscriber/
-	cp middleware/ClientProxy.py AMoTPublisherSubscriber/
-	cp middleware/examples/AMoTSubscriberApp.py AMoTPublisherSubscriber/AMoTApp.py
-	cp middleware/examples/AMoTClient2.py AMoTPublisherSubscriber/AMoTClient2.py
+	mkdir -p amot-publisher-subscriber
+	rm -rf amot-publisher-subscriber/*
+	cp middleware/examples/publisherSubscriberAdl.py amot-publisher-subscriber/adl.py
+	cp engine.py amot-publisher-subscriber/
+	cp config.py amot-publisher-subscriber/
+	cp pickle.py amot-publisher-subscriber/
+	cp middleware/Invoker.py amot-publisher-subscriber/
+	cp middleware/ServerRequestHandler.py amot-publisher-subscriber/
+	cp middleware/Requestor.py amot-publisher-subscriber/
+	cp middleware/ClientRequestHandler.py amot-publisher-subscriber/
+	cp middleware/ClientProxy.py amot-publisher-subscriber/
+	cp middleware/examples/subscriberApp.py amot-publisher-subscriber/app.py
+	cp middleware/examples/client2.py amot-publisher-subscriber/client2.py
+
+set:
+	sed -i "s/'host':.*/'host': b'$(IP)',/g" middleware/examples/*Config.py
 
 all:
 	$(MAKE) server
 	$(MAKE) publisher
 	$(MAKE) subscriber
-	$(MAKE) publisher_subscriber
+# 	$(MAKE) publisher_subscriber
+
+run-server:
+	cd amot-server && python3 AMoTEngine.py
+
+run-publisher:
+	cd amot-publisher && python3 AMoTEngine.py
+
+run-subscriber:
+	cd amot-subscriber && python3 AMoTEngine.py

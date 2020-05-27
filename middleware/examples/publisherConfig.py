@@ -10,7 +10,7 @@ Subscriber = {}
 
 # AMoT-Server IP Address and Port
 Server = {
-    'host': '192.168.0.102',
+    'host': b'192.168.0.102',
     'port': 60000
 }
 

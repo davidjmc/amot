@@ -2,3 +2,7 @@ AMoTBroker
 AMoTSubscriber
 AMoTPublisher
 AMoTPublisherSubscriber
+amot-server
+amot-subscriber
+amot-publisher
+amot-publisherSubscriber

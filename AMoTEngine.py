@@ -1,8 +1,8 @@
 import time
 
 
-import AMoTConfig as cfg
-import AMoTAdl as adl
+import config as cfg
+import adl as adl
 
 
 class AMoTEngine:

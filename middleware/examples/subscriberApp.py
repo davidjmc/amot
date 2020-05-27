@@ -1,7 +1,7 @@
 from AMoTEngine import Component
 
 
-class AMoTApp(Component):
+class App(Component):
     def __init__(self):
         super().__init__()
         self.count = 0
