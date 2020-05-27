@@ -3,7 +3,6 @@ import socket
 import time
 
 
-
 class AMoTEngine:
     def __init__(self):
         self.components = None
@@ -96,6 +95,12 @@ class Component:
     def __init__(self):
         self.engine = None
 
+    class Request(object):
+        def __init__(self,  operation, topic, *args):
+            self.op = operation
+            self.topic = topic
+            self.args = [m for m in args]
+
     def set_engine(self, engine):
         self.engine = engine
         return self
@@ -109,11 +114,21 @@ class Component:
     def external(self):
         return self.engine.attached(self)
 
+    # def publish(self, topic, message):
+    #     self.external().run(b'Publish', topic, message)
+    #
+    # def subscribe(self, topic):
+    #     self.external().run(b'Subscribe', topic)
+
     def publish(self, topic, message):
-        self.external().run(b'Publish', topic, message)
+        request = self.Request(b'Publish', topic, message)
+        # self.external().run(b'Publish', topic, message)
+        self.external().run(request)
 
     def subscribe(self, topic):
-        self.external().run(b'Subscribe', topic)
+        request = self.Request(b'Subscribe', topic)
+        # self.external().run(b'Subscribe', topic)
+        self.external().run(request)
 
 
 class AMoTSubscriber(Component):
