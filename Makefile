@@ -12,6 +12,19 @@ server:
 	cp middleware/ClientRequestHandler.py generated/amot-server/
 	cp middleware/ClientProxy.py generated/amot-server/
 
+adaptation_manager:
+	mkdir -p generated/amot-adaptation-manager
+	rm -rf generated/amot-adaptation-manager/*
+	cp middleware/examples/adapterAdl.py generated/amot-adaptation-manager/adl.py
+	cp middleware/examples/adapterConfig.py generated/amot-adaptation-manager/config.py
+	cp AMoTEngine.py generated/amot-adaptation-manager/
+	cp adaptation-manager/AdaptationManager.py generated/amot-adaptation-manager/
+	cp middleware/Invoker.py generated/amot-adaptation-manager/
+	cp middleware/ServerRequestHandler.py generated/amot-adaptation-manager/
+	cp middleware/Requestor.py generated/amot-adaptation-manager/
+	cp middleware/ClientRequestHandler.py generated/amot-adaptation-manager/
+	cp middleware/ClientProxy.py generated/amot-adaptation-manager/
+
 publisher:
 	mkdir -p generated/amot-publisher
 	rm -rf generated/amot-publisher/*
@@ -58,12 +71,16 @@ set:
 
 all:
 	$(MAKE) server
+	$(MAKE) adaptation_manager
 	$(MAKE) publisher
 	$(MAKE) subscriber
 	$(MAKE) publisher_subscriber
 
 run-server:
 	cd generated/amot-server && python3 AMoTEngine.py
+
+run-adaptation-manager:
+	cd generated/amot-adaptation-manager && python3 AMoTEngine.py
 
 run-publisher:
 	cd generated/amot-publisher && python3 AMoTEngine.py

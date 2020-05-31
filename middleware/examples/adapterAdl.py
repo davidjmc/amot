@@ -1,26 +1,31 @@
 Components = {
-    'Client': 'Client',
+    'ServerRequestHandler': 'ServerRequestHandler',
+    'Invoker': 'Invoker',
+    'AdaptationManager': 'AdaptationManager',
+    
     'ClientProxy': 'ClientProxy',
     'Requestor': 'Requestor',
     'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {
-    'Client': 'ClientProxy',
+    'ServerRequestHandler': 'Invoker',
+    'Invoker': 'AdaptationManager',
+
+    'AdaptationManager': 'ClientProxy',
     'ClientProxy': 'Requestor',
     'Requestor': 'ClientRequestHandler'
 }
-
 
 SubscriberConfigs = { }
 
 Configs = {
     'serverHost': '192.168.0.102',
-    'serverPort': 60000
+    'serverPort': 60005,
 }
 
 Starter = {
-    'Client'
+    'ServerRequestHandler'
 }
 
 Adaptability = {

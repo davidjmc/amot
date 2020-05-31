@@ -22,14 +22,12 @@ class QueueServer(Component):
         operation = request.op
         topic = request.topic
         message = request.message
-        print(message)
 
         if operation == b'Publish':
             self.publish(topic, message)
             self.notify_subscribers(topic)
         elif operation == b'Subscribe':
             ip_port = message.split(b' ')
-            print(ip_port)
             self.subscriber(topic, ip_port[0], int(ip_port[1]))
         elif operation == b'Adapt':
             invocation = {'Operation': args[0], 'Topic': args[1]}
@@ -56,7 +54,6 @@ class QueueServer(Component):
     # Notify the subscribers by topics
     def notify_subscribers(self, topic):
         subscribers = self.subscriber_manager.filter_subscribers(self.subscribers, topic)
-        print(subscribers)
 
         if subscribers is not None:
             if self.topics[topic] is not None:

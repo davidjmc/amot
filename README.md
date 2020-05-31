@@ -14,8 +14,12 @@ Adaptive Middleware of Things
 
 ### Clone
 
-- Clone thos repository to your local machine using `https://github.com/davidjmc/amot`
+- Clone this repository to your local machine using `https://github.com/davidjmc/amot`
 
 ## Running the AMoT
+
+> On the computer
+
+
 
 ## Team

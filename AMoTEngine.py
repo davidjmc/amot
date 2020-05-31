@@ -11,6 +11,8 @@ class AMoTEngine:
         self.attachments = None
         self.starter = None
         self.adaptability = None
+        self.subscriber = AMoTSubscriber()
+        self.adaptation_egent = AdaptationAgent()
         
         self.current_components = {}
         
@@ -42,11 +44,9 @@ class AMoTEngine:
         return external_class.set_engine(self)
 
     def set_component_configs(self):
-        print(cfg.Component)
-        print('subscriber' in cfg.Component)
         if 'subscriber' in cfg.Component:
             self.listen_configs = self.subscriber_configs
-            AMoTSubscriber().set_engine(self).run()
+            self.subscriber.set_engine(self).run()
         if 'server' in cfg.Component:
             self.keep_alive = False
 
@@ -72,7 +72,7 @@ class AMoTEngine:
                     if self.adaptability['Type'] is not None:
                         self.adaptation_configs = cfg.Adaptation
                         if (time.time() - last_adaptation) > cfg.Adaptation['timeout']:
-                            # starts adaptation
+                            self.adaptation_egent.set_engine(self).run()
                             last_adaptation = time.time()
 
             except OSError as e:
@@ -121,6 +121,9 @@ class Component:
     def notify(self, topic, message, ip, port):
         return self.external().run(b'Notify', topic, message, ip, port)
 
+    def adapt(self, adaptability, thing, message):
+        return self.external().run(b'Adapt', adaptability, thing, message)
+
 
 class AMoTSubscriber(Component):
     def __init__(self):
@@ -130,6 +133,15 @@ class AMoTSubscriber(Component):
         for topic in self.engine.subscriber_configs['topics']:
             self.subscribe(topic)
 
+
+class AdaptationAgent(Component):
+    def __init__(self):
+        super().__init__()
+
+    def run(self):
+        #self.adapt()
+        print('Adaptation Agent')
+        
 
 if __name__ == '__main__':
     AMoTEngine().run()
