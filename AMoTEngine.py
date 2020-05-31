@@ -23,8 +23,6 @@ class AMoTEngine:
         self.listen_configs = self.server_configs
         self.listen_configs['timeout'] = None
 
-        self.keep_alive = True
-
     def deploy_components(self):
         self.components = adl.Components
         self.attachments = adl.Attachments
@@ -47,8 +45,6 @@ class AMoTEngine:
         if 'subscriber' in cfg.Component:
             self.listen_configs = self.subscriber_configs
             self.subscriber.set_engine(self).run()
-        if 'server' in cfg.Component:
-            self.keep_alive = False
 
     def run(self):
         last_adaptation = 0

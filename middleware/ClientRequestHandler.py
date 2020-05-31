@@ -7,42 +7,37 @@ class ClientRequestHandler(Component):
 
     def __init__(self):
         super().__init__()
-        self.sock = None
-        self.server = None
-        self.port = None
-        self.addr = None
-        self.data = None
+        self.socks = {}
 
     def run(self, *args):
         package = args[0]
-        self.data = package['Payload']
+        data = package['Payload']
 
-        if self.sock is None or self.engine.keep_alive is False:
-            self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            self.server = package['Destination']
-            self.port = package['DPort']
-            if self.port == 0:
-                self.port = 60000
-            self.addr = socket.getaddrinfo(self.server, self.port)[0][-1]
+        server = package['Destination']
+        port = package['DPort']
+        addr = socket.getaddrinfo(server, port)[0][-1]
+
+        if self.socks.get(addr) is None:
+            self.socks[addr] = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            if port == 0:
+                port = 60000
 
             try:
 
-                self.sock.connect(self.addr)
+                self.socks[addr].connect(addr)
 
             except OSError as e:
                 print('Error: ' + str(e) + 'Couldnt connect with socket-server')
 
-        return self.send()
+        return self.send(addr, data)
 
-    def send(self):
+    def send(self, addr, data):
         try:
-            self.sock.sendall(self.data)
-            if self.engine.keep_alive is False:
-                self.sock.close()
+            self.socks[addr].sendall(data)
             return True
         except OSError as e:
             print('Cant send data')
-            self.sock.close()
-            self.sock = None
+            self.socks[addr].close()
+            self.socks[addr] = None
             return False
         # self.sock.close()
