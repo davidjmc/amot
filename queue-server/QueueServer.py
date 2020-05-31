@@ -33,7 +33,11 @@ class QueueServer(Component):
             invocation = {'Operation': args[0], 'Topic': args[1]}
             self.external().run(invocation)
         else:
-            print('Notification engine :: Operation ' + str(args[0]['Operation']) + 'is not implemented by AMoT Engine')
+            print(
+                'Notification engine :: Operation ' + 
+                str(args[0]['Operation']) + 
+                'is not implemented by AMoT Engine'
+            )
 
     def publish(self, topic, message):
         ret = False
@@ -57,9 +61,13 @@ class QueueServer(Component):
 
         if subscribers is not None:
             if self.topics[topic] is not None:
-                non_notification = self.notify_consumer.notify_subscriber(subscribers, topic, self.topics[topic][0], self)
-                self.subscribers = self.subscriber_manager.remove_subscriber(self.subscribers, topic, non_notification)
-                self.topics[topic].popleft()
+                non_notification = self.notify_consumer.notify_subscriber(
+                    subscribers, topic, self.topics[topic][-1], self
+                )
+                self.subscribers = self.subscriber_manager.remove_subscriber(
+                    self.subscribers, topic, non_notification
+                )
+                self.topics[topic].pop()
 
 
 class SubscriberManager:

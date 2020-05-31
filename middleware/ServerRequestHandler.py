@@ -38,14 +38,17 @@ class ServerRequestHandler(Component):
         except OSError as e:
             print('ServerRequestHandler Socket Error: ', e)
 
+        # print('sources b4:', self.sources)
+        # print('select')
         readable, writeable, exceptional = select.select(self.sources, [], [])
-
+        # print('readable now: ', readable)
         for s in readable:
             if s is self.server_sock:
                 try:
                     connection, device = self.server_sock.accept()
                     self.server_sock.setblocking(False)
                     self.sources.append(connection)
+                    readable.append(connection)
                 except OSError as e:
                     print('Error when receiving data on the ServerRequestHandler: ', e)
             elif s:
@@ -59,17 +62,19 @@ class ServerRequestHandler(Component):
                             break
                 except OSError as e:
                     self.sources.remove(s)
-                    break
+                    continue
 
                 if data:
                     self.message = data
-                    break
+                    self.external().run(self.message)
                 else:
                     self.sources.remove(s)
-                    break
+
+        # print('sources then:', self.sources)
+        # print('-----')
 
         # self.receive()
-        self.external().run(self.message)
+
 
 # import socket
 #
