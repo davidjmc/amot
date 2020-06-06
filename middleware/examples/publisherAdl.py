@@ -8,7 +8,8 @@ Components = {
 Attachments = {
     'Client': 'ClientProxy',
     'ClientProxy': 'Requestor',
-    'Requestor': 'ClientRequestHandler'
+    'Requestor': 'ClientRequestHandler',
+    'AdaptationAgent': 'ClientProxy'
 }
 
 
@@ -24,5 +25,5 @@ Starter = {
 }
 
 Adaptability = {
-    'Type': None
+    'kind': b'Evolutive'
 }

@@ -21,7 +21,9 @@ class ClientProxy(Component):
             ip = args[3]
             port = args[4]
         elif args[0] == b'Adapt':
-            invocation = {'Operation': args[0], 'Topic': args[1]}
+            ip = args[3]
+            port = args[4]
+            request = self.Request(args[0], args[1], args[2])
         else:
             print('Notification engine :: Operation ' + args[0].decode() + ' is not implemented by AMoT Engine')
 

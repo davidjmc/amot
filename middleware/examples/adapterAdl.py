@@ -2,7 +2,7 @@ Components = {
     'ServerRequestHandler': 'ServerRequestHandler',
     'Invoker': 'Invoker',
     'AdaptationManager': 'AdaptationManager',
-    
+
     'ClientProxy': 'ClientProxy',
     'Requestor': 'Requestor',
     'ClientRequestHandler': 'ClientRequestHandler'
@@ -29,5 +29,5 @@ Starter = {
 }
 
 Adaptability = {
-    'Type': None
+    'kind': None
 }

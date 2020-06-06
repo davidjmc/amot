@@ -11,7 +11,7 @@ Components = {
 Attachments = {
     'ServerRequestHandler': 'Invoker',
     'Invoker': 'App',
-    
+
     'AMoTSubscriber': 'ClientProxy',
     'ClientProxy': 'Requestor',
     'Requestor': 'ClientRequestHandler'
@@ -38,5 +38,5 @@ Starter = {
 }
 
 Adaptability = {
-    'Type': None
+    'kind': None
 }

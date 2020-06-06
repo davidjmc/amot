@@ -19,9 +19,10 @@ class Invoker(Component):
         elif b'Notify' in package:
             invocation = package.split(b' ', 2)
             request = self.Request(invocation[0], invocation[1], invocation[2])
+        elif b'Adapt' in package:
+            invocation = package.split(b' ', 2)
+            request = self.Request(invocation[0], invocation[1], invocation[2])
         else:
             print('Notification engine :: Operation is not implemented by AMoT Engine')
 
-        # invocation = pickle.loads(data)
-        # self.external().run(package)
-        self.external().run(request)
+        return self.external().run(request)

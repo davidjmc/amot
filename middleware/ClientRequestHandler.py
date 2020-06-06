@@ -32,12 +32,25 @@ class ClientRequestHandler(Component):
         return self.send(addr, data)
 
     def send(self, addr, data):
+        buffer_size = 536
+        response = b''
         try:
             self.socks[addr].sendall(data)
-            return True
+            # try:
+            #     while True:
+            #         self.socks[addr].settimeout(1)
+            #         #self.socks[addr].setblocking(0)
+            #         part = self.socks[addr].recv(buffer_size)
+            #         response += part
+            #         print(response, '<=========CRH')
+            #         if len(part) < buffer_size:
+            #                 break
+            #     # self.socks[addr].setblocking(1)
+            #     return response
+            # except:
+             return True
         except OSError as e:
             print('Cant send data')
             self.socks[addr].close()
             self.socks[addr] = None
             return False
-        # self.sock.close()

@@ -11,15 +11,18 @@ class AMoTEngine:
         self.attachments = None
         self.starter = None
         self.adaptability = None
+        self.thing_id = None
+        self.last_adaptation = 0
         self.subscriber = AMoTSubscriber()
-        self.adaptation_egent = AdaptationAgent()
-        
+        self.adaptation_agent = AdaptationAgent()
+
         self.current_components = {}
-        
+
         self.server_configs = cfg.Server
         self.subscriber_configs = cfg.Subscriber
         self.adaptation_configs = cfg.Adaptation
-        
+        self.thing_id = b'10'
+
         self.listen_configs = self.server_configs
         self.listen_configs['timeout'] = None
 
@@ -47,34 +50,36 @@ class AMoTEngine:
             self.subscriber.set_engine(self).run()
 
     def run(self):
-        last_adaptation = 0
+
+        if self.last_adaptation == 0:
+            self.last_adaptation = time.time()
+
         try:
             self.deploy_components()
             self.load_components()
             self.set_component_configs()
-            # self.connect()
 
         except OSError as e:
             self.restart_and_reconnect()
 
         while True:
-            # print(cfg.Adaptation)
+
             try:
                 for component in self.starter:
                     print('Engine running component ', component)
                     component_instance = self.current_components[component]
                     component_instance.run()
 
-                    if self.adaptability['Type'] is not None:
-                        self.adaptation_configs = cfg.Adaptation
-                        if (time.time() - last_adaptation) > cfg.Adaptation['timeout']:
-                            self.adaptation_egent.set_engine(self).run()
-                            last_adaptation = time.time()
+                if (
+                    self.adaptability['kind'] is not None) and (
+                    (time.time() - self.last_adaptation) >
+                    self.adaptation_configs['timeout']):
+                    self.adaptation_agent.set_engine(self).run()
+                    self.last_adaptation = time.time()
 
             except OSError as e:
                 self.restart_and_reconnect()
 
-            # time.sleep(1)
 
     @staticmethod
     def restart_and_reconnect():
@@ -117,8 +122,8 @@ class Component:
     def notify(self, topic, message, ip, port):
         return self.external().run(b'Notify', topic, message, ip, port)
 
-    def adapt(self, adaptability, thing, message):
-        return self.external().run(b'Adapt', adaptability, thing, message)
+    def adapt(self, adaptability, message, ip, port):
+        return self.external().run(b'Adapt', adaptability, message, ip, port)
 
 
 class AMoTSubscriber(Component):
@@ -135,9 +140,17 @@ class AdaptationAgent(Component):
         super().__init__()
 
     def run(self):
-        #self.adapt()
-        print('Adaptation Agent')
-        
+        has_adaptation = None
+
+        adaptation = self.engine.adaptability['kind']
+        thing = self.engine.thing_id
+        has_adaptation = self.adapt(
+            adaptation, thing, self.engine.adaptation_configs['host'],
+            self.engine.adaptation_configs['port'])
+
+        print(has_adaptation)
+
+
 
 if __name__ == '__main__':
     AMoTEngine().run()

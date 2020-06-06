@@ -15,5 +15,7 @@ Server = {
 }
 
 Adaptation = {
-    'timeout': 5
+    'host': b'192.168.1.13',
+    'port': 60005,
+    'timeout': 10
 }
