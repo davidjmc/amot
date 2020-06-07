@@ -1,5 +1,7 @@
 import socket
 
+from datetime import datetime
+
 from AMoTEngine import Component
 
 
@@ -36,19 +38,19 @@ class ClientRequestHandler(Component):
         response = b''
         try:
             self.socks[addr].sendall(data)
-            # try:
-            #     while True:
-            #         self.socks[addr].settimeout(1)
-            #         #self.socks[addr].setblocking(0)
-            #         part = self.socks[addr].recv(buffer_size)
-            #         response += part
-            #         print(response, '<=========CRH')
-            #         if len(part) < buffer_size:
-            #                 break
-            #     # self.socks[addr].setblocking(1)
-            #     return response
-            # except:
-             return True
+            print('\t{0} data sent, w8ing response'.format(datetime.now()))
+            while True:
+                part = self.socks[addr].recv(buffer_size)
+                response += part
+                if len(part) < buffer_size:
+                    break
+            print('\t', response, '<=========CRH')
+            if response == b'0':
+                return True
+            elif response == b'':
+                # TODO look for a better exception
+                raise OSError
+            return response
         except OSError as e:
             print('Cant send data')
             self.socks[addr].close()

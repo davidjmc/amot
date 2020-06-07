@@ -65,8 +65,9 @@ class ServerRequestHandler(Component):
                 if data:
                     self.message = data
                     response = self.external().run(self.message)
-                    if response:
-                        s.sendall(response)
+                    if not response:
+                        response = b'0'
+                    s.sendall(response)
                 else:
                     self.sources.remove(s)
 

@@ -1,4 +1,5 @@
 from AMoTEngine import Component
+from datetime import datetime
 
 
 class App(Component):
@@ -8,6 +9,5 @@ class App(Component):
 
     def run(self, *args):
         package = args[0]
-        print(package.topic)
-        print(package.message)
+        print(datetime.now(), package.topic, package.message)
         pass
