@@ -19,6 +19,8 @@ adaptation_manager:
 	cp middleware/examples/adapterConfig.py generated/amot-adaptation-manager/config.py
 	cp AMoTEngine.py generated/amot-adaptation-manager/
 	cp adaptation-manager/AdaptationManager.py generated/amot-adaptation-manager/
+	cp adaptation-manager/Monitor.py generated/amot-adaptation-manager/
+	cp adaptation-manager/EvolutiveMonitor.py generated/amot-adaptation-manager/
 	cp middleware/Invoker.py generated/amot-adaptation-manager/
 	cp middleware/ServerRequestHandler.py generated/amot-adaptation-manager/
 	cp middleware/Requestor.py generated/amot-adaptation-manager/

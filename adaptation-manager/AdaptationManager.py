@@ -1,10 +1,12 @@
 from AMoTEngine import Component
+from Monitor import Monitor
 
 
 class AdaptationManager(Component):
 
     def __init__(self):
         super().__init__()
+        Monitor().run()
 
     def run(self, *args):
         request = args[0]
