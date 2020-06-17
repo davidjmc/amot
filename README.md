@@ -41,4 +41,4 @@ Adaptive Middleware of Things
 
 - Blogs and Codess
 
--- [How To Make Python Wait][https://blog.miguelgrinberg.com/post/how-to-make-python-wait], by Miguel Grinberg -- February 5, 2019
+  - [How To Make Python Wait](https://blog.miguelgrinberg.com/post/how-to-make-python-wait), by Miguel Grinberg -- February 5, 2019
