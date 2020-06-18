@@ -39,7 +39,7 @@ Adaptive Middleware of Things
 
   - M. Voelter, M. Kircher, and U. Zdun, Remoting Patterns: Foundations of Enterprise, Internet and Realtime Distributed Object Middleware, Pattern Series. John Wiley and Sons, 2004.
 
-  - S. Tarkomam, Publish/Subscriber Systems: Design and Principles, 1st Edition, Wiley series in communications networking & distributed systems, Wiley, s.l., 2012, doi:10.1002/9781118354261.
+  - S. Tarkoma, Publish/Subscriber Systems: Design and Principles, 1st Edition, Wiley series in communications networking & distributed systems, Wiley, s.l., 2012, doi:10.1002/9781118354261.
 
 - Journals and Papers
 
