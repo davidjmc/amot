@@ -1,4 +1,5 @@
 import time
+from hashlib import md5
 
 
 import config as cfg
@@ -8,6 +9,7 @@ import adl as adl
 class AMoTEngine:
     def __init__(self):
         self.components = None
+        self.components_hashes = {}
         self.attachments = None
         self.starter = None
         self.adaptability = None
@@ -35,6 +37,10 @@ class AMoTEngine:
     def load_components(self):
         for component in self.components:
             component_file = self.components.get(component)
+            file_hash = md5(
+                open('{0}.py'.format(component_file),'rb').read()
+            ).hexdigest()
+            self.components_hashes[component_file] = file_hash
             component_instance = getattr(__import__(component_file), component)
             self.current_components[component] = component_instance().set_engine(self)
 
