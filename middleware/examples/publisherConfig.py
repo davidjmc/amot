@@ -18,4 +18,5 @@ Adaptation = {
     'host': b'192.168.1.13',
     'port': 60005,
     'timeout': 10
+    'components': [b'ClientProxy']
 }

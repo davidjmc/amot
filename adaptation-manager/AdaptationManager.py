@@ -1,21 +1,23 @@
 from AMoTEngine import Component
-from Monitor import Monitor
 
 
 class AdaptationManager(Component):
+    # component_library = '/home/david/doutorado/2020-1/amot/adaptation-manager/library'
 
     def __init__(self):
         super().__init__()
-        Monitor().run()
+        self.component_library = '/libray'
 
     def run(self, *args):
         request = args[0]
-        operation = request.op
         adaptation_type = request.topic
         message = request.message
 
         if adaptation_type == b'Evolutive':
-            print('Entrei no Evolutive')
+            EvolutiveMonitor(self).run()
+            # EvolutiveAnalizer().run()
+            # EvolutivePlanner().run()
+            # EvolutiveExecutor().run()
             return b'Entrei no Evolutive!'
         elif adaptation_type == b'Reactive':
             print('Entrei no Reactive')

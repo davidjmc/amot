@@ -2,8 +2,9 @@ import os
 import time
 
 
-class EvolutiveMonitor():
-    def __init__(self):
+class EvolutiveMonitor:
+    def __init__(self, manager):
+        self.manager = manager
         self.component_library = None
 
     def run(self):
