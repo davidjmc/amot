@@ -35,10 +35,16 @@ Adaptive Middleware of Things
 
 ## References
 
-## References on Frameworks, Tools and Technology
+- Books
 
-- Python Programming Language
+  - M. Voelter, M. Kircher, and U. Zdun, Remoting Patterns: Foundations of Enterprise, Internet and Realtime Distributed Object Middleware, Pattern Series. John Wiley and Sons, 2004.
 
-- Blogs and Codess
+  - S. Tarkomam, Publish/Subscriber Systems: Design and Principles, 1st Edition, Wiley series in communications networking & distributed systems, Wiley, s.l., 2012, doi:10.1002/9781118354261.
+
+- Journals and Papers
+
+  - N.S. Rosa, G.M.M. Campos, and D.J.M. Cavalcanti, Lightweight formalisation of adaptive middleware, Journal of Systems Architecture, 2009, doi:10.1016/j.sysarc.2018.12.002.
+
+- Frameworks, Tools and Technology
 
   - [How To Make Python Wait](https://blog.miguelgrinberg.com/post/how-to-make-python-wait), by Miguel Grinberg -- February 5, 2019
