@@ -43,7 +43,7 @@ Adaptive Middleware of Things
 
 - Journals and Papers
 
-  - N.S. Rosa, G.M.M. Campos, and D.J.M. Cavalcanti, Lightweight formalisation of adaptive middleware, Journal of Systems Architecture, 2009, doi:10.1016/j.sysarc.2018.12.002.
+  - N.S. Rosa, G.M.M. Campos, and D.J.M. Cavalcanti, Lightweight formalisation of adaptive middleware, Journal of Systems Architecture, 2019, doi:10.1016/j.sysarc.2018.12.002.
 
 - Frameworks, Tools and Technology
 
