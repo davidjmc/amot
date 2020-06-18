@@ -1,4 +1,5 @@
 import time
+import sys
 from hashlib import md5
 
 
@@ -149,12 +150,42 @@ class AdaptationAgent(Component):
         has_adaptation = None
 
         adaptation = self.engine.adaptability['kind']
-        thing = self.engine.thing_id
-        has_adaptation = self.adapt(
-            adaptation, thing, self.engine.adaptation_configs['host'],
+        comp_hashes = b','.join(
+            [
+                bytes('{0}:{1}'.format(
+                    comp, self.engine.components_hashes[comp]
+                ), 'utf-8') for comp in self.engine.components_hashes.keys()
+            ]
+        )
+        thing_data = self.engine.thing_id + b' ' + comp_hashes
+
+        data = self.adapt(
+            adaptation, thing_data, self.engine.adaptation_configs['host'],
             self.engine.adaptation_configs['port'])
 
-        print(has_adaptation)
+        if not data or type(data) is not bytes:
+            return
+
+        data = str(data, 'utf-8')
+        files = data.split('\x1c') # FILE SEPARATOR (28)
+        for comp_content in files:
+            compname, content = comp_content.split('\x1d') # GROUP SEPARATOR (29)
+            self.adaptComponent(compname, content)
+        self.engine.load_components()
+
+    def adaptComponent(self, component, data):
+        print('adapting {0}'.format(component))
+        file = component + '.py'
+        wr = open(file, 'w')
+        wr.write(data)
+        wr.close()
+        self.reloadComponent(component)
+
+    # https://stackoverflow.com/questions/30379893/replacing-an-imported-module-dependency
+    def reloadComponent(self, file):
+        del sys.modules[file]
+        module = __import__(file)
+        sys.modules[file] = module
 
 
 
