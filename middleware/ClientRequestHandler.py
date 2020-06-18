@@ -44,7 +44,7 @@ class ClientRequestHandler(Component):
                 response += part
                 if len(part) < buffer_size:
                     break
-            print('\t', response, '<=========CRH')
+            # print('\t', response, '<=========CRH')
             if response == b'0':
                 return True
             elif response == b'':
