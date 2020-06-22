@@ -22,7 +22,6 @@ class AdaptationManager(Component):
             components_hashes[_comp] = _hash
 
 
-
         # ADAPTATION
         components = {}
 

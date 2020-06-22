@@ -1,6 +1,8 @@
 import time
 import sys
+from hashlib import sha1
 from hashlib import md5
+import binascii
 
 
 import config as cfg
@@ -38,9 +40,13 @@ class AMoTEngine:
     def load_components(self):
         for component in self.components:
             component_file = self.components.get(component)
-            file_hash = md5(
+            # file_hash = md5(
+            #     open('{0}.py'.format(component_file),'rb').read()
+            # ).hexdigest()
+            file_hash = binascii.hexlify(sha1(
                 open('{0}.py'.format(component_file),'rb').read()
-            ).hexdigest()
+                ).digest())
+
             self.components_hashes[component_file] = file_hash
             component_instance = getattr(__import__(component_file), component)
             self.current_components[component] = component_instance().set_engine(self)
@@ -162,6 +168,7 @@ class AdaptationAgent(Component):
         data = self.adapt(
             adaptation, thing_data, self.engine.adaptation_configs['host'],
             self.engine.adaptation_configs['port'])
+
 
         if not data or type(data) is not bytes:
             return

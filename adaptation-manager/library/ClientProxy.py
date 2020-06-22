@@ -10,7 +10,6 @@ class ClientProxy(Component):
         request = None
         ip = self.engine.server_configs['host']
         port = self.engine.server_configs['port']
-        print('\t\tnew-client-proxy')
 
         if args[0] == b'Publish':
             request = self.Request(args[0], args[1], args[2])

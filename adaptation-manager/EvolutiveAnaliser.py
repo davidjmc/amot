@@ -8,5 +8,6 @@ class EvolutiveAnaliser():
     def run(self):
         for comp in self.remote_versions.keys():
             if self.local_versions.get(comp) and self.local_versions[comp] != self.remote_versions[comp]:
+                print(self.local_versions[comp], "<>", self.remote_versions[comp])
                 self.components_to_adapt.append(comp)
         return self

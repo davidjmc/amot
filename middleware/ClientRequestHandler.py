@@ -38,7 +38,7 @@ class ClientRequestHandler(Component):
         response = b''
         try:
             self.socks[addr].sendall(data)
-            print('\t{0} data sent, w8ing response'.format(datetime.now()))
+            # print('\t{0} data sent, w8ing response'.format(datetime.now()))
             while True:
                 part = self.socks[addr].recv(buffer_size)
                 response += part
