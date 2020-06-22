@@ -15,5 +15,5 @@ class EvolutiveMonitor:
             #self.component_library[comp_name] = md5(open('library/' + comp_file, 'rb').read()).hexdigest()
             self.component_library[comp_name] = binascii.hexlify(
                 sha1(open('library/' + comp_file, 'rb').read()
-                    ).digest())
+                    ).digest()).decode('ascii')
         return self

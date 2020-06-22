@@ -12,7 +12,7 @@ class AdaptationManager(Component):
         # REQUEST DECODE
         request = args[0]
         adaptation_type = request.topic
-        message = request.message.decode('utf-8')
+        message = request.message.decode('ascii')
 
         thing_id, components_hashes_str = message.split(' ')
 

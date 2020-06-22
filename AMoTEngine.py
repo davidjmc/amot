@@ -158,9 +158,7 @@ class AdaptationAgent(Component):
         adaptation = self.engine.adaptability['kind']
         comp_hashes = b','.join(
             [
-                bytes('{0}:{1}'.format(
-                    comp, self.engine.components_hashes[comp]
-                ), 'utf-8') for comp in self.engine.components_hashes.keys()
+                bytes('{0}:'.format(comp), 'ascii') + self.engine.components_hashes[comp] for comp in self.engine.components_hashes.keys()
             ]
         )
         thing_data = self.engine.thing_id + b' ' + comp_hashes
