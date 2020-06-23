@@ -176,7 +176,7 @@ class AdaptationAgent(Component):
         for comp_content in files:
             compname, content = comp_content.split('\x1d') # GROUP SEPARATOR (29)
             self.adaptComponent(compname, content)
-        self.engine.load_components()
+        # self.engine.load_components()
 
     def adaptComponent(self, component, data):
         print('adapting {0}'.format(component))
@@ -191,6 +191,14 @@ class AdaptationAgent(Component):
         del sys.modules[file]
         module = __import__(file)
         sys.modules[file] = module
+        file_hash = binascii.hexlify(sha1(
+                open('{0}.py'.format(file),'rb').read()
+                ).digest())
+
+        self.engine.components_hashes[file] = file_hash
+        component_instance = getattr(__import__(file), file)
+        self.engine.current_components[file] = component_instance().set_engine(self)
+
 
 
 
