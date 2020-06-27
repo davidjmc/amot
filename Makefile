@@ -11,6 +11,8 @@ server:
 	cp middleware/Requestor.py generated/amot-server/
 	cp middleware/ClientRequestHandler.py generated/amot-server/
 	cp middleware/ClientProxy.py generated/amot-server/
+	cp middleware/QueueProxy.py generated/amot-server/
+	cp middleware/Marshaller.py generated/amot-server/
 
 adaptation_manager:
 	mkdir -p generated/amot-adaptation-manager
@@ -41,6 +43,8 @@ publisher:
 	cp middleware/ClientRequestHandler.py generated/amot-publisher/
 	cp middleware/ClientProxy.py generated/amot-publisher/
 	cp middleware/examples/publisherApp.py generated/amot-publisher/Client.py
+	cp middleware/QueueProxy.py generated/amot-publisher/
+	cp middleware/Marshaller.py generated/amot-publisher/
 
 subscriber:
 	mkdir -p generated/amot-subscriber

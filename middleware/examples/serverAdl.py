@@ -1,5 +1,6 @@
 Components = {
     'ServerRequestHandler': 'ServerRequestHandler',
+    'Marshaller': 'Marshaller',
     'Invoker': 'Invoker',
     'QueueServer': 'QueueServer',
 
@@ -9,8 +10,8 @@ Components = {
 }
 
 Attachments = {
-    'ServerRequestHandler': 'Invoker',
-    'Invoker': 'QueueServer',
+    'ServerRequestHandler': 'Marshaller',
+    'Marshaller': 'QueueServer',
 
     'QueueServer': 'ClientProxy',
     'ClientProxy': 'Requestor',

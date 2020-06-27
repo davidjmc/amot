@@ -1,4 +1,4 @@
-from AMoTEngine import Component
+from AMoTEngine import Component, Message
 
 class Invoker(Component):
     def _init_(self):
@@ -12,16 +12,16 @@ class Invoker(Component):
 
         if b'Publish' in package:
             invocation = package.split(b' ', 2)
-            request = self.Request(invocation[0], invocation[1], invocation[2])
+            request = Message(invocation[0], invocation[1], invocation[2])
         elif b'Subscribe' in package:
             invocation = package.split(b' ', 2)
-            request = self.Request(invocation[0], invocation[1], invocation[2])
+            request = Message(invocation[0], invocation[1], invocation[2])
         elif b'Notify' in package:
             invocation = package.split(b' ', 2)
-            request = self.Request(invocation[0], invocation[1], invocation[2])
+            request = Message(invocation[0], invocation[1], invocation[2])
         elif b'Adapt' in package:
             invocation = package.split(b' ', 2)
-            request = self.Request(invocation[0], invocation[1], invocation[2])
+            request = Message(invocation[0], invocation[1], invocation[2])
         else:
             print('Notification engine :: Operation is not implemented by AMoT Engine')
 

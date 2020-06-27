@@ -2,7 +2,7 @@ import pickle
 import socket
 from collections import deque
 
-from AMoTEngine import Component
+from AMoTEngine import Component, Message
 
 
 class QueueServer(Component):
@@ -18,10 +18,10 @@ class QueueServer(Component):
         self.notify_consumer = NotificationConsumer()
 
     def run(self, *args):
-        request = args[0]
-        operation = request.op
-        topic = request.topic
-        message = request.message
+        message = args[0]
+        operation = message.op
+        topic = message.topic
+        message = message.message
 
         if operation == b'Publish':
             self.publish(topic, message)
@@ -34,8 +34,8 @@ class QueueServer(Component):
             self.external().run(invocation)
         else:
             print(
-                'Notification engine :: Operation ' + 
-                str(args[0]['Operation']) + 
+                'Notification engine :: Operation ' +
+                str(args[0]['Operation']) +
                 'is not implemented by AMoT Engine'
             )
 

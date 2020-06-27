@@ -20,4 +20,4 @@ class Requestor(Component):
             'Payload': self.pkg
         }
 
-        return self.external().run(package)
+        return self.external().run(self.pkg, args[1], args[2])

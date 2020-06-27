@@ -102,16 +102,21 @@ class AMoTEngine:
         # machine.reset()
 
 
-class Component:
+class Message(object):
+    def __init__(self, operation, topic, message, subscriber_addr = None):
+        self.op = operation
+        self.topic = topic
+        self.subscriber_addr = subscriber_addr
+        self.message = message
 
+    def __str__(self):
+        return '\n'.join([str(self.op), str(self.topic), str(self.subscriber_addr), str(self.message)])
+
+
+class Component:
     def __init__(self):
         self.engine = None
 
-    class Request(object):
-        def __init__(self,  operation, topic, message):
-            self.op = operation
-            self.topic = topic
-            self.message = message
 
     def set_engine(self, engine):
         self.engine = engine

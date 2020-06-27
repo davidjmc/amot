@@ -12,11 +12,10 @@ class ClientRequestHandler(Component):
         self.socks = {}
 
     def run(self, *args):
-        package = args[0]
-        data = package['Payload']
+        data = args[0]
+        server = args[1]
+        port = args[2]
 
-        server = package['Destination']
-        port = package['DPort']
         addr = socket.getaddrinfo(server, port)[0][-1]
 
         if self.socks.get(addr) is None:
