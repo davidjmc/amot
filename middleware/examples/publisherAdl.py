@@ -4,14 +4,17 @@ Components = {
     # 'ClientProxy': 'ClientProxy',
     # 'Requestor': 'Requestor',
     'Marshaller': 'Marshaller',
-    'ClientRequestHandler': 'ClientRequestHandler'
+    'ClientRequestHandler': 'ClientRequestHandler',
+    'AdaptationProxy': 'AdaptationProxy'
 }
 
 Attachments = {
     'Client': 'QueueProxy',
     'QueueProxy': 'Marshaller',
-    'Marshaller': 'ClientRequestHandler'
-    # 'AdaptationAgent': 'ClientProxy'
+    'Marshaller': 'ClientRequestHandler',
+
+    'Executor': 'AdaptationProxy',
+    'AdaptationProxy': 'Marshaller'
 }
 
 
@@ -27,6 +30,6 @@ Starter = {
 }
 
 Adaptability = {
-    # 'kind': b'Evolutive'
-    'kind': None
+    'kind': b'Evolutive'
+    # 'kind': None
 }

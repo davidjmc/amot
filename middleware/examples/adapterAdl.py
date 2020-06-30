@@ -1,20 +1,12 @@
 Components = {
     'ServerRequestHandler': 'ServerRequestHandler',
-    'Invoker': 'Invoker',
-    'AdaptationManager': 'AdaptationManager',
-
-    'ClientProxy': 'ClientProxy',
-    'Requestor': 'Requestor',
-    'ClientRequestHandler': 'ClientRequestHandler'
+    'Marshaller': 'Marshaller',
+    'AdaptationEngine': 'AdaptationEngine',
 }
 
 Attachments = {
-    'ServerRequestHandler': 'Invoker',
-    'Invoker': 'AdaptationManager',
-
-    'AdaptationManager': 'ClientProxy',
-    'ClientProxy': 'Requestor',
-    'Requestor': 'ClientRequestHandler'
+    'ServerRequestHandler': 'Marshaller',
+    'Marshaller': 'AdaptationEngine'
 }
 
 SubscriberConfigs = { }

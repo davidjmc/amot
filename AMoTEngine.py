@@ -19,7 +19,7 @@ class AMoTEngine:
         self.thing_id = None
         self.last_adaptation = 0
         self.subscriber = None
-        self.adaptation_agent = AdaptationAgent()
+        self.adaptation_executor = Executor()
 
         self.current_components = {}
 
@@ -88,7 +88,7 @@ class AMoTEngine:
                     self.adaptability['kind'] is not None) and (
                     (time.time() - self.last_adaptation) >
                     self.adaptation_configs['timeout']):
-                    self.adaptation_agent.set_engine(self).run()
+                    self.adaptation_executor.set_engine(self).run()
                     self.last_adaptation = time.time()
 
             except OSError as e:
@@ -142,10 +142,10 @@ class Component:
         return self.external().run(b'Notify', topic, message, ip, port)
 
     def adapt(self, adaptability, message, ip, port):
-        return self.external().run(b'Adapt', adaptability, message, ip, port)
+        return self.external().run(adaptability, message, ip, port)
 
 
-class AdaptationAgent(Component):
+class Executor(Component):
     def __init__(self):
         super().__init__()
 
@@ -153,12 +153,17 @@ class AdaptationAgent(Component):
         has_adaptation = None
 
         adaptation = self.engine.adaptability['kind']
-        comp_hashes = b','.join(
-            [
-                bytes('{0}:'.format(comp), 'ascii') + self.engine.components_hashes[comp] for comp in self.engine.components_hashes.keys()
-            ]
-        )
-        thing_data = self.engine.thing_id + b' ' + comp_hashes
+        thing_data = None
+        if adaptation == b'Evolutive':
+            comp_hashes = b','.join(
+                [
+                    bytes('{0}:'.format(comp), 'ascii') + self.engine.components_hashes[comp] for comp in self.engine.components_hashes.keys()
+                ]
+            )
+            thing_data = self.engine.thing_id + b' ' + comp_hashes
+
+        if thing_data is None:
+            return
 
         data = self.adapt(
             adaptation, thing_data, self.engine.adaptation_configs['host'],
@@ -173,10 +178,9 @@ class AdaptationAgent(Component):
         for comp_content in files:
             compname, content = comp_content.split('\x1d') # GROUP SEPARATOR (29)
             self.adaptComponent(compname, content)
-        self.engine.load_components()
 
     def adaptComponent(self, component, data):
-        print('adapting {0}'.format(component))
+        print('===== adapting {0} ====='.format(component))
         file = component + '.py'
         wr = open(file, 'w')
         wr.write(data)
@@ -188,6 +192,14 @@ class AdaptationAgent(Component):
         del sys.modules[file]
         module = __import__(file)
         sys.modules[file] = module
+        file_hash = binascii.hexlify(sha1(
+                open('{0}.py'.format(file),'rb').read()
+            ).digest())
+        self.engine.components_hashes[file] = file_hash
+        component_instance = getattr(__import__(file), file)
+        self.engine.current_components[file] = component_instance().set_engine(self)
+
+
 
 
 

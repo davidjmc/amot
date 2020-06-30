@@ -25,17 +25,18 @@ adaptation_manager:
 	cp middleware/examples/adapterAdl.py generated/amot-adaptation-manager/adl.py
 	cp middleware/examples/adapterConfig.py generated/amot-adaptation-manager/config.py
 	cp AMoTEngine.py generated/amot-adaptation-manager/
-	cp adaptation-manager/AdaptationManager.py generated/amot-adaptation-manager/
+	cp adaptation-manager/AdaptationEngine.py generated/amot-adaptation-manager/
 	cp adaptation-manager/EvolutiveAdapter.py generated/amot-adaptation-manager/
 	cp adaptation-manager/EvolutiveMonitor.py generated/amot-adaptation-manager/
 	cp adaptation-manager/EvolutiveAnaliser.py generated/amot-adaptation-manager/
 	cp adaptation-manager/EvolutiveExecutor.py generated/amot-adaptation-manager/
 	cp -R adaptation-manager/library generated/amot-adaptation-manager/
-	cp middleware/Invoker.py generated/amot-adaptation-manager/
+# 	cp middleware/Invoker.py generated/amot-adaptation-manager/
 	cp middleware/ServerRequestHandler.py generated/amot-adaptation-manager/
-	cp middleware/Requestor.py generated/amot-adaptation-manager/
-	cp middleware/ClientRequestHandler.py generated/amot-adaptation-manager/
-	cp middleware/ClientProxy.py generated/amot-adaptation-manager/
+	cp middleware/Marshaller.py generated/amot-adaptation-manager/
+# 	cp middleware/Requestor.py generated/amot-adaptation-manager/
+# 	cp middleware/ClientRequestHandler.py generated/amot-adaptation-manager/
+# 	cp middleware/ClientProxy.py generated/amot-adaptation-manager/
 
 publisher:
 	mkdir -p generated/amot-publisher
@@ -50,6 +51,7 @@ publisher:
 	cp middleware/examples/publisherApp.py generated/amot-publisher/Client.py
 	cp middleware/QueueProxy.py generated/amot-publisher/
 	cp middleware/Marshaller.py generated/amot-publisher/
+	cp middleware/AdaptationProxy.py generated/amot-publisher/
 
 subscriber:
 	mkdir -p generated/amot-subscriber
