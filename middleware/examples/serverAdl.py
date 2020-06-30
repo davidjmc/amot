@@ -5,17 +5,21 @@ Components = {
     'QueueServer': 'QueueServer',
 
     'ClientProxy': 'ClientProxy',
-    'Requestor': 'Requestor',
+    'Marshaller': 'Marshaller',
+    'Unmarshaller': 'Unmarshaller',
     'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {
-    'ServerRequestHandler': 'Marshaller',
-    'Marshaller': 'QueueServer',
+    'ServerRequestHandler': 'Unmarshaller',
+    'Unmarshaller': 'QueueServer',
 
     'QueueServer': 'ClientProxy',
-    'ClientProxy': 'Requestor',
-    'Requestor': 'ClientRequestHandler'
+    'ClientProxy': 'Marshaller',
+    'Marshaller': 'ClientRequestHandler'
+
+    # 'ServerRequestHandler->Marshaller->QueueServer',
+    # 'QueueServer->ClientProxy->Marshaller->ClientRequestHandler'
 }
 
 Roles = {

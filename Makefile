@@ -13,6 +13,7 @@ server:
 	cp middleware/ClientProxy.py generated/amot-server/
 	cp middleware/QueueProxy.py generated/amot-server/
 	cp middleware/Marshaller.py generated/amot-server/
+	cp middleware/Unmarshaller.py generated/amot-server/
 
 adaptation_manager:
 	mkdir -p generated/amot-adaptation-manager
@@ -61,6 +62,7 @@ subscriber:
 	cp middleware/examples/subscriberApp.py generated/amot-subscriber/App.py
 	cp middleware/QueueProxy.py generated/amot-subscriber/
 	cp middleware/Marshaller.py generated/amot-subscriber/
+	cp middleware/Unmarshaller.py generated/amot-subscriber/
 	cp middleware/Notifier.py generated/amot-subscriber/
 
 publisher_subscriber:

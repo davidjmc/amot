@@ -7,15 +7,16 @@ Components = {
     #'ClientProxy': 'ClientProxy',
     'QueueProxy': 'QueueProxy',
     'Marshaller': 'Marshaller',
+    'Unmarshaller': 'Unmarshaller',
     #'Requestor': 'Requestor',
     'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {
     #'ServerRequestHandler': 'Invoker',
-    'ServerRequestHandler': 'Marshaller',
+    'ServerRequestHandler': 'Unmarshaller',
     #'Invoker': 'App',
-    'Marshaller': 'Notifier',
+    'Unmarshaller': 'Notifier',
     'Notifier': 'App',
 
     #'AMoTSubscriber': 'ClientProxy',
