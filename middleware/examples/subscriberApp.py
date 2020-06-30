@@ -7,7 +7,7 @@ class App(Component):
         super().__init__()
         self.count = 0
 
-    def run(self, *args):
-        package = args[0]
-        print(datetime.now(), package.topic, package.message)
+    def run(self, topic, message):
+        print('Recebido: "{0}" em "{1}"'.format(message, topic))
+        # print(datetime.now(), package.topic, package.message)
         pass

@@ -64,6 +64,7 @@ subscriber:
 	cp middleware/Marshaller.py generated/amot-subscriber/
 	cp middleware/Unmarshaller.py generated/amot-subscriber/
 	cp middleware/Notifier.py generated/amot-subscriber/
+	cp middleware/Subscriptor.py generated/amot-subscriber/
 
 publisher_subscriber:
 	mkdir -p generated/amot-publisher-subscriber

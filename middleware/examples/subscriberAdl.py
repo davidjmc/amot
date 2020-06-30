@@ -1,5 +1,6 @@
 Components = {
     'App': 'App',
+    'Subscriptor': 'Subscriptor',
     'ServerRequestHandler': 'ServerRequestHandler',
     #'Invoker': 'Invoker',
     'Notifier': 'Notifier',
@@ -18,13 +19,15 @@ Attachments = {
     #'Invoker': 'App',
     'Unmarshaller': 'Notifier',
     'Notifier': 'App',
+    #'ServerRequestHandler->Marshaller->Notifier->App',
 
     #'AMoTSubscriber': 'ClientProxy',
-    'AMoTSubscriber': 'QueueProxy',
+    'Subscriptor': 'QueueProxy',
     #'ClientProxy': 'Requestor',
     'QueueProxy': 'Marshaller',
     #'Requestor': 'ClientRequestHandler'
     'Marshaller': 'ClientRequestHandler'
+    #'Subscriptor->QueueProxy->Marshaller->ClientRequestHandler'
 }
 
 Roles = {

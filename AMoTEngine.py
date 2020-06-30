@@ -18,7 +18,7 @@ class AMoTEngine:
         self.adaptability = None
         self.thing_id = None
         self.last_adaptation = 0
-        self.subscriber = AMoTSubscriber()
+        self.subscriber = None
         self.adaptation_agent = AdaptationAgent()
 
         self.current_components = {}
@@ -60,6 +60,7 @@ class AMoTEngine:
     def set_component_configs(self):
         if 'subscriber' in cfg.Component:
             self.listen_configs = self.subscriber_configs
+            self.subscriber = self.current_components['Subscriptor']
             self.subscriber.set_engine(self).run()
 
     def run(self):
@@ -142,15 +143,6 @@ class Component:
 
     def adapt(self, adaptability, message, ip, port):
         return self.external().run(b'Adapt', adaptability, message, ip, port)
-
-
-class AMoTSubscriber(Component):
-    def __init__(self):
-        super().__init__()
-
-    def run(self):
-        for topic in self.engine.subscriber_configs['topics']:
-            self.subscribe(topic)
 
 
 class AdaptationAgent(Component):
