@@ -5,12 +5,16 @@ server:
 	cp middleware/examples/serverConfig.py generated/amot-server/config.py
 	cp AMoTEngine.py generated/amot-server/
 	cp pickle.py generated/amot-server/
-	cp queue-server/QueueServer.py generated/amot-server/
-	cp middleware/Invoker.py generated/amot-server/
+# 	cp queue-server/QueueServer.py generated/amot-server/
+	cp queue-server/NotificationConsumer.py generated/amot-server/
+	cp queue-server/NotificationEngine.py generated/amot-server/
+	cp queue-server/SubscriptionManager.py generated/amot-server/
+	cp queue-server/NotifierProxy.py generated/amot-server/
+# 	cp middleware/Invoker.py generated/amot-server/
 	cp middleware/ServerRequestHandler.py generated/amot-server/
-	cp middleware/Requestor.py generated/amot-server/
+# 	cp middleware/Requestor.py generated/amot-server/
 	cp middleware/ClientRequestHandler.py generated/amot-server/
-	cp middleware/ClientProxy.py generated/amot-server/
+# 	cp middleware/ClientProxy.py generated/amot-server/
 	cp middleware/QueueProxy.py generated/amot-server/
 	cp middleware/Marshaller.py generated/amot-server/
 	cp middleware/Unmarshaller.py generated/amot-server/

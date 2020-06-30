@@ -1,10 +1,8 @@
 Components = {
     'ServerRequestHandler': 'ServerRequestHandler',
-    'Marshaller': 'Marshaller',
-    'Invoker': 'Invoker',
-    'QueueServer': 'QueueServer',
-
-    'ClientProxy': 'ClientProxy',
+    'NotifierProxy': 'NotifierProxy',
+    'NotificationEngine': 'NotificationEngine',
+    'NotificationConsumer': 'NotificationConsumer',
     'Marshaller': 'Marshaller',
     'Unmarshaller': 'Unmarshaller',
     'ClientRequestHandler': 'ClientRequestHandler'
@@ -12,10 +10,10 @@ Components = {
 
 Attachments = {
     'ServerRequestHandler': 'Unmarshaller',
-    'Unmarshaller': 'QueueServer',
-
-    'QueueServer': 'ClientProxy',
-    'ClientProxy': 'Marshaller',
+    'Unmarshaller': 'NotificationEngine',
+    'NotificationEngine': 'NotificationConsumer',
+    'NotificationConsumer': 'NotifierProxy',
+    'NotifierProxy': 'Marshaller',
     'Marshaller': 'ClientRequestHandler'
 
     # 'ServerRequestHandler->Marshaller->QueueServer',
