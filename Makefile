@@ -59,6 +59,9 @@ subscriber:
 	cp middleware/ClientRequestHandler.py generated/amot-subscriber/
 	cp middleware/ClientProxy.py generated/amot-subscriber/
 	cp middleware/examples/subscriberApp.py generated/amot-subscriber/App.py
+	cp middleware/QueueProxy.py generated/amot-subscriber/
+	cp middleware/Marshaller.py generated/amot-subscriber/
+	cp middleware/Notifier.py generated/amot-subscriber/
 
 publisher_subscriber:
 	mkdir -p generated/amot-publisher-subscriber

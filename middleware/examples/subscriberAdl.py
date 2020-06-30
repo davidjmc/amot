@@ -1,20 +1,29 @@
 Components = {
     'App': 'App',
     'ServerRequestHandler': 'ServerRequestHandler',
-    'Invoker': 'Invoker',
+    #'Invoker': 'Invoker',
+    'Notifier': 'Notifier',
 
-    'ClientProxy': 'ClientProxy',
-    'Requestor': 'Requestor',
+    #'ClientProxy': 'ClientProxy',
+    'QueueProxy': 'QueueProxy',
+    'Marshaller': 'Marshaller',
+    #'Requestor': 'Requestor',
     'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {
-    'ServerRequestHandler': 'Invoker',
-    'Invoker': 'App',
+    #'ServerRequestHandler': 'Invoker',
+    'ServerRequestHandler': 'Marshaller',
+    #'Invoker': 'App',
+    'Marshaller': 'Notifier',
+    'Notifier': 'App',
 
-    'AMoTSubscriber': 'ClientProxy',
-    'ClientProxy': 'Requestor',
-    'Requestor': 'ClientRequestHandler'
+    #'AMoTSubscriber': 'ClientProxy',
+    'AMoTSubscriber': 'QueueProxy',
+    #'ClientProxy': 'Requestor',
+    'QueueProxy': 'Marshaller',
+    #'Requestor': 'ClientRequestHandler'
+    'Marshaller': 'ClientRequestHandler'
 }
 
 Roles = {

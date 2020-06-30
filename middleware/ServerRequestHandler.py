@@ -64,6 +64,7 @@ class ServerRequestHandler(Component):
 
                 if data:
                     self.message = data
+                    print(self.message, 'aqui!!')
                     response = self.external().run(self.message)
                     if not response:
                         response = b'0'

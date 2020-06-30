@@ -29,6 +29,7 @@ class Marshaller(Component):
         return serialized
 
     def unserialize(self, data):
+        print(data, 'aqui!!!!')
         attrs = {
             b'Op': None,
             b'Topic': None,

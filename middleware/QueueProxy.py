@@ -15,7 +15,7 @@ class QueueProxy(Component):
             message = Message(args[0], args[1], args[2])
         elif args[0] == b'Subscribe':
             ip_port = self.engine.subscriber_configs['host'] + b' ' + self.engine.subscriber_configs['port']
-            message = Message(args[0], args[1], None, ip_port)
+            message = Message(args[0], args[1], ip_port, None)
         elif args[0] == b'Unsubscribe':
             #TODO
             pass
