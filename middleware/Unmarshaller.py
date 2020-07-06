@@ -5,30 +5,7 @@ class Unmarshaller(Component):
         super().__init__()
 
     def run(self, *args):
-        message = args[0]
-        ip = None
-        port = None
-        if len(args) > 1:
-            ip, port = args[1:3]
-        if type(message) == bytes: # i.e., it is a serialize operation (is it?) #TODO
-            message_obj = self.unserialize(message)
-            return self.external().run(message_obj)
-        elif type(message) == Message:
-            serialized = self.serialize(message)
-            return self.external().run(serialized, ip, port)
-
-
-    def serialize(self, message_obj):
-        serialized = b'Op:' + message_obj.op + b'\n'
-        serialized += b'Topic:' + message_obj.topic + b'\n'
-        if message_obj.subscriber_addr is not None:
-            serialized += b'Addr:' + message_obj.subscriber_addr + b'\n'
-
-        serialized += b'\n'
-        serialized += message_obj.message
-        return serialized
-
-    def unserialize(self, data):
+        data = args[0]
         print(data, 'aqui!!!!')
         attrs = {
             b'Op': None,
@@ -77,4 +54,4 @@ class Unmarshaller(Component):
             attrs[b'message'],
             attrs[b'Subscriber_addr']
         )
-        return message_obj
+        return self.external().run(message_obj)
