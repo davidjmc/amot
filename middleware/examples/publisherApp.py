@@ -2,6 +2,7 @@ import time
 import random as r
 
 from AMoTEngine import Component
+from datetime import datetime
 
 topic = b'temperature'
 
@@ -18,6 +19,7 @@ class Client(Component):
         temp, hum = self.temp_hum_sensor()
         msg = b'Temperature: %b and Humidity: %b' % (temp, hum)
         print(self.count, msg)
+        print(':::T0:::', datetime.now().timestamp())
         self.publish(topic, msg)
         self.count += 1
         time.sleep(1)

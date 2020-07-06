@@ -1,6 +1,7 @@
 import socket, select
 
 from AMoTEngine import Component
+from datetime import datetime
 
 
 class ServerRequestHandler(Component):
@@ -50,6 +51,7 @@ class ServerRequestHandler(Component):
                 except OSError as e:
                     print('Error when receiving data on the ServerRequestHandler: ', e)
             elif s:
+                print(':::T0:::', datetime.now().timestamp())
                 buffer_size = 536
                 data = b''
                 try:

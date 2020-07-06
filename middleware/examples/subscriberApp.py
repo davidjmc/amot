@@ -8,6 +8,7 @@ class App(Component):
         self.count = 0
 
     def run(self, topic, message):
+        print(':::T1:::', datetime.now().timestamp())
         print('Recebido: "{0}" em "{1}"'.format(message, topic))
         # print(datetime.now(), package.topic, package.message)
         pass
