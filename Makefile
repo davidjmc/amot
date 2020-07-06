@@ -33,7 +33,7 @@ adaptation_manager:
 	cp -R adaptation-manager/library generated/amot-adaptation-manager/
 # 	cp middleware/Invoker.py generated/amot-adaptation-manager/
 	cp middleware/ServerRequestHandler.py generated/amot-adaptation-manager/
-	cp middleware/Marshaller.py generated/amot-adaptation-manager/
+	cp middleware/Unmarshaller.py generated/amot-adaptation-manager/
 # 	cp middleware/Requestor.py generated/amot-adaptation-manager/
 # 	cp middleware/ClientRequestHandler.py generated/amot-adaptation-manager/
 # 	cp middleware/ClientProxy.py generated/amot-adaptation-manager/

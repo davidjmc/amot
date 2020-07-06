@@ -1,12 +1,12 @@
 Components = {
     'ServerRequestHandler': 'ServerRequestHandler',
-    'Marshaller': 'Marshaller',
+    'Unmarshaller': 'Unmarshaller',
     'AdaptationEngine': 'AdaptationEngine',
 }
 
 Attachments = {
-    'ServerRequestHandler': 'Marshaller',
-    'Marshaller': 'AdaptationEngine'
+    'ServerRequestHandler': 'Unmarshaller',
+    'Unmarshaller': 'AdaptationEngine'
 }
 
 SubscriberConfigs = { }
