@@ -1,5 +1,4 @@
 import time
-import sys
 from hashlib import sha1
 from hashlib import md5
 import binascii
@@ -7,6 +6,8 @@ import binascii
 
 import config as cfg
 import adl as adl
+
+from Executor import Executor
 
 
 class AMoTEngine:
@@ -112,96 +113,6 @@ class Message(object):
 
     def __str__(self):
         return '\n'.join([str(self.op), str(self.topic), str(self.subscriber_addr), str(self.message)])
-
-
-class Component:
-    def __init__(self):
-        self.engine = None
-
-
-    def set_engine(self, engine):
-        self.engine = engine
-        return self
-
-    def get_engine(self):
-        return self.engine
-
-    def run(self, *args):
-        pass
-
-    def external(self):
-        return self.engine.attached(self)
-
-    def publish(self, topic, message):
-        self.external().run(b'Publish', topic, message)
-
-    def subscribe(self, topic):
-        self.external().run(b'Subscribe', topic)
-
-    def notify(self, topic, message, ip, port):
-        return self.external().run(b'Notify', topic, message, ip, port)
-
-    def adapt(self, adaptability, message, ip, port):
-        return self.external().run(adaptability, message, ip, port)
-
-
-class Executor(Component):
-    def __init__(self):
-        super().__init__()
-
-    def run(self):
-        has_adaptation = None
-
-        adaptation = self.engine.adaptability['kind']
-        thing_data = None
-        if adaptation == b'Evolutive':
-            comp_hashes = b','.join(
-                [
-                    bytes('{0}:'.format(comp), 'ascii') + self.engine.components_hashes[comp] for comp in self.engine.components_hashes.keys()
-                ]
-            )
-            thing_data = self.engine.thing_id + b' ' + comp_hashes
-
-        if thing_data is None:
-            return
-
-        data = self.adapt(
-            adaptation, thing_data, self.engine.adaptation_configs['host'],
-            self.engine.adaptation_configs['port'])
-
-
-        if not data or type(data) is not bytes:
-            return
-
-        data = str(data, 'utf-8')
-        files = data.split('\x1c') # FILE SEPARATOR (28)
-        for comp_content in files:
-            compname, content = comp_content.split('\x1d') # GROUP SEPARATOR (29)
-            self.adaptComponent(compname, content)
-
-    def adaptComponent(self, component, data):
-        print('===== adapting {0} ====='.format(component))
-        file = component + '.py'
-        wr = open(file, 'w')
-        wr.write(data)
-        wr.close()
-        self.reloadComponent(component)
-
-    # https://stackoverflow.com/questions/30379893/replacing-an-imported-module-dependency
-    def reloadComponent(self, file):
-        del sys.modules[file]
-        module = __import__(file)
-        sys.modules[file] = module
-        file_hash = binascii.hexlify(sha1(
-                open('{0}.py'.format(file),'rb').read()
-            ).digest())
-        self.engine.components_hashes[file] = file_hash
-        component_instance = getattr(__import__(file), file)
-        self.engine.current_components[file] = component_instance().set_engine(self)
-
-
-
-
 
 if __name__ == '__main__':
     AMoTEngine().run()

@@ -2,7 +2,8 @@ import pickle
 import socket
 from collections import deque
 
-from AMoTEngine import Component, Message
+from Component import Component
+from AMoTEngine import Message
 
 
 class QueueServer(Component):

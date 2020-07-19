@@ -1,5 +1,5 @@
 
-from AMoTEngine import Component
+from Component import Component
 
 topic_pub = 'Hello'
 topic_sub = 'Hello'

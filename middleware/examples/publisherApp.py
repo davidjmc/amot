@@ -1,7 +1,7 @@
 import time
 import random as r
 
-from AMoTEngine import Component
+from Component import Component
 from datetime import datetime
 
 topic = b'temperature'

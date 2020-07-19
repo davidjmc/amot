@@ -1,4 +1,5 @@
-from AMoTEngine import Component, Message
+from Component import Component
+from AMoTEngine import Message
 
 class Unmarshaller(Component):
     def __init__(self):

@@ -1,4 +1,4 @@
-from AMoTEngine import Component
+from Component import Component
 
 
 class Requestor(Component):

@@ -2,7 +2,7 @@ import socket
 
 from datetime import datetime
 
-from AMoTEngine import Component
+from Component import Component
 
 
 class ClientRequestHandler(Component):

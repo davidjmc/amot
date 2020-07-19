@@ -1,6 +1,6 @@
 import socket, select
 
-from AMoTEngine import Component
+from Component import Component
 from datetime import datetime
 
 

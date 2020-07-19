@@ -4,16 +4,14 @@ server:
 	cp middleware/examples/serverAdl.py generated/amot-server/adl.py
 	cp middleware/examples/serverConfig.py generated/amot-server/config.py
 	cp AMoTEngine.py generated/amot-server/
-# 	cp queue-server/QueueServer.py generated/amot-server/
+	cp Executor.py generated/amot-server/
+	cp Component.py generated/amot-server/
 	cp queue-server/NotificationConsumer.py generated/amot-server/
 	cp queue-server/NotificationEngine.py generated/amot-server/
 	cp queue-server/SubscriptionManager.py generated/amot-server/
 	cp queue-server/NotifierProxy.py generated/amot-server/
-# 	cp middleware/Invoker.py generated/amot-server/
 	cp middleware/ServerRequestHandler.py generated/amot-server/
-# 	cp middleware/Requestor.py generated/amot-server/
 	cp middleware/ClientRequestHandler.py generated/amot-server/
-# 	cp middleware/ClientProxy.py generated/amot-server/
 	cp middleware/QueueProxy.py generated/amot-server/
 	cp middleware/Marshaller.py generated/amot-server/
 	cp middleware/Unmarshaller.py generated/amot-server/
@@ -24,6 +22,8 @@ adaptation_manager:
 	cp middleware/examples/adapterAdl.py generated/amot-adaptation-manager/adl.py
 	cp middleware/examples/adapterConfig.py generated/amot-adaptation-manager/config.py
 	cp AMoTEngine.py generated/amot-adaptation-manager/
+	cp Executor.py generated/amot-adaptation-manager/
+	cp Component.py generated/amot-adaptation-manager/
 	cp adaptation-manager/AdaptationEngine.py generated/amot-adaptation-manager/
 	cp adaptation-manager/EvolutiveAdapter.py generated/amot-adaptation-manager/
 	cp adaptation-manager/EvolutiveMonitor.py generated/amot-adaptation-manager/
@@ -43,6 +43,8 @@ publisher:
 	cp middleware/examples/publisherAdl.py generated/amot-publisher/adl.py
 	cp middleware/examples/publisherConfig.py generated/amot-publisher/config.py
 	cp AMoTEngine.py generated/amot-publisher/
+	cp Executor.py generated/amot-publisher/
+	cp Component.py generated/amot-publisher/
 	cp middleware/Requestor.py generated/amot-publisher/
 	cp middleware/ClientRequestHandler.py generated/amot-publisher/
 	cp middleware/ClientProxy.py generated/amot-publisher/
@@ -57,6 +59,8 @@ subscriber:
 	cp middleware/examples/subscriberAdl.py generated/amot-subscriber/adl.py
 	cp middleware/examples/subscriberConfig.py generated/amot-subscriber/config.py
 	cp AMoTEngine.py generated/amot-subscriber/
+	cp Executor.py generated/amot-subscriber/
+	cp Component.py generated/amot-subscriber/
 	cp middleware/Invoker.py generated/amot-subscriber/
 	cp middleware/ServerRequestHandler.py generated/amot-subscriber/
 	cp middleware/Requestor.py generated/amot-subscriber/
@@ -74,6 +78,8 @@ publisher_subscriber:
 	rm -rf generated/amot-publisher-subscriber/*
 	cp middleware/examples/publisherSubscriberAdl.py generated/amot-publisher-subscriber/adl.py
 	cp AMoTEngine.py generated/amot-publisher-subscriber/
+	cp Executor.py generated/amot-publisher-subscriber/
+	cp Component.py generated/amot-publisher-subscriber/
 	cp config.py generated/amot-publisher-subscriber/
 	cp middleware/Invoker.py generated/amot-publisher-subscriber/
 	cp middleware/ServerRequestHandler.py generated/amot-publisher-subscriber/
