@@ -51,7 +51,7 @@ class Executor(Component):
         module = __import__(file)
         sys.modules[file] = module
         self.engine.components_versions[file] = version
-        fp = open('versions.data', 'w')
+        fp = open('versions.txt', 'w')
 
         i = 0
         for _file in self.engine.components_versions.keys():

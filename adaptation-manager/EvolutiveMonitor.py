@@ -6,7 +6,7 @@ class EvolutiveMonitor:
         self.component_library = {}
 
     def run(self):
-        versions = open('library/versions.data', 'r').read()
+        versions = open('library/versions.txt', 'r').read()
         comps_versions = [parts.split('#') for parts in versions.split('\n')]
         for (comp, ver) in comps_versions:
             self.component_library[comp] = ver

@@ -43,7 +43,7 @@ class AMoTEngine:
             self.current_components[component] = component_instance().set_engine(self)
 
         # load versions
-        versions = open('versions.data', 'r').read()
+        versions = open('versions.txt', 'r').read()
         comps_versions = [parts.split('#') for parts in versions.split('\n')]
         for (comp, ver) in comps_versions:
             self.components_versions[comp] = ver
