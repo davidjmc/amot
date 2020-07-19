@@ -4,7 +4,6 @@ server:
 	cp middleware/examples/serverAdl.py generated/amot-server/adl.py
 	cp middleware/examples/serverConfig.py generated/amot-server/config.py
 	cp AMoTEngine.py generated/amot-server/
-	cp pickle.py generated/amot-server/
 # 	cp queue-server/QueueServer.py generated/amot-server/
 	cp queue-server/NotificationConsumer.py generated/amot-server/
 	cp queue-server/NotificationEngine.py generated/amot-server/
@@ -44,7 +43,6 @@ publisher:
 	cp middleware/examples/publisherAdl.py generated/amot-publisher/adl.py
 	cp middleware/examples/publisherConfig.py generated/amot-publisher/config.py
 	cp AMoTEngine.py generated/amot-publisher/
-	cp pickle.py generated/amot-publisher/
 	cp middleware/Requestor.py generated/amot-publisher/
 	cp middleware/ClientRequestHandler.py generated/amot-publisher/
 	cp middleware/ClientProxy.py generated/amot-publisher/
@@ -59,7 +57,6 @@ subscriber:
 	cp middleware/examples/subscriberAdl.py generated/amot-subscriber/adl.py
 	cp middleware/examples/subscriberConfig.py generated/amot-subscriber/config.py
 	cp AMoTEngine.py generated/amot-subscriber/
-	cp pickle.py generated/amot-subscriber/
 	cp middleware/Invoker.py generated/amot-subscriber/
 	cp middleware/ServerRequestHandler.py generated/amot-subscriber/
 	cp middleware/Requestor.py generated/amot-subscriber/
@@ -78,7 +75,6 @@ publisher_subscriber:
 	cp middleware/examples/publisherSubscriberAdl.py generated/amot-publisher-subscriber/adl.py
 	cp AMoTEngine.py generated/amot-publisher-subscriber/
 	cp config.py generated/amot-publisher-subscriber/
-	cp pickle.py generated/amot-publisher-subscriber/
 	cp middleware/Invoker.py generated/amot-publisher-subscriber/
 	cp middleware/ServerRequestHandler.py generated/amot-publisher-subscriber/
 	cp middleware/Requestor.py generated/amot-publisher-subscriber/
