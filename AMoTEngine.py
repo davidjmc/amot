@@ -1,7 +1,4 @@
 import time
-from hashlib import sha1
-from hashlib import md5
-import binascii
 
 
 import config as cfg
