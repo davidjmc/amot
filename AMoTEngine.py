@@ -13,7 +13,7 @@ from Executor import Executor
 class AMoTEngine:
     def __init__(self):
         self.components = None
-        self.components_hashes = {}
+        self.components_versions = {}
         self.attachments = None
         self.starter = None
         self.adaptability = None
@@ -39,18 +39,17 @@ class AMoTEngine:
         self.adaptability = adl.Adaptability
 
     def load_components(self):
+        # load components
         for component in self.components:
             component_file = self.components.get(component)
-            # file_hash = md5(
-            #     open('{0}.py'.format(component_file),'rb').read()
-            # ).hexdigest()
-            file_hash = binascii.hexlify(sha1(
-                open('{0}.py'.format(component_file),'rb').read()
-                ).digest())
-
-            self.components_hashes[component_file] = file_hash
             component_instance = getattr(__import__(component_file), component)
             self.current_components[component] = component_instance().set_engine(self)
+
+        # load versions
+        versions = open('versions.data', 'r').read()
+        comps_versions = [parts.split('#') for parts in versions.split('\n')]
+        for (comp, ver) in comps_versions:
+            self.components_versions[comp] = ver
 
     def attached(self, component):
         class_name = component.__class__.__name__
@@ -84,7 +83,6 @@ class AMoTEngine:
                     print('Engine running component ', component)
                     component_instance = self.current_components[component]
                     component_instance.run()
-
                 if (
                     self.adaptability['kind'] is not None) and (
                     (time.time() - self.last_adaptation) >

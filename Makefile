@@ -3,6 +3,7 @@ server:
 	rm -rf generated/amot-server/*
 	cp middleware/examples/serverAdl.py generated/amot-server/adl.py
 	cp middleware/examples/serverConfig.py generated/amot-server/config.py
+	cp middleware/examples/server.versions generated/amot-server/versions.data
 	cp AMoTEngine.py generated/amot-server/
 	cp Executor.py generated/amot-server/
 	cp Component.py generated/amot-server/
@@ -21,6 +22,7 @@ adaptation_manager:
 	rm -rf generated/amot-adaptation-manager/*
 	cp middleware/examples/adapterAdl.py generated/amot-adaptation-manager/adl.py
 	cp middleware/examples/adapterConfig.py generated/amot-adaptation-manager/config.py
+	cp middleware/examples/adapter.versions generated/amot-adaptation-manager/versions.data
 	cp AMoTEngine.py generated/amot-adaptation-manager/
 	cp Executor.py generated/amot-adaptation-manager/
 	cp Component.py generated/amot-adaptation-manager/
@@ -42,6 +44,7 @@ publisher:
 	rm -rf generated/amot-publisher/*
 	cp middleware/examples/publisherAdl.py generated/amot-publisher/adl.py
 	cp middleware/examples/publisherConfig.py generated/amot-publisher/config.py
+	cp middleware/examples/publisher.versions generated/amot-publisher/versions.data
 	cp AMoTEngine.py generated/amot-publisher/
 	cp Executor.py generated/amot-publisher/
 	cp Component.py generated/amot-publisher/
@@ -58,6 +61,7 @@ subscriber:
 	rm -rf generated/amot-subscriber/*
 	cp middleware/examples/subscriberAdl.py generated/amot-subscriber/adl.py
 	cp middleware/examples/subscriberConfig.py generated/amot-subscriber/config.py
+	cp middleware/examples/subscriber.versions generated/amot-subscriber/versions.data
 	cp AMoTEngine.py generated/amot-subscriber/
 	cp Executor.py generated/amot-subscriber/
 	cp Component.py generated/amot-subscriber/

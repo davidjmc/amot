@@ -14,19 +14,19 @@ class AdaptationEngine(Component):
         adaptation_type = message.topic
         message = message.message.decode('ascii')
 
-        thing_id, components_hashes_str = message.split(' ')
+        thing_id, components_versions_str = message.split(' ')
 
-        components_hashes = {}
-        for component_hash in components_hashes_str.split(','):
+        components_versions = {}
+        for component_hash in components_versions_str.split(','):
             _comp, _hash = component_hash.split(':')
-            components_hashes[_comp] = _hash
+            components_versions[_comp] = _hash
 
 
         # ADAPTATION
         components = {}
 
         if adaptation_type == b'Evolutive':
-            components = EvolutiveAdapter(components_hashes).run()
+            components = EvolutiveAdapter(components_versions).run()
             # return b'Entrei no Evolutive!'
         elif adaptation_type == b'Reactive':
             print('Entrei no Reactive')
