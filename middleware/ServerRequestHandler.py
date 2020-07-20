@@ -5,8 +5,9 @@ from datetime import datetime
 
 
 class ServerRequestHandler(Component):
-    def __init__(self):
+    def __init__(self, engine):
         super().__init__()
+        self.engine = engine
         self.server_sock = None
         self.address = None
         self.connection = None

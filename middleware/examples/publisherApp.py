@@ -8,8 +8,9 @@ topic = b'temperature'
 
 
 class Client(Component):
-    def __init__(self):
+    def __init__(self, engine):
         super().__init__()
+        self.engine = engine
         self.count = 0
         # self.sensor = dht.DHT11(machine.Pin(2))
 

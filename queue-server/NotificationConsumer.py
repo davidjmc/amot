@@ -2,8 +2,9 @@ from Component import Component
 from SubscriptionManager import SubscriptionManager
 
 class NotificationConsumer(Component):
-    def __init__(self):
+    def __init__(self, engine):
         super().__init__()
+        self.engine = engine
 
     def run(self, topic, message, storage):
         subscribers = storage.filter_subscribers(topic)

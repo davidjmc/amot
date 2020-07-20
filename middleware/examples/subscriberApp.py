@@ -3,8 +3,9 @@ from datetime import datetime
 
 
 class App(Component):
-    def __init__(self):
+    def __init__(self, engine):
         super().__init__()
+        self.engine = engine
         self.count = 0
 
     def run(self, topic, message):

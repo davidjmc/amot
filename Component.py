@@ -2,10 +2,6 @@ class Component:
     def __init__(self):
         self.engine = None
 
-    def set_engine(self, engine):
-        self.engine = engine
-        return self
-
     def run(self, *args):
         pass
 

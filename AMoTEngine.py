@@ -17,7 +17,7 @@ class AMoTEngine:
         self.thing_id = None
         self.last_adaptation = 0
         self.subscriber = None
-        self.adaptation_executor = Executor()
+        self.adaptation_executor = Executor(self)
 
         self.current_components = {}
 
@@ -40,7 +40,7 @@ class AMoTEngine:
         for component in self.components:
             component_file = self.components.get(component)
             component_instance = getattr(__import__(component_file), component)
-            self.current_components[component] = component_instance().set_engine(self)
+            self.current_components[component] = component_instance(self)
 
         # load versions
         versions = open('versions.txt', 'r').read()
@@ -58,7 +58,7 @@ class AMoTEngine:
         if 'subscriber' in cfg.Component:
             self.listen_configs = self.subscriber_configs
             self.subscriber = self.current_components['Subscriptor']
-            self.subscriber.set_engine(self).run()
+            self.subscriber.run()
 
     def run(self):
         if self.last_adaptation == 0:
@@ -83,7 +83,7 @@ class AMoTEngine:
                     self.adaptability['kind'] is not None) and (
                     (time.time() - self.last_adaptation) >
                     self.adaptation_configs['timeout']):
-                    self.adaptation_executor.set_engine(self).run()
+                    self.adaptation_executor.run()
                     self.last_adaptation = time.time()
 
             except OSError as e:

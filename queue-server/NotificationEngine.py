@@ -6,8 +6,9 @@ class NotificationEngine(Component):
 
     # topics where messages are posted
 
-    def __init__(self):
+    def __init__(self, engine):
         super().__init__()
+        self.engine = engine
         self.storage = SubscriptionManager()
 
     def run(self, *args):

@@ -12,8 +12,9 @@ class QueueServer(Component):
     # AMoT-Clients list subscribed to some topic
     subscribers = {}
 
-    def __init__(self):
+    def __init__(self, engine):
         super().__init__()
+        self.engine = engine
         self.subscriber_manager = SubscriberManager()
         self.notify_consumer = NotificationConsumer()
 

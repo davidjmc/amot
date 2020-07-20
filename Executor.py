@@ -2,8 +2,9 @@ import sys
 from Component import Component
 
 class Executor(Component):
-    def __init__(self):
+    def __init__(self, engine):
         super().__init__()
+        self.engine = engine
 
     def run(self):
         has_adaptation = None
@@ -61,4 +62,4 @@ class Executor(Component):
         fp.close()
 
         component_instance = getattr(__import__(file), file)
-        self.engine.current_components[file] = component_instance().set_engine(self.engine)
+        self.engine.current_components[file] = component_instance(self.engine)

@@ -7,8 +7,9 @@ from Component import Component
 
 class ClientRequestHandler(Component):
 
-    def __init__(self):
+    def __init__(self, engine):
         super().__init__()
+        self.engine = engine
         self.socks = {}
 
     def run(self, *args):
