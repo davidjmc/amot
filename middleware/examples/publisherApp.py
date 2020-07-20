@@ -20,7 +20,8 @@ class Client():
         msg = b'Temperature: %b and Humidity: %b' % (temp, hum)
         print(self.count, msg)
         print(':::T0:::', datetime.now().timestamp())
-        self.engine.attached(self).run(b'Publish', topic, msg)
+        # self.engine.attached(self).run(b'Publish', topic, msg)
+        self.engine.publish(self, topic, msg)
         self.count += 1
         time.sleep(1)
 

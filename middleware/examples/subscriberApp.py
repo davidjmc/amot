@@ -7,6 +7,12 @@ class App():
         self.engine = engine
         self.count = 0
 
+
+    def subscribe(self):
+        for topic in self.engine.subscriber_configs['topics']:
+            self.engine.subscribe(self, topic)
+
+
     def run(self, topic, message):
         print(':::T1:::', datetime.now().timestamp())
         print('Recebido: "{0}" em "{1}"'.format(message, topic))

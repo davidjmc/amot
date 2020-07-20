@@ -29,6 +29,14 @@ class AmotEngine:
         self.listen_configs = self.server_configs
         self.listen_configs['timeout'] = None
 
+
+    def publish(self, app, topic, message):
+        self.attached(app).run(b'Publish', topic, message)
+
+    def subscribe(self, app, topic):
+        self.attached(app).run(b'Subscribe', topic)
+
+
     def deploy_components(self):
         self.components = adl.Components
         self.attachments = adl.Attachments
@@ -57,8 +65,8 @@ class AmotEngine:
     def set_component_configs(self):
         if 'subscriber' in cfg.Component:
             self.listen_configs = self.subscriber_configs
-            self.subscriber = self.current_components['Subscriptor']
-            self.subscriber.run()
+            self.subscriber = self.current_components['App']
+            self.subscriber.subscribe()
 
     def run(self):
         if self.last_adaptation == 0:

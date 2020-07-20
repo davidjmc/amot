@@ -18,13 +18,6 @@ Attachments = {
 }
 
 
-SubscriberConfigs = { }
-
-Configs = {
-    'serverHost': '192.168.0.102',
-    'serverPort': 60000
-}
-
 Starter = {
     'Client'
 }
