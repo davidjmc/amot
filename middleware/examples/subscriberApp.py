@@ -1,8 +1,7 @@
-from Component import Component
 from datetime import datetime
 
 
-class App(Component):
+class App():
     def __init__(self, engine):
         super().__init__()
         self.engine = engine

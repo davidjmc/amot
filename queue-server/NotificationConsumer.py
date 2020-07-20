@@ -1,7 +1,6 @@
-from Component import Component
 from SubscriptionManager import SubscriptionManager
 
-class NotificationConsumer(Component):
+class NotificationConsumer():
     def __init__(self, engine):
         super().__init__()
         self.engine = engine

@@ -1,7 +1,6 @@
-from Component import Component
 
 
-class Notifier(Component):
+class Notifier():
     def __init__(self, engine):
         super().__init__()
         self.engine = engine

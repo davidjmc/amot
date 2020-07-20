@@ -1,10 +1,9 @@
 import socket, select
 
-from Component import Component
 from datetime import datetime
 
 
-class ServerRequestHandler(Component):
+class ServerRequestHandler():
     def __init__(self, engine):
         super().__init__()
         self.engine = engine

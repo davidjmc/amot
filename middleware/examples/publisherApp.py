@@ -1,13 +1,12 @@
 import time
 import random as r
 
-from Component import Component
 from datetime import datetime
 
 topic = b'temperature'
 
 
-class Client(Component):
+class Client():
     def __init__(self, engine):
         super().__init__()
         self.engine = engine

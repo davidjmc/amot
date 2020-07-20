@@ -1,7 +1,6 @@
-from Component import Component
 
 
-class QueueProxy(Component):
+class QueueProxy():
 
     def __init__(self, engine):
         super().__init__()

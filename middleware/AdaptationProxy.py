@@ -1,6 +1,5 @@
-from Component import Component
 
-class AdaptationProxy(Component):
+class AdaptationProxy():
 
     def __init__(self, engine):
         super().__init__()

@@ -1,6 +1,5 @@
-from Component import Component
 
-class Unmarshaller(Component):
+class Unmarshaller():
     def __init__(self, engine):
         super().__init__()
         self.engine = engine

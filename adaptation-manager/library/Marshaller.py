@@ -1,6 +1,5 @@
-from Component import Component
 
-class Marshaller(Component):
+class Marshaller():
     def __init__(self, engine):
         super().__init__()
         self.engine = engine

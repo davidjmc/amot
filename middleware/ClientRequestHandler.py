@@ -2,10 +2,9 @@ import socket
 
 from datetime import datetime
 
-from Component import Component
 
 
-class ClientRequestHandler(Component):
+class ClientRequestHandler():
 
     def __init__(self, engine):
         super().__init__()

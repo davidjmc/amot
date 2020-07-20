@@ -2,10 +2,8 @@ import pickle
 import socket
 from collections import deque
 
-from Component import Component
 
-
-class QueueServer(Component):
+class QueueServer():
     # topics where messages are posted
     topics = {}
 

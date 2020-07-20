@@ -1,7 +1,6 @@
 import sys
-from Component import Component
 
-class Executor(Component):
+class Executor():
     def __init__(self, engine):
         super().__init__()
         self.engine = engine

@@ -1,8 +1,7 @@
-from Component import Component
 from EvolutiveAdapter import EvolutiveAdapter
 
 
-class AdaptationEngine(Component):
+class AdaptationEngine():
     # component_library = '/home/david/doutorado/2020-1/amot/adaptation-manager/library'
 
     def __init__(self, engine):

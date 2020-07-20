@@ -1,6 +1,5 @@
-from Component import Component
 
-class NotifierProxy(Component):
+class NotifierProxy():
 
     def __init__(self, engine):
         super().__init__()

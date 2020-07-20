@@ -1,8 +1,7 @@
-from Component import Component
 from SubscriptionManager import SubscriptionManager
 from collections import deque
 
-class NotificationEngine(Component):
+class NotificationEngine():
 
     # topics where messages are posted
 
