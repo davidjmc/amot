@@ -52,7 +52,7 @@ class AMoTEngine:
         class_name = component.__class__.__name__
         external_class_name = self.attachments.get(class_name)
         external_class = self.current_components[external_class_name]
-        return external_class.set_engine(self)
+        return external_class
 
     def set_component_configs(self):
         if 'subscriber' in cfg.Component:
@@ -61,7 +61,6 @@ class AMoTEngine:
             self.subscriber.set_engine(self).run()
 
     def run(self):
-
         if self.last_adaptation == 0:
             self.last_adaptation = time.time()
 

@@ -61,4 +61,4 @@ class Executor(Component):
         fp.close()
 
         component_instance = getattr(__import__(file), file)
-        self.engine.current_components[file] = component_instance().set_engine(self)
+        self.engine.current_components[file] = component_instance().set_engine(self.engine)
