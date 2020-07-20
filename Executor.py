@@ -22,7 +22,7 @@ class Executor(Component):
         if thing_data is None:
             return
 
-        data = self.adapt(
+        data = self.engine.attached(self).run(
             adaptation, thing_data, self.engine.adaptation_configs['host'],
             self.engine.adaptation_configs['port'])
 

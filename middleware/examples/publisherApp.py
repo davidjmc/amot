@@ -21,7 +21,7 @@ class Client(Component):
         msg = b'Temperature: %b and Humidity: %b' % (temp, hum)
         print(self.count, msg)
         print(':::T0:::', datetime.now().timestamp())
-        self.publish(topic, msg)
+        self.engine.attached(self).run(b'Publish', topic, msg)
         self.count += 1
         time.sleep(1)
 

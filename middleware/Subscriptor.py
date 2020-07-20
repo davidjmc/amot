@@ -7,4 +7,4 @@ class Subscriptor(Component):
 
     def run(self):
         for topic in self.engine.subscriber_configs['topics']:
-            self.subscribe(topic)
+            self.engine.attached(self).run(b'Subscribe', topic)
