@@ -18,7 +18,7 @@ class NotificationEngine(Component):
         message = message['msg']
 
         if operation == b'Publish':
-            subscribers_notified = self.external().run(topic, message, self.storage)
+            subscribers_notified = self.engine.attached(self).run(topic, message, self.storage)
             self.storage.keep_subscribers(topic, subscribers_notified)
         elif operation == b'Subscribe':
             ip_port = message.split(b' ')

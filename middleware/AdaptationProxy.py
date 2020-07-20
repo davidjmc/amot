@@ -13,4 +13,4 @@ class AdaptationProxy(Component):
             'msg': message
         }
 
-        return self.external().run(message, ip, port)
+        return self.engine.attached(self).run(message, ip, port)

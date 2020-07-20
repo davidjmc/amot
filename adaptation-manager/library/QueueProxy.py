@@ -27,7 +27,7 @@ class QueueProxy(Component):
         if message is None:
             return False
 
-        return self.external().run(message, ip, port)
+        return self.engine.attached(self).run(message, ip, port)
 
 
 

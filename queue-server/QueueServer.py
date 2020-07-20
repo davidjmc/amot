@@ -32,7 +32,7 @@ class QueueServer(Component):
             self.subscriber(topic, ip_port[0], int(ip_port[1]))
         elif operation == b'Adapt':
             invocation = {'Operation': args[0], 'Topic': args[1]}
-            self.external().run(invocation)
+            self.engine.attached(self).run(invocation)
         else:
             print(
                 'Notification engine :: Operation ' +

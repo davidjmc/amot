@@ -55,4 +55,4 @@ class Unmarshaller(Component):
             'msg': attrs[b'message'],
             'subs_addr': attrs[b'Subscriber_addr']
         }
-        return self.external().run(message_obj)
+        return self.engine.attached(self).run(message_obj)

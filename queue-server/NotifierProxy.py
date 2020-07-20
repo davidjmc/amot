@@ -14,4 +14,4 @@ class NotifierProxy(Component):
         }
         (ip, port) = address
 
-        return self.external().run(message, ip, port)
+        return self.engine.attached(self).run(message, ip, port)

@@ -9,5 +9,5 @@ class Notifier(Component):
 
     def run(self, *args):
         message = args[0]
-        self.external().run(message['topic'], message['msg'])
+        self.engine.attached(self).run(message['topic'], message['msg'])
         pass

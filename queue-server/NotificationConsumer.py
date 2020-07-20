@@ -10,7 +10,7 @@ class NotificationConsumer(Component):
         subscribers = storage.filter_subscribers(topic)
         confirmed = []
         for subscriber in subscribers:
-            if self.external().run(topic, message, subscriber) is not False:
+            if self.engine.attached(self).run(topic, message, subscriber) is not False:
                 confirmed.append(subscriber)
         return confirmed
 

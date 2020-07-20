@@ -18,4 +18,4 @@ class Marshaller(Component):
         serialized += b'\n'
         serialized += message_obj['msg']
 
-        return self.external().run(serialized, ip, port)
+        return self.engine.attached(self).run(serialized, ip, port)
