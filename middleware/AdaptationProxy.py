@@ -1,9 +1,8 @@
 
 class AdaptationProxy():
 
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
     def run(self, adaptability, message, ip, port):
         message = {
@@ -12,4 +11,4 @@ class AdaptationProxy():
             'msg': message
         }
 
-        return self.engine.attached(self).run(message, ip, port)
+        return AmotEngine.attached(self).run(message, ip, port)

@@ -1,15 +1,14 @@
 import time
 import random as r
+import traceback
 
 from datetime import datetime
 
 topic = b'temperature'
 
-
 class Client():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
         self.count = 0
         # self.sensor = dht.DHT11(machine.Pin(2))
 
@@ -20,8 +19,9 @@ class Client():
         msg = b'Temperature: %b and Humidity: %b' % (temp, hum)
         print(self.count, msg)
         print(':::T0:::', datetime.now().timestamp())
-        # self.engine.attached(self).run(b'Publish', topic, msg)
-        self.engine.publish(self, topic, msg)
+        # AmotEngine.attached(self).run(b'Publish', topic, msg)
+        # AmotEngine.getProxyFor(self).publish(topic, msg)
+        AmotEngine.publish(self, topic, msg)
         self.count += 1
         time.sleep(1)
 

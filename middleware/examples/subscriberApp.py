@@ -1,16 +1,14 @@
 from datetime import datetime
 
-
 class App():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
         self.count = 0
 
 
     def subscribe(self):
-        for topic in self.engine.subscriber_configs['topics']:
-            self.engine.subscribe(self, topic)
+        for topic in AmotEngine.subscriber_configs['topics']:
+            AmotEngine.subscribe(self, topic)
 
 
     def run(self, topic, message):

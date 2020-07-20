@@ -1,8 +1,7 @@
 
 class Unmarshaller():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
     def run(self, *args):
         data = args[0]
@@ -54,4 +53,4 @@ class Unmarshaller():
             'msg': attrs[b'message'],
             'subs_addr': attrs[b'Subscriber_addr']
         }
-        return self.engine.attached(self).run(message_obj)
+        return AmotEngine.attached(self).run(message_obj)

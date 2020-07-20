@@ -4,51 +4,38 @@ import time
 import config as cfg
 import adl as adl
 
-from Executor import Executor
-
-
 class AmotEngine:
+
+    components = adl.Components
+    components['Executor'] = 'Executor'
+    attachments = adl.Attachments
+    starter = adl.Starter
+    adaptability = adl.Adaptability
+
+    server_configs = listen_configs = cfg.Server
+    subscriber_configs = cfg.Subscriber
+    adaptation_configs = cfg.Adaptation
+    listen_configs['timeout'] = None
+
+    components_versions = {}
+    current_components = {}
+
+    thing_id = b'10'
+
+    last_adaptation = 0
+    adaptation_executor = None
+    subscriber = None
+
     def __init__(self):
-        self.components = None
-        self.components_versions = {}
-        self.attachments = None
-        self.starter = None
-        self.adaptability = None
-        self.thing_id = None
-        self.last_adaptation = 0
-        self.subscriber = None
-        self.adaptation_executor = Executor(self)
-
-        self.current_components = {}
-
-        self.server_configs = cfg.Server
-        self.subscriber_configs = cfg.Subscriber
-        self.adaptation_configs = cfg.Adaptation
-        self.thing_id = b'10'
-
-        self.listen_configs = self.server_configs
-        self.listen_configs['timeout'] = None
-
-
-    def publish(self, app, topic, message):
-        self.attached(app).run(b'Publish', topic, message)
-
-    def subscribe(self, app, topic):
-        self.attached(app).run(b'Subscribe', topic)
-
-
-    def deploy_components(self):
-        self.components = adl.Components
-        self.attachments = adl.Attachments
-        self.starter = adl.Starter
-        self.adaptability = adl.Adaptability
-
-    def load_components(self):
         # load components
         for component in self.components:
             component_file = self.components.get(component)
-            component_instance = getattr(__import__(component_file), component)
-            self.current_components[component] = component_instance(self)
+            imported = __import__(component_file)
+            imported.__dict__['AmotEngine'] = self
+            component_instance = getattr(imported, component)
+            self.current_components[component] = component_instance()
+
+        self.adaptation_executor = self.current_components['Executor']
 
         # load versions
         versions = open('versions.txt', 'r').read()
@@ -56,29 +43,37 @@ class AmotEngine:
         for (comp, ver) in comps_versions:
             self.components_versions[comp] = ver
 
-    def attached(self, component):
-        class_name = component.__class__.__name__
-        external_class_name = self.attachments.get(class_name)
-        external_class = self.current_components[external_class_name]
-        return external_class
-
-    def set_component_configs(self):
+        #setting subscriber
         if 'subscriber' in cfg.Component:
             self.listen_configs = self.subscriber_configs
             self.subscriber = self.current_components['App']
             self.subscriber.subscribe()
 
+    @staticmethod
+    def publish(app, topic, message):
+        AmotEngine.attached(app).run(b'Publish', topic, message)
+
+    @staticmethod
+    def subscribe(app, topic):
+        AmotEngine.attached(app).run(b'Subscribe', topic)
+
+    @staticmethod
+    def attached(component):
+        class_name = component.__class__.__name__
+        external_class_name = AmotEngine.attachments.get(class_name)
+        external_class = AmotEngine.current_components[external_class_name]
+        return external_class
+
     def run(self):
-        if self.last_adaptation == 0:
-            self.last_adaptation = time.time()
+        if AmotEngine.last_adaptation == 0:
+            AmotEngine.last_adaptation = time.time()
 
-        try:
-            self.deploy_components()
-            self.load_components()
-            self.set_component_configs()
+        # try:
+        #     self.load_components()
+        #     self.set_component_configs()
 
-        except OSError as e:
-            self.restart_and_reconnect()
+        # except OSError as e:
+        #     self.restart_and_reconnect()
 
         while True:
 

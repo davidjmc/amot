@@ -1,8 +1,7 @@
 
 class Marshaller():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
     def run(self, *args):
         message_obj, ip, port = args
@@ -15,4 +14,4 @@ class Marshaller():
         serialized += b'\n'
         serialized += message_obj['msg']
 
-        return self.engine.attached(self).run(serialized, ip, port)
+        return AmotEngine.attached(self).run(serialized, ip, port)

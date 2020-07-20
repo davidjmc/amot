@@ -6,9 +6,8 @@ from datetime import datetime
 
 class ClientRequestHandler():
 
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
         self.socks = {}
 
     def run(self, *args):

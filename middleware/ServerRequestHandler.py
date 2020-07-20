@@ -4,9 +4,8 @@ from datetime import datetime
 
 
 class ServerRequestHandler():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
         self.server_sock = None
         self.address = None
         self.connection = None
@@ -20,12 +19,12 @@ class ServerRequestHandler():
             if self.server_sock is None:
                 self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                timeout = self.engine.listen_configs['timeout']
+                timeout = AmotEngine.listen_configs['timeout']
                 if timeout is not None:
                     timeout = timeout / 1000.0
                 self.server_sock.settimeout(timeout)
-                self.address = socket.getaddrinfo(self.engine.listen_configs['host'],
-                                                  self.engine.listen_configs['port'])[0][-1]
+                self.address = socket.getaddrinfo(AmotEngine.listen_configs['host'],
+                                                  AmotEngine.listen_configs['port'])[0][-1]
 
                 try:
                     self.server_sock.bind(self.address)
@@ -67,7 +66,7 @@ class ServerRequestHandler():
                 if data:
                     self.message = data
                     print(self.message, 'aqui!!')
-                    response = self.engine.attached(self).run(self.message)
+                    response = AmotEngine.attached(self).run(self.message)
                     if not response:
                         response = b'0'
                     s.sendall(response)

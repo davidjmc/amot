@@ -1,29 +1,30 @@
 import sys
 
+from AMoTEngine import AmotEngine
+
 class Executor():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
     def run(self):
         has_adaptation = None
 
-        adaptation = self.engine.adaptability['kind']
+        adaptation = AmotEngine.adaptability['kind']
         thing_data = None
         if adaptation == b'Evolutive':
             comp_versions = b','.join(
                 [
-                    bytes('{0}:{1}'.format(comp,self.engine.components_versions[comp]), 'ascii') for comp in self.engine.components_versions.keys()
+                    bytes('{0}:{1}'.format(comp,AmotEngine.components_versions[comp]), 'ascii') for comp in AmotEngine.components_versions.keys()
                 ]
             )
-            thing_data = self.engine.thing_id + b' ' + comp_versions
+            thing_data = AmotEngine.thing_id + b' ' + comp_versions
 
         if thing_data is None:
             return
 
-        data = self.engine.attached(self).run(
-            adaptation, thing_data, self.engine.adaptation_configs['host'],
-            self.engine.adaptation_configs['port'])
+        data = AmotEngine.attached(self).run(
+            adaptation, thing_data, AmotEngine.adaptation_configs['host'],
+            AmotEngine.adaptation_configs['port'])
 
 
         if not data or type(data) is not bytes:
@@ -50,15 +51,17 @@ class Executor():
         del sys.modules[file]
         module = __import__(file)
         sys.modules[file] = module
-        self.engine.components_versions[file] = version
+        AmotEngine.components_versions[file] = version
         fp = open('versions.txt', 'w')
 
         i = 0
-        for _file in self.engine.components_versions.keys():
-            data = ("\n" if i != 0 else "") + _file + '#' + self.engine.components_versions[_file]
+        for _file in AmotEngine.components_versions.keys():
+            data = ("\n" if i != 0 else "") + _file + '#' + AmotEngine.components_versions[_file]
             fp.write(data)
             i += 1
         fp.close()
 
-        component_instance = getattr(__import__(file), file)
-        self.engine.current_components[file] = component_instance(self.engine)
+        imported = __import__(file)
+        imported.__dict__['AmotEngine'] = AmotEngine
+        component_instance = getattr(imported, file)
+        AmotEngine.current_components[file] = component_instance()

@@ -5,9 +5,8 @@ class NotificationEngine():
 
     # topics where messages are posted
 
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
         self.storage = SubscriptionManager()
 
     def run(self, *args):
@@ -17,7 +16,7 @@ class NotificationEngine():
         message = message['msg']
 
         if operation == b'Publish':
-            subscribers_notified = self.engine.attached(self).run(topic, message, self.storage)
+            subscribers_notified = AmotEngine.attached(self).run(topic, message, self.storage)
             self.storage.keep_subscribers(topic, subscribers_notified)
         elif operation == b'Subscribe':
             ip_port = message.split(b' ')

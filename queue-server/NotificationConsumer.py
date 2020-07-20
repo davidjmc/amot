@@ -1,15 +1,14 @@
 from SubscriptionManager import SubscriptionManager
 
 class NotificationConsumer():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
     def run(self, topic, message, storage):
         subscribers = storage.filter_subscribers(topic)
         confirmed = []
         for subscriber in subscribers:
-            if self.engine.attached(self).run(topic, message, subscriber) is not False:
+            if AmotEngine.attached(self).run(topic, message, subscriber) is not False:
                 confirmed.append(subscriber)
         return confirmed
 

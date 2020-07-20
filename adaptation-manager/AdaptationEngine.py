@@ -4,9 +4,8 @@ from EvolutiveAdapter import EvolutiveAdapter
 class AdaptationEngine():
     # component_library = '/home/david/doutorado/2020-1/amot/adaptation-manager/library'
 
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
     def run(self, *args):
         # REQUEST DECODE

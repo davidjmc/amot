@@ -10,9 +10,8 @@ class QueueServer():
     # AMoT-Clients list subscribed to some topic
     subscribers = {}
 
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
         self.subscriber_manager = SubscriberManager()
         self.notify_consumer = NotificationConsumer()
 
@@ -30,7 +29,7 @@ class QueueServer():
             self.subscriber(topic, ip_port[0], int(ip_port[1]))
         elif operation == b'Adapt':
             invocation = {'Operation': args[0], 'Topic': args[1]}
-            self.engine.attached(self).run(invocation)
+            AmotEngine.attached(self).run(invocation)
         else:
             print(
                 'Notification engine :: Operation ' +

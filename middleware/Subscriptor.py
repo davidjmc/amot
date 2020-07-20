@@ -1,9 +1,8 @@
 
 class Subscriptor():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
     def run(self):
-        for topic in self.engine.subscriber_configs['topics']:
-            self.engine.attached(self).run(b'Subscribe', topic)
+        for topic in AmotEngine.subscriber_configs['topics']:
+            AmotEngine.attached(self).run(b'Subscribe', topic)

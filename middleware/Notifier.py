@@ -1,12 +1,10 @@
 
-
 class Notifier():
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
 
     def run(self, *args):
         message = args[0]
-        self.engine.attached(self).run(message['topic'], message['msg'])
+        AmotEngine.attached(self).run(message['topic'], message['msg'])
         pass

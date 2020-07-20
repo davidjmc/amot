@@ -1,9 +1,8 @@
 
 class NotifierProxy():
 
-    def __init__(self, engine):
+    def __init__(self):
         super().__init__()
-        self.engine = engine
 
     def run(self, topic, message, address):
         message = {
@@ -13,4 +12,4 @@ class NotifierProxy():
         }
         (ip, port) = address
 
-        return self.engine.attached(self).run(message, ip, port)
+        return AmotEngine.attached(self).run(message, ip, port)
