@@ -2,32 +2,27 @@ Components = {
     'App': 'App',
     'Subscriptor': 'Subscriptor',
     'ServerRequestHandler': 'ServerRequestHandler',
-    #'Invoker': 'Invoker',
     'Notifier': 'Notifier',
 
-    #'ClientProxy': 'ClientProxy',
     'QueueProxy': 'QueueProxy',
     'Marshaller': 'Marshaller',
     'Unmarshaller': 'Unmarshaller',
-    #'Requestor': 'Requestor',
-    'ClientRequestHandler': 'ClientRequestHandler'
+    'ClientRequestHandler': 'ClientRequestHandler',
+
+    'AdaptationProxy': 'AdaptationProxy'
 }
 
 Attachments = {
-    #'ServerRequestHandler': 'Invoker',
     'ServerRequestHandler': 'Unmarshaller',
-    #'Invoker': 'App',
     'Unmarshaller': 'Notifier',
     'Notifier': 'App',
-    #'ServerRequestHandler->Marshaller->Notifier->App',
 
-    #'AMoTSubscriber': 'ClientProxy',
     'Subscriptor': 'QueueProxy',
-    #'ClientProxy': 'Requestor',
     'QueueProxy': 'Marshaller',
-    #'Requestor': 'ClientRequestHandler'
-    'Marshaller': 'ClientRequestHandler'
-    #'Subscriptor->QueueProxy->Marshaller->ClientRequestHandler'
+    'Marshaller': 'ClientRequestHandler',
+
+    'Executor': 'AdaptationProxy',
+    'AdaptationProxy': 'Marshaller'
 }
 
 Roles = {
@@ -51,5 +46,5 @@ Starter = {
 }
 
 Adaptability = {
-    'kind': None
+    'kind': b'Evolutive'
 }
