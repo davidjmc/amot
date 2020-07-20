@@ -1,5 +1,4 @@
 from Component import Component
-from AMoTEngine import Message
 
 
 class QueueProxy(Component):
@@ -13,10 +12,10 @@ class QueueProxy(Component):
         port = self.engine.server_configs['port']
 
         if args[0] == b'Publish':
-            message = Message(args[0], args[1], args[2])
+            message = {'op': args[0], 'topic': args[1], 'msg': args[2]}
         elif args[0] == b'Subscribe':
             ip_port = self.engine.subscriber_configs['host'] + b' ' + self.engine.subscriber_configs['port']
-            message = Message(args[0], args[1], ip_port, None)
+            message = {'op': args[0], 'topic': args[1], 'msg': ip_port}
         elif args[0] == b'Unsubscribe':
             #TODO
             pass

@@ -1,5 +1,4 @@
 from Component import Component
-from AMoTEngine import Message
 from SubscriptionManager import SubscriptionManager
 from collections import deque
 
@@ -13,9 +12,9 @@ class NotificationEngine(Component):
 
     def run(self, *args):
         message = args[0]
-        operation = message.op
-        topic = message.topic
-        message = message.message
+        operation = message['op']
+        topic = message['topic']
+        message = message['msg']
 
         if operation == b'Publish':
             subscribers_notified = self.external().run(topic, message, self.storage)

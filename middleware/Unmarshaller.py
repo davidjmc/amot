@@ -1,5 +1,4 @@
 from Component import Component
-from AMoTEngine import Message
 
 class Unmarshaller(Component):
     def __init__(self):
@@ -49,10 +48,10 @@ class Unmarshaller(Component):
         # for part in parts:
         #     attr, value = part.split(':', 1)
         #     attrs[attr] = value
-        message_obj = Message(
-            attrs[b'Op'],
-            attrs[b'Topic'],
-            attrs[b'message'],
-            attrs[b'Subscriber_addr']
-        )
+        message_obj = {
+            'op': attrs[b'Op'],
+            'topic': attrs[b'Topic'],
+            'msg': attrs[b'message'],
+            'subs_addr': attrs[b'Subscriber_addr']
+        }
         return self.external().run(message_obj)

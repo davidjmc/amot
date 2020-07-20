@@ -3,7 +3,6 @@ import socket
 from collections import deque
 
 from Component import Component
-from AMoTEngine import Message
 
 
 class QueueServer(Component):
@@ -20,9 +19,9 @@ class QueueServer(Component):
 
     def run(self, *args):
         message = args[0]
-        operation = message.op
-        topic = message.topic
-        message = message.message
+        operation = message['op']
+        topic = message['topic']
+        message = message['message']
 
         if operation == b'Publish':
             self.publish(topic, message)

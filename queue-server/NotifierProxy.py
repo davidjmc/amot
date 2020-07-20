@@ -1,5 +1,4 @@
 from Component import Component
-from AMoTEngine import Message
 
 class NotifierProxy(Component):
 
@@ -7,10 +6,11 @@ class NotifierProxy(Component):
         super().__init__()
 
     def run(self, topic, message, address):
-        message = Message(b'Notify', topic, message)
+        message = {
+            'op': b'Notify',
+            'topic': topic,
+            'msg': message
+        }
         (ip, port) = address
-
-        if message is None:
-            return False
 
         return self.external().run(message, ip, port)

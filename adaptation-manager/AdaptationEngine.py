@@ -11,8 +11,8 @@ class AdaptationEngine(Component):
     def run(self, *args):
         # REQUEST DECODE
         message = args[0]
-        adaptation_type = message.topic
-        message = message.message.decode('ascii')
+        adaptation_type = message['topic']
+        message = message['msg'].decode('ascii')
 
         thing_id, components_versions_str = message.split(' ')
 
