@@ -7,7 +7,7 @@ import adl as adl
 from Executor import Executor
 
 
-class AMoTEngine:
+class AmotEngine:
     def __init__(self):
         self.components = None
         self.components_versions = {}
@@ -99,4 +99,4 @@ class AMoTEngine:
 
 
 if __name__ == '__main__':
-    AMoTEngine().run()
+    AmotEngine().run()
