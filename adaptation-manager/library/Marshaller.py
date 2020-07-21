@@ -6,7 +6,7 @@ class Marshaller():
     def run(self, *args):
         message_obj, ip, port = args
 
-        print('NEW MARSHALLER')
+        # print('NEW MARSHALLER')
 
         serialized = b'Op:' + message_obj['op'] + b'\n'
         serialized += b'Topic:' + message_obj['topic'] + b'\n'

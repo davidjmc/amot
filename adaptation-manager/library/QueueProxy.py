@@ -8,7 +8,7 @@ class QueueProxy():
         message = None
         ip = AmotEngine.server_configs['host']
         port = AmotEngine.server_configs['port']
-        print('NOVO QUEUE PROXY')
+        # print('NOVO QUEUE PROXY')
 
         if args[0] == b'Publish':
             message = {'op': args[0], 'topic': args[1], 'msg': args[2]}

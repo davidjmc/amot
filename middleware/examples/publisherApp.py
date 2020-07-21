@@ -2,7 +2,7 @@ import time
 import random as r
 import traceback
 
-from datetime import datetime
+# from datetime import datetime
 
 topic = b'temperature'
 
@@ -15,15 +15,17 @@ class Client():
     def run(self):
 
         # Test publisher application running on the Computer
+        AmotEngine._times.append(('--app0:', time.time()))
         temp, hum = self.temp_hum_sensor()
         msg = b'Temperature: %b and Humidity: %b' % (temp, hum)
-        print(self.count, msg)
-        print(':::T0:::', datetime.now().timestamp())
+        # print(self.count, msg)
+        # print(':::T0:::', datetime.now().timestamp())
         # AmotEngine.attached(self).run(b'Publish', topic, msg)
         # AmotEngine.getProxyFor(self).publish(topic, msg)
-        AmotEngine.publish(self, topic, msg)
         self.count += 1
         time.sleep(1)
+        AmotEngine._times.append(('--app1:', time.time()))
+        AmotEngine.publish(self, topic, msg)
 
         # Test publisher application running on the device (thing)
         # temp, hum = self.read_sensor()
