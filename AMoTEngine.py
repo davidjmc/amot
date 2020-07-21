@@ -77,6 +77,7 @@ class AmotEngine:
         # except OSError as e:
         #     self.restart_and_reconnect()
 
+        time_i = 0
         while True:
             self._times.append(('--total0:', time.time()))
             try:
@@ -101,34 +102,36 @@ class AmotEngine:
 
             self._times.append(('--total1:', time.time()))
 
+            if 'publisher' in cfg.Component:
+                time_i = int(time_i) + 1
+                time_i = str(time_i)
+                total = [t[1] for t in self._times if t[0][:7] == '--total']
+                print('#' + time_i + ' total: ', total[1] - total[0])
 
-            total = [t[1] for t in self._times if t[0][:7] == '--total']
-            print('total: ', total[1] - total[0])
+                compApp = [t[1] for t in self._times if t[0][:9] == '--compApp']
+                print('#' + time_i + ' compApp: ', compApp[1] - compApp[0])
 
-            compApp = [t[1] for t in self._times if t[0][:9] == '--compApp']
-            print('compApp: ', compApp[1] - compApp[0])
+                app = [t[1] for t in self._times if t[0][:5] == '--app']
+                print('#' + time_i + ' app: ', app[1] - app[0])
 
-            app = [t[1] for t in self._times if t[0][:5] == '--app']
-            print('app: ', app[1] - app[0])
+                net = [t[1] for t in self._times if t[0][:5] == '--net']
+                if len(net) == 2:
+                    print('#' + time_i + ' net: ', net[1] - net[0])
+                elif len(net) == 4:
+                    print('#' + time_i + ' net: ', net[1] - net[0])
+                    print('#' + time_i + ' net: ', net[3] - net[2])
 
-            net = [t[1] for t in self._times if t[0][:5] == '--net']
-            if len(net) == 2:
-                print('net: ', net[1] - net[0])
-            elif len(net) == 4:
-                print('net: ', net[1] - net[0])
-                print('net: ', net[3] - net[2])
+                adapt = [t[1] for t in self._times if t[0][:7] == '--adapt']
+                if len(adapt) == 2:
+                    print('#' + time_i + ' adapt: ', adapt[1] - adapt[0])
 
-            adapt = [t[1] for t in self._times if t[0][:7] == '--adapt']
-            if len(adapt) == 2:
-                print('adapt: ', adapt[1] - adapt[0])
-
-            print('--')
-            print('MID: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0])))
-            print('MID_COMP_APP: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0]) - (net[1] - net[0])))
-            if len(adapt) == 2:
-                print('MID_COMP_ADAPT: ', 1000 * ((adapt[1] - adapt[0]) - (net[3] - net[2])))
-            print('--')
-            # print(self._times)
+                print('--')
+                print('#' + time_i + ' MID: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0])))
+                print('#' + time_i + ' MID_COMP_APP: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0]) - (net[1] - net[0])))
+                if len(adapt) == 2:
+                    print('#' + time_i + ' MID_COMP_ADAPT: ', 1000 * ((adapt[1] - adapt[0]) - (net[3] - net[2])))
+                print('--')
+                # print(self._times)
 
             self._times = []
 
