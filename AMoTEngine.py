@@ -102,9 +102,29 @@ class AmotEngine:
 
             self._times.append(('--total1:', time.time()))
 
+            time_i = int(time_i) + 1
+            time_i = str(time_i)
+            if 'subscriber' in cfg.Component:
+                midApp = [t[1] for t in self._times if t[0][:8] == '--midApp']
+                print('#' + time_i + ' midApp: ', midApp[1] - midApp[0])
+
+                app = [t[1] for t in self._times if t[0][:5] == '--app']
+                print('#' + time_i + ' app: ', app[1] - app[0])
+
+                adapt = [t[1] for t in self._times if t[0][:7] == '--adapt']
+                if len(adapt) == 2:
+                    print('#' + time_i + ' adapt: ', adapt[1] - adapt[0])
+
+                net = [t[1] for t in self._times if t[0][:5] == '--net']
+
+                print('--')
+                print('#' + time_i + ' MID_COMP_APP: ', 1000 * ((midApp[1] - midApp[0]) - (app[1] - app[0])))
+                if len(adapt) == 2:
+                    print('#' + time_i + ' MID_COMP_ADAPT: ', 1000 * ((adapt[1] - adapt[0]) - (net[1] - net[0])))
+                print('--')
+                print('--')
+
             if 'publisher' in cfg.Component:
-                time_i = int(time_i) + 1
-                time_i = str(time_i)
                 total = [t[1] for t in self._times if t[0][:7] == '--total']
                 print('#' + time_i + ' total: ', total[1] - total[0])
 
@@ -130,6 +150,7 @@ class AmotEngine:
                 print('#' + time_i + ' MID_COMP_APP: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0]) - (net[1] - net[0])))
                 if len(adapt) == 2:
                     print('#' + time_i + ' MID_COMP_ADAPT: ', 1000 * ((adapt[1] - adapt[0]) - (net[3] - net[2])))
+                print('--')
                 print('--')
                 # print(self._times)
 

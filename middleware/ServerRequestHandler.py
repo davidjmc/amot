@@ -1,6 +1,7 @@
 import socket, select
 
 from datetime import datetime
+import time
 
 
 class ServerRequestHandler():
@@ -50,7 +51,7 @@ class ServerRequestHandler():
                 except OSError as e:
                     print('Error when receiving data on the ServerRequestHandler: ', e)
             elif s:
-                print(':::T0:::', datetime.now().timestamp())
+                # print(':::T0:::', datetime.now().timestamp())
                 buffer_size = 536
                 data = b''
                 try:
@@ -65,8 +66,10 @@ class ServerRequestHandler():
 
                 if data:
                     self.message = data
-                    print(self.message, 'aqui!!')
+                    # print(self.message, 'aqui!!')
+                    AmotEngine._times.append(('--midApp0', time.time()))
                     response = AmotEngine.attached(self).run(self.message)
+                    AmotEngine._times.append(('--midApp1', time.time()))
                     if not response:
                         response = b'0'
                     s.sendall(response)
