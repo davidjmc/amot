@@ -1,4 +1,4 @@
-import time
+import pickle
 
 class Marshaller():
     def __init__(self):
@@ -8,15 +8,9 @@ class Marshaller():
         message_obj, ip, port = args
 
         # print('NEW MARSHALLER')
-        time.sleep(1)
-        print('dummy marshaller')
+        print('pickle marshaller')
 
-        serialized = b'Op:' + message_obj['op'] + b'\n'
-        serialized += b'Topic:' + message_obj['topic'] + b'\n'
-        if message_obj.get('subs_addr') is not None:
-            serialized += b'Addr:' + message_obj['subs_addr'] + b'\n'
-
-        serialized += b'\n'
-        serialized += message_obj['msg']
+        serialized = pickle.dumps(message_obj)
+        serialized = b'pkl' + serialized
 
         return AmotEngine.attached(self).run(serialized, ip, port)

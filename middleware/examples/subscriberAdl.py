@@ -32,5 +32,5 @@ Starter = {
 }
 
 Adaptability = {
-    'kind': b'Evolutive'
+    'kind': None
 }

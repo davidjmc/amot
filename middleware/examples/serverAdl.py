@@ -4,7 +4,7 @@ Components = {
     'NotificationEngine': 'NotificationEngine',
     'NotificationConsumer': 'NotificationConsumer',
     'Marshaller': 'Marshaller',
-    'Unmarshaller': 'Unmarshaller',
+    'Unmarshaller': 'UnmarshallerHybrid',
     'ClientRequestHandler': 'ClientRequestHandler'
 }
 

@@ -43,14 +43,11 @@ class Unmarshaller():
             attrs[b'message'] += bytes([data[byte]])
             byte += 1
 
-        # parts = str(data, 'ascii').split('\n')
-        # for part in parts:
-        #     attr, value = part.split(':', 1)
-        #     attrs[attr] = value
         message_obj = {
             'op': attrs[b'Op'],
             'topic': attrs[b'Topic'],
             'msg': attrs[b'message'],
             'subs_addr': attrs[b'Subscriber_addr']
         }
+
         return AmotEngine.attached(self).run(message_obj)

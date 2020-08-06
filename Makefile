@@ -4,6 +4,7 @@ server:
 
 	cp AMoTEngine.py generated/amot-server/
 	cp Executor.py generated/amot-server/
+	cp pickle.py generated/amot-server/
 
 	cp middleware/examples/serverAdl.py generated/amot-server/adl.py
 	cp middleware/examples/serverConfig.py generated/amot-server/config.py
@@ -18,7 +19,7 @@ server:
 	cp middleware/ClientRequestHandler.py generated/amot-server/
 	cp middleware/QueueProxy.py generated/amot-server/
 	cp middleware/Marshaller.py generated/amot-server/
-	cp middleware/Unmarshaller.py generated/amot-server/
+	cp middleware/UnmarshallerHybrid.py generated/amot-server/
 
 adaptation_manager:
 	mkdir -p generated/amot-adaptation-manager
@@ -26,6 +27,7 @@ adaptation_manager:
 
 	cp AMoTEngine.py generated/amot-adaptation-manager/
 	cp Executor.py generated/amot-adaptation-manager/
+	cp pickle.py generated/amot-adaptation-manager/
 
 	cp middleware/examples/adapterAdl.py generated/amot-adaptation-manager/adl.py
 	cp middleware/examples/adapterConfig.py generated/amot-adaptation-manager/config.py
@@ -39,7 +41,7 @@ adaptation_manager:
 	cp -R adaptation-manager/library generated/amot-adaptation-manager/
 
 	cp middleware/ServerRequestHandler.py generated/amot-adaptation-manager/
-	cp middleware/Unmarshaller.py generated/amot-adaptation-manager/
+	cp middleware/UnmarshallerHybrid.py generated/amot-adaptation-manager/
 
 publisher:
 	mkdir -p generated/amot-publisher
@@ -47,6 +49,7 @@ publisher:
 
 	cp AMoTEngine.py generated/amot-publisher/
 	cp Executor.py generated/amot-publisher/
+	cp pickle.py generated/amot-publisher/
 
 	cp middleware/examples/publisherAdl.py generated/amot-publisher/adl.py
 	cp middleware/examples/publisherConfig.py generated/amot-publisher/config.py

@@ -1,6 +1,6 @@
 Components = {
     'ServerRequestHandler': 'ServerRequestHandler',
-    'Unmarshaller': 'Unmarshaller',
+    'Unmarshaller': 'UnmarshallerHybrid',
     'AdaptationEngine': 'AdaptationEngine',
 }
 
