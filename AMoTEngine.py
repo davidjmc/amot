@@ -134,6 +134,15 @@ class AmotEngine:
                 app = [t[1] for t in self._times if t[0][:5] == '--app']
                 print('#' + time_i + ' app: ', app[1] - app[0])
 
+                proxy = [t[1] for t in self._times if t[0][:7] == '--proxy']
+                print('#' + time_i + ' proxy: ', proxy[1] - proxy[0])
+
+                mars = [t[1] for t in self._times if t[0][:6] == '--mars']
+                print('#' + time_i + ' mars: ', mars[1] - mars[0])
+
+                crh = [t[1] for t in self._times if t[0][:5] == '--crh']
+                print('#' + time_i + ' crh: ', crh[1] - crh[0])
+
                 net = [t[1] for t in self._times if t[0][:5] == '--net']
                 if len(net) == 2:
                     print('#' + time_i + ' net: ', net[1] - net[0])
@@ -148,6 +157,7 @@ class AmotEngine:
                 print('--')
                 print('#' + time_i + ' MID: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0])))
                 print('#' + time_i + ' MID_COMP_APP: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0]) - (net[1] - net[0])))
+                print('#' + time_i + ' MQTT_EQUIV: ', 1000 * ((proxy[1] - proxy[0]) + (mars[1] - mars[0]) + (crh[1] - crh[0])))
                 if len(adapt) == 2:
                     print('#' + time_i + ' MID_COMP_ADAPT: ', 1000 * ((adapt[1] - adapt[0]) - (net[3] - net[2])))
                 print('--')

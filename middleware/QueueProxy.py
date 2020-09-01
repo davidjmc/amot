@@ -1,3 +1,4 @@
+import time
 
 class QueueProxy():
 
@@ -5,6 +6,7 @@ class QueueProxy():
         super().__init__()
 
     def run(self, *args):
+        AmotEngine._times.append(('--proxy0:', time.time()))
         message = None
         ip = AmotEngine.server_configs['host']
         port = AmotEngine.server_configs['port']
@@ -23,6 +25,7 @@ class QueueProxy():
         if message is None:
             return False
 
+        AmotEngine._times.append(('--proxy1:', time.time()))
         return AmotEngine.attached(self).run(message, ip, port)
 
 

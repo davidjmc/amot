@@ -12,6 +12,7 @@ class ClientRequestHandler():
         self.socks = {}
 
     def run(self, *args):
+        AmotEngine._times.append(('--crh0:', time.time()))
         data = args[0]
         server = args[1]
         port = args[2]
@@ -25,17 +26,17 @@ class ClientRequestHandler():
 
             try:
 
-                self.socks[addr].connect(addr)
+                self.socks[addr].connect(socket.getaddrinfo(server, port)[0][-1])
 
             except OSError as e:
                 print('Error: ' + str(e) + 'Couldnt connect with socket-server')
-
         return self.send(addr, data)
 
     def send(self, addr, data):
         buffer_size = 536
         response = b''
         try:
+            AmotEngine._times.append(('--crh1:', time.time()))
             AmotEngine._times.append(('--net0:', time.time()))
             self.socks[addr].sendall(data)
             # print(':::T1:::', datetime.now().timestamp())
