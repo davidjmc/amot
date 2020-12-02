@@ -11,7 +11,7 @@ class EvolutiveAdapter(object):
         monitor = EvolutiveMonitor().run()
         analiser = EvolutiveAnaliser(monitor.component_library, self.thing_versions).run()
         # TODO EvolutivePlanner
-        executor = EvolutiveExecutor(analiser.components_to_adapt).run()
+        executor = EvolutiveExecutor(analiser.components_to_adapt, monitor.component_library).run()
 
         # print(self.thing_versions)
         # print(monitor.component_library)

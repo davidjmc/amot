@@ -1,23 +1,23 @@
 import socket
 
+import time
 from datetime import datetime
 
-from AMoTEngine import Component
 
 
-class ClientRequestHandler(Component):
+class ClientRequestHandler():
 
     def __init__(self):
         super().__init__()
         self.socks = {}
 
     def run(self, *args):
-        package = args[0]
-        data = package['Payload']
+        data = args[0]
+        server = args[1]
+        port = args[2]
 
-        server = package['Destination']
-        port = package['DPort']
-        addr = socket.getaddrinfo(server, port)[0][-1]
+        # addr = socket.getaddrinfo(server, port)[0][-1]
+        addr = b':'.join([server, bytes([port & 0xff])])
 
         if self.socks.get(addr) is None:
             self.socks[addr] = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,7 +37,9 @@ class ClientRequestHandler(Component):
         buffer_size = 536
         response = b''
         try:
+            AmotEngine._times.append(('--net0:', time.time()))
             self.socks[addr].sendall(data)
+            # print(':::T1:::', datetime.now().timestamp())
             # print('\t{0} data sent, w8ing response'.format(datetime.now()))
             while True:
                 part = self.socks[addr].recv(buffer_size)
@@ -45,6 +47,7 @@ class ClientRequestHandler(Component):
                 if len(part) < buffer_size:
                     break
             # print('\t', response, '<=========CRH')
+            AmotEngine._times.append(('--net1:', time.time()))
             if response == b'0':
                 return True
             elif response == b'':

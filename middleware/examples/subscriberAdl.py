@@ -1,42 +1,36 @@
 Components = {
     'App': 'App',
+    'Subscriptor': 'Subscriptor',
     'ServerRequestHandler': 'ServerRequestHandler',
-    'Invoker': 'Invoker',
+    'Notifier': 'Notifier',
 
-    'ClientProxy': 'ClientProxy',
-    'Requestor': 'Requestor',
-    'ClientRequestHandler': 'ClientRequestHandler'
+    'QueueProxy': 'QueueProxy',
+    'Marshaller': 'Marshaller',
+    'Unmarshaller': 'Unmarshaller',
+    'ClientRequestHandler': 'ClientRequestHandler',
+
+    'AdaptationProxy': 'AdaptationProxy'
 }
 
 Attachments = {
-    'ServerRequestHandler': 'Invoker',
-    'Invoker': 'App',
+    'ServerRequestHandler': 'Unmarshaller',
+    'Unmarshaller': 'Notifier',
+    'Notifier': 'App',
 
-    'AMoTSubscriber': 'ClientProxy',
-    'ClientProxy': 'Requestor',
-    'Requestor': 'ClientRequestHandler'
+    # 'Subscriptor': 'QueueProxy',
+    'App': 'QueueProxy',
+    'QueueProxy': 'Marshaller',
+    'Marshaller': 'ClientRequestHandler',
+
+    'Executor': 'AdaptationProxy',
+    'AdaptationProxy': 'Marshaller'
 }
 
-Roles = {
-    'subscriber'
-}
-
-SubscriberConfigs = {
-    'timeout': None,
-    'topics': ['Hello'],
-    'host': '192.168.0.102',
-    'port': 60001
-}
-
-Configs = {
-    'serverHost': '192.168.0.102',
-    'serverPort': 60000,
-}
 
 Starter = {
     'ServerRequestHandler'
 }
 
 Adaptability = {
-    'kind': None
+    'kind': b'Evolutive'
 }

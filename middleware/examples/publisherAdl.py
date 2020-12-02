@@ -1,24 +1,22 @@
 Components = {
     'Client': 'Client',
-    'ClientProxy': 'ClientProxy',
-    'Requestor': 'Requestor',
-    'ClientRequestHandler': 'ClientRequestHandler'
+    'QueueProxy': 'QueueProxy',
+    # 'ClientProxy': 'ClientProxy',
+    # 'Requestor': 'Requestor',
+    'Marshaller': 'Marshaller',
+    'ClientRequestHandler': 'ClientRequestHandler',
+    'AdaptationProxy': 'AdaptationProxy'
 }
 
 Attachments = {
-    'Client': 'ClientProxy',
-    'ClientProxy': 'Requestor',
-    'Requestor': 'ClientRequestHandler',
-    'AdaptationAgent': 'ClientProxy'
+    'Client': 'QueueProxy',
+    'QueueProxy': 'Marshaller',
+    'Marshaller': 'ClientRequestHandler',
+
+    'Executor': 'AdaptationProxy',
+    'AdaptationProxy': 'Marshaller'
 }
 
-
-SubscriberConfigs = { }
-
-Configs = {
-    'serverHost': '192.168.0.102',
-    'serverPort': 60000
-}
 
 Starter = {
     'Client'
@@ -26,4 +24,5 @@ Starter = {
 
 Adaptability = {
     'kind': b'Evolutive'
+    # 'kind': None
 }

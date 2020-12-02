@@ -1,9 +1,10 @@
 import socket, select
 
-from AMoTEngine import Component
+from datetime import datetime
+import time
 
 
-class ServerRequestHandler(Component):
+class ServerRequestHandler():
     def __init__(self):
         super().__init__()
         self.server_sock = None
@@ -19,12 +20,12 @@ class ServerRequestHandler(Component):
             if self.server_sock is None:
                 self.server_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.server_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-                timeout = self.engine.listen_configs['timeout']
+                timeout = AmotEngine.listen_configs['timeout']
                 if timeout is not None:
                     timeout = timeout / 1000.0
                 self.server_sock.settimeout(timeout)
-                self.address = socket.getaddrinfo(self.engine.listen_configs['host'],
-                                                  self.engine.listen_configs['port'])[0][-1]
+                self.address = socket.getaddrinfo(AmotEngine.listen_configs['host'],
+                                                  AmotEngine.listen_configs['port'])[0][-1]
 
                 try:
                     self.server_sock.bind(self.address)
@@ -50,6 +51,7 @@ class ServerRequestHandler(Component):
                 except OSError as e:
                     print('Error when receiving data on the ServerRequestHandler: ', e)
             elif s:
+                # print(':::T0:::', datetime.now().timestamp())
                 buffer_size = 536
                 data = b''
                 try:
@@ -64,7 +66,10 @@ class ServerRequestHandler(Component):
 
                 if data:
                     self.message = data
-                    response = self.external().run(self.message)
+                    # print(self.message, 'aqui!!')
+                    AmotEngine._times.append(('--midApp0', time.time()))
+                    response = AmotEngine.attached(self).run(self.message)
+                    AmotEngine._times.append(('--midApp1', time.time()))
                     if not response:
                         response = b'0'
                     s.sendall(response)

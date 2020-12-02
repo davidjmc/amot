@@ -1,20 +1,23 @@
 Components = {
     'ServerRequestHandler': 'ServerRequestHandler',
-    'Invoker': 'Invoker',
-    'QueueServer': 'QueueServer',
-
-    'ClientProxy': 'ClientProxy',
-    'Requestor': 'Requestor',
+    'NotifierProxy': 'NotifierProxy',
+    'NotificationEngine': 'NotificationEngine',
+    'NotificationConsumer': 'NotificationConsumer',
+    'Marshaller': 'Marshaller',
+    'Unmarshaller': 'Unmarshaller',
     'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {
-    'ServerRequestHandler': 'Invoker',
-    'Invoker': 'QueueServer',
+    'ServerRequestHandler': 'Unmarshaller',
+    'Unmarshaller': 'NotificationEngine',
+    'NotificationEngine': 'NotificationConsumer',
+    'NotificationConsumer': 'NotifierProxy',
+    'NotifierProxy': 'Marshaller',
+    'Marshaller': 'ClientRequestHandler'
 
-    'QueueServer': 'ClientProxy',
-    'ClientProxy': 'Requestor',
-    'Requestor': 'ClientRequestHandler'
+    # 'ServerRequestHandler->Marshaller->QueueServer',
+    # 'QueueServer->ClientProxy->Marshaller->ClientRequestHandler'
 }
 
 Roles = {

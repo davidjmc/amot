@@ -1,97 +1,160 @@
 import time
-import sys
-from hashlib import sha1
-from hashlib import md5
-import binascii
 
-
+import datetime
 import config as cfg
 import adl as adl
 
 
-class AMoTEngine:
+class AmotEngine:
+
+    _times = []
+    components = adl.Components
+    components['Executor'] = 'Executor'
+    attachments = adl.Attachments
+    starter = adl.Starter
+    adaptability = adl.Adaptability
+
+    server_configs = listen_configs = cfg.Server
+    subscriber_configs = cfg.Subscriber
+    adaptation_configs = cfg.Adaptation
+    listen_configs['timeout'] = None
+
+    components_versions = {}
+    current_components = {}
+
+    thing_id = b'10'
+
+    last_adaptation = 0
+    adaptation_executor = None
+    subscriber = None
+
     def __init__(self):
-        self.components = None
-        self.components_hashes = {}
-        self.attachments = None
-        self.starter = None
-        self.adaptability = None
-        self.thing_id = None
-        self.last_adaptation = 0
-        self.subscriber = AMoTSubscriber()
-        self.adaptation_agent = AdaptationAgent()
-
-        self.current_components = {}
-
-        self.server_configs = cfg.Server
-        self.subscriber_configs = cfg.Subscriber
-        self.adaptation_configs = cfg.Adaptation
-        self.thing_id = b'10'
-
-        self.listen_configs = self.server_configs
-        self.listen_configs['timeout'] = None
-
-    def deploy_components(self):
-        self.components = adl.Components
-        self.attachments = adl.Attachments
-        self.starter = adl.Starter
-        self.adaptability = adl.Adaptability
-
-    def load_components(self):
+        # load components
         for component in self.components:
             component_file = self.components.get(component)
-            # file_hash = md5(
-            #     open('{0}.py'.format(component_file),'rb').read()
-            # ).hexdigest()
-            file_hash = binascii.hexlify(sha1(
-                open('{0}.py'.format(component_file),'rb').read()
-                ).digest())
+            imported = __import__(component_file)
+            imported.__dict__['AmotEngine'] = self
+            component_instance = getattr(imported, component)
+            self.current_components[component] = component_instance()
 
-            self.components_hashes[component_file] = file_hash
-            component_instance = getattr(__import__(component_file), component)
-            self.current_components[component] = component_instance().set_engine(self)
+        self.adaptation_executor = self.current_components['Executor']
 
-    def attached(self, component):
-        class_name = component.__class__.__name__
-        external_class_name = self.attachments.get(class_name)
-        external_class = self.current_components[external_class_name]
-        return external_class.set_engine(self)
+        # load versions
+        versions = open('versions.txt', 'r').read()
+        comps_versions = [parts.split('#') for parts in versions.split('\n')]
+        for (comp, ver) in comps_versions:
+            self.components_versions[comp] = ver
 
-    def set_component_configs(self):
+        #setting subscriber
         if 'subscriber' in cfg.Component:
             self.listen_configs = self.subscriber_configs
-            self.subscriber.set_engine(self).run()
+            self.subscriber = self.current_components['App']
+            self.subscriber.subscribe()
+
+    @staticmethod
+    def publish(app, topic, message):
+        AmotEngine.attached(app).run(b'Publish', topic, message)
+
+    @staticmethod
+    def subscribe(app, topic):
+        AmotEngine.attached(app).run(b'Subscribe', topic)
+
+    @staticmethod
+    def attached(component):
+        class_name = component.__class__.__name__
+        external_class_name = AmotEngine.attachments.get(class_name)
+        external_class = AmotEngine.current_components[external_class_name]
+        return external_class
 
     def run(self):
+        if AmotEngine.last_adaptation == 0:
+            AmotEngine.last_adaptation = time.time()
 
-        if self.last_adaptation == 0:
-            self.last_adaptation = time.time()
+        # try:
+        #     self.load_components()
+        #     self.set_component_configs()
 
-        try:
-            self.deploy_components()
-            self.load_components()
-            self.set_component_configs()
+        # except OSError as e:
+        #     self.restart_and_reconnect()
 
-        except OSError as e:
-            self.restart_and_reconnect()
-
+        time_i = 0
         while True:
-
+            self._times.append(('--total0:', time.time()))
             try:
                 for component in self.starter:
-                    print('Engine running component ', component)
+                    # print('Engine running component ', component)
                     component_instance = self.current_components[component]
+                    self._times.append(('--compApp0:', time.time()))
                     component_instance.run()
-
+                    self._times.append(('--compApp1:', time.time()))
                 if (
                     self.adaptability['kind'] is not None) and (
                     (time.time() - self.last_adaptation) >
                     self.adaptation_configs['timeout']):
-                    self.adaptation_agent.set_engine(self).run()
+                    self._times.append(('--adapt0:', time.time()))
+                    self.adaptation_executor.run()
                     self.last_adaptation = time.time()
+                    self._times.append(('--adapt1:', time.time()))
+
 
             except OSError as e:
                 self.restart_and_reconnect()
+
+            self._times.append(('--total1:', time.time()))
+
+            time_i = int(time_i) + 1
+            time_i = str(time_i)
+            if 'subscriber' in cfg.Component:
+                midApp = [t[1] for t in self._times if t[0][:8] == '--midApp']
+                print('#' + time_i + ' midApp: ', midApp[1] - midApp[0])
+
+                app = [t[1] for t in self._times if t[0][:5] == '--app']
+                print('#' + time_i + ' app: ', app[1] - app[0])
+
+                adapt = [t[1] for t in self._times if t[0][:7] == '--adapt']
+                if len(adapt) == 2:
+                    print('#' + time_i + ' adapt: ', adapt[1] - adapt[0])
+
+                net = [t[1] for t in self._times if t[0][:5] == '--net']
+
+                print('--')
+                print('#' + time_i + ' MID_COMP_APP: ', 1000 * ((midApp[1] - midApp[0]) - (app[1] - app[0])))
+                if len(adapt) == 2:
+                    print('#' + time_i + ' MID_COMP_ADAPT: ', 1000 * ((adapt[1] - adapt[0]) - (net[1] - net[0])))
+                print('--')
+                print('--')
+
+            if 'publisher' in cfg.Component:
+                total = [t[1] for t in self._times if t[0][:7] == '--total']
+                print('#' + time_i + ' total: ', total[1] - total[0])
+
+                compApp = [t[1] for t in self._times if t[0][:9] == '--compApp']
+                print('#' + time_i + ' compApp: ', compApp[1] - compApp[0])
+
+                app = [t[1] for t in self._times if t[0][:5] == '--app']
+                print('#' + time_i + ' app: ', app[1] - app[0])
+
+                net = [t[1] for t in self._times if t[0][:5] == '--net']
+                if len(net) == 2:
+                    print('#' + time_i + ' net: ', net[1] - net[0])
+                elif len(net) == 4:
+                    print('#' + time_i + ' net: ', net[1] - net[0])
+                    print('#' + time_i + ' net: ', net[3] - net[2])
+
+                adapt = [t[1] for t in self._times if t[0][:7] == '--adapt']
+                if len(adapt) == 2:
+                    print('#' + time_i + ' adapt: ', adapt[1] - adapt[0])
+
+                print('--')
+                print('#' + time_i + ' MID: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0])))
+                print('#' + time_i + ' MID_COMP_APP: ', 1000 * ((compApp[1] - compApp[0]) - (app[1] - app[0]) - (net[1] - net[0])))
+                if len(adapt) == 2:
+                    print('#' + time_i + ' MID_COMP_ADAPT: ', 1000 * ((adapt[1] - adapt[0]) - (net[3] - net[2])))
+                print('--')
+                print('--')
+                # print(self._times)
+
+            self._times = []
 
 
     @staticmethod
@@ -102,105 +165,5 @@ class AMoTEngine:
         # machine.reset()
 
 
-class Component:
-
-    def __init__(self):
-        self.engine = None
-
-    class Request(object):
-        def __init__(self,  operation, topic, message):
-            self.op = operation
-            self.topic = topic
-            self.message = message
-
-    def set_engine(self, engine):
-        self.engine = engine
-        return self
-
-    def get_engine(self):
-        return self.engine
-
-    def run(self, *args):
-        pass
-
-    def external(self):
-        return self.engine.attached(self)
-
-    def publish(self, topic, message):
-        self.external().run(b'Publish', topic, message)
-
-    def subscribe(self, topic):
-        self.external().run(b'Subscribe', topic)
-
-    def notify(self, topic, message, ip, port):
-        return self.external().run(b'Notify', topic, message, ip, port)
-
-    def adapt(self, adaptability, message, ip, port):
-        return self.external().run(b'Adapt', adaptability, message, ip, port)
-
-
-class AMoTSubscriber(Component):
-    def __init__(self):
-        super().__init__()
-
-    def run(self):
-        for topic in self.engine.subscriber_configs['topics']:
-            self.subscribe(topic)
-
-
-class AdaptationAgent(Component):
-    def __init__(self):
-        super().__init__()
-
-    def run(self):
-        has_adaptation = None
-
-        adaptation = self.engine.adaptability['kind']
-        comp_hashes = b','.join(
-            [
-                bytes('{0}:'.format(comp), 'ascii') + self.engine.components_hashes[comp] for comp in self.engine.components_hashes.keys()
-            ]
-        )
-        thing_data = self.engine.thing_id + b' ' + comp_hashes
-
-        data = self.adapt(
-            adaptation, thing_data, self.engine.adaptation_configs['host'],
-            self.engine.adaptation_configs['port'])
-
-
-        if not data or type(data) is not bytes:
-            return
-
-        data = str(data, 'utf-8')
-        files = data.split('\x1c') # FILE SEPARATOR (28)
-        for comp_content in files:
-            compname, content = comp_content.split('\x1d') # GROUP SEPARATOR (29)
-            self.adaptComponent(compname, content)
-        # self.engine.load_components()
-
-    def adaptComponent(self, component, data):
-        print('adapting {0}'.format(component))
-        file = component + '.py'
-        wr = open(file, 'w')
-        wr.write(data)
-        wr.close()
-        self.reloadComponent(component)
-
-    # https://stackoverflow.com/questions/30379893/replacing-an-imported-module-dependency
-    def reloadComponent(self, file):
-        del sys.modules[file]
-        module = __import__(file)
-        sys.modules[file] = module
-        file_hash = binascii.hexlify(sha1(
-                open('{0}.py'.format(file),'rb').read()
-                ).digest())
-
-        self.engine.components_hashes[file] = file_hash
-        component_instance = getattr(__import__(file), file)
-        self.engine.current_components[file] = component_instance().set_engine(self)
-
-
-
-
 if __name__ == '__main__':
-    AMoTEngine().run()
+    AmotEngine().run()
