@@ -87,6 +87,21 @@ publisher_subscriber:
 	cp Executor.py generated/amot-publisher-subscriber/
 
 
+
+thin-client:
+	mkdir -p generated/amot-thin
+	rm -rf generated/amot-thin/*
+	mkdir -p generated/amot-thin/components
+
+	cp AMoTEngine.py generated/amot-thin/
+	cp AMoTAgent.py generated/amot-thin/
+
+	cp middleware/examples/thinAdl.py generated/amot-thin/adl.py
+	cp middleware/examples/publisherConfig.py generated/amot-thin/config.py
+	cp middleware/examples/publisher.txt generated/amot-thin/versions.txt
+	cp main.py generated/amot-thin/main.py
+
+
 set:
 	sed -i "s/'host':.*/'host': b'$(IP)',/g" middleware/examples/*Config.py
 
@@ -96,6 +111,7 @@ all:
 	$(MAKE) publisher
 	$(MAKE) subscriber
 	$(MAKE) publisher_subscriber
+	$(MAKE) thin-client
 
 run-server:
 	cd generated/amot-server && python3 AMoTEngine.py
@@ -109,5 +125,8 @@ run-publisher:
 run-subscriber:
 	cd generated/amot-subscriber && python3 AMoTEngine.py
 
-run-published-subscriber:
+run-publisher-subscriber:
 	cd generated/amot-publisher-subscriber && python3 AMoTEngine.py
+
+run-thin-publisher:
+	cd generated/amot-thin && python3 main.py
