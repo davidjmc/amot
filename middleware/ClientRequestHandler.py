@@ -26,7 +26,7 @@ class ClientRequestHandler():
 
             try:
 
-                self.socks[addr].connect(addr)
+                self.socks[addr].connect(socket.getaddrinfo(server, port)[0][-1])
 
             except OSError as e:
                 print('Error: ' + str(e) + 'Couldnt connect with socket-server')
