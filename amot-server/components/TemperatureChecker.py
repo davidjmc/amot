@@ -24,6 +24,7 @@ class App():
         self.count += 1
         time.sleep(1)
         # AmotEngine._times.append(('--app1:', time.time()))
+        print('Publishing on topic [{0}]: {1}'.format(topic, msg))
         AmotEngine.publish(self, topic, msg)
 
         # Test publisher application running on the device (thing)

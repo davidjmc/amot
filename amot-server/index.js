@@ -1,9 +1,11 @@
 var net = require('net')
 const fs = require('fs')
 
+const self_port = 60010
+
 var server = new net.Server()
-server.listen(60005, '0.0.0.0', 5, () => {
-    console.log('listening')
+server.listen(self_port, '0.0.0.0', 5, () => {
+    console.log(`listening on ${self_port}`)
 })
 
 server.on('connection', socket => {
