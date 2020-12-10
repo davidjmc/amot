@@ -97,7 +97,7 @@ thin-client:
 	cp AMoTAgent.py generated/amot-thin/
 
 	cp middleware/examples/thinAdl.py generated/amot-thin/adl.py
-	cp middleware/examples/publisherConfig.py generated/amot-thin/config.py
+	cp middleware/examples/thinConfig.py generated/amot-thin/config.py
 	cp middleware/examples/publisher.txt generated/amot-thin/versions.txt
 	cp main.py generated/amot-thin/main.py
 
