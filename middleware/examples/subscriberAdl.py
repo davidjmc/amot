@@ -1,5 +1,5 @@
 Components = {
-    'App': 'App',
+    'App': 'LoggerSubscriber',
     'Subscriptor': 'Subscriptor',
     'ServerRequestHandler': 'ServerRequestHandler',
     'Notifier': 'Notifier',
@@ -8,8 +8,6 @@ Components = {
     'Marshaller': 'Marshaller',
     'Unmarshaller': 'Unmarshaller',
     'ClientRequestHandler': 'ClientRequestHandler',
-
-    'AdaptationProxy': 'AdaptationProxy'
 }
 
 Attachments = {
@@ -20,10 +18,7 @@ Attachments = {
     # 'Subscriptor': 'QueueProxy',
     'App': 'QueueProxy',
     'QueueProxy': 'Marshaller',
-    'Marshaller': 'ClientRequestHandler',
-
-    'Executor': 'AdaptationProxy',
-    'AdaptationProxy': 'Marshaller'
+    'Marshaller': 'ClientRequestHandler'
 }
 
 
@@ -32,5 +27,6 @@ Starter = {
 }
 
 Adaptability = {
-    'kind': b'Evolutive'
+    # 'kind': b'Evolutive'
+    'kind': None
 }
