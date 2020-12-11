@@ -7,9 +7,9 @@ broker:
 	cp AMoTAgent.py generated/amot-broker/
 	cp main.py generated/amot-broker/main.py
 
-	cp middleware/examples/serverAdl.py generated/amot-broker/adl.py
-	cp middleware/examples/serverConfig.py generated/amot-broker/config.py
-	cp middleware/examples/server.txt generated/amot-broker/versions.txt
+	cp examples/serverAdl.py generated/amot-broker/adl.py
+	cp examples/serverConfig.py generated/amot-broker/config.py
+	cp examples/server.txt generated/amot-broker/versions.txt
 
 
 subscriber:
@@ -21,9 +21,9 @@ subscriber:
 	cp AMoTAgent.py generated/amot-subscriber/
 	cp main.py generated/amot-subscriber/main.py
 
-	cp middleware/examples/subscriberAdl.py generated/amot-subscriber/adl.py
-	cp middleware/examples/subscriberConfig.py generated/amot-subscriber/config.py
-	cp middleware/examples/subscriber.txt generated/amot-subscriber/versions.txt
+	cp examples/subscriberAdl.py generated/amot-subscriber/adl.py
+	cp examples/subscriberConfig.py generated/amot-subscriber/config.py
+	cp examples/subscriber.txt generated/amot-subscriber/versions.txt
 
 
 publisher:
@@ -35,9 +35,9 @@ publisher:
 	cp AMoTAgent.py generated/amot-publisher/
 	cp main.py generated/amot-publisher/main.py
 
-	cp middleware/examples/thinAdl.py generated/amot-publisher/adl.py
-	cp middleware/examples/thinConfig.py generated/amot-publisher/config.py
-	cp middleware/examples/publisher.txt generated/amot-publisher/versions.txt
+	cp examples/thinAdl.py generated/amot-publisher/adl.py
+	cp examples/thinConfig.py generated/amot-publisher/config.py
+	cp examples/publisher.txt generated/amot-publisher/versions.txt
 
 
 set:
@@ -45,6 +45,8 @@ set:
 
 
 all:
+	mkdir -p generated
+	rm -rf generated/*
 	$(MAKE) broker
 	$(MAKE) publisher
 	$(MAKE) subscriber
