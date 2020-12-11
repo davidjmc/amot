@@ -2,9 +2,4 @@ AMoTBroker
 AMoTSubscriber
 AMoTPublisher
 AMoTPublisherSubscriber
-generated/amot-server
-generated/amot-subscriber
-generated/amot-publisher
-generated/amot-publisher-subscriber
-generated/amot-adaptation-manager
-generated/amot-thin
+generated/*
