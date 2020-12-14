@@ -39,6 +39,18 @@ publisher:
 	cp examples/thinConfig.py generated/amot-publisher/config.py
 	cp examples/publisher.txt generated/amot-publisher/versions.txt
 
+publisher-2:
+	mkdir -p generated/amot-publisher2
+	rm -rf generated/amot-publisher2/*
+	mkdir -p generated/amot-publisher2/components
+
+	cp AMoTEngine.py generated/amot-publisher2/
+	cp AMoTAgent.py generated/amot-publisher2/
+	cp main.py generated/amot-publisher2/main.py
+
+	cp examples/thinAdl2.py generated/amot-publisher2/adl.py
+	cp examples/thinConfig2.py generated/amot-publisher2/config.py
+	cp examples/publisher.txt generated/amot-publisher2/versions.txt
 
 set:
 	sed -i "s/'host':.*/'host': b'$(IP)',/g" middleware/examples/*Config.py
@@ -49,6 +61,7 @@ all:
 	rm -rf generated/*
 	$(MAKE) broker
 	$(MAKE) publisher
+	$(MAKE) publisher-2
 	$(MAKE) subscriber
 
 run-broker:
@@ -62,3 +75,6 @@ run-subscriber:
 
 run-publisher:
 	cd generated/amot-publisher && python3 main.py
+
+run-publisher2:
+	cd generated/amot-publisher2 && python3 main.py

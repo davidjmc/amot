@@ -1,15 +1,12 @@
 Component = {
-    'subscriber'
+    'publisher'
 }
 
-Publisher = {}
-
-Subscriber = {
-    'timeout': None,
-    'topics': [b'temperature', b'temp'],
-    'host': b'192.168.0.102',
-    'port': b'60001'
+Publisher = {
+    'timeout': 1
 }
+
+Subscriber = {}
 
 # AMoT-Server IP Address and Port
 Server = {
@@ -21,4 +18,8 @@ Adaptation = {
     'host': b'192.168.0.102',
     'port': 60010,
     'timeout': 10
+}
+
+App = {
+    'topic': b'temp'
 }
