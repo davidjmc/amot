@@ -1,5 +1,0 @@
-Client#0.1
-QueueProxy#0.1
-Marshaller#0.1
-ClientRequestHandler#0.1
-AdaptationProxy#0.1

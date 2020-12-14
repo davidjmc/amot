@@ -9,7 +9,6 @@ broker:
 
 	cp examples/serverAdl.py generated/amot-broker/adl.py
 	cp examples/serverConfig.py generated/amot-broker/config.py
-	cp examples/server.txt generated/amot-broker/versions.txt
 
 
 subscriber:
@@ -23,7 +22,6 @@ subscriber:
 
 	cp examples/subscriberAdl.py generated/amot-subscriber/adl.py
 	cp examples/subscriberConfig.py generated/amot-subscriber/config.py
-	cp examples/subscriber.txt generated/amot-subscriber/versions.txt
 
 
 publisher:
@@ -37,7 +35,6 @@ publisher:
 
 	cp examples/thinAdl.py generated/amot-publisher/adl.py
 	cp examples/thinConfig.py generated/amot-publisher/config.py
-	cp examples/publisher.txt generated/amot-publisher/versions.txt
 
 
 publisher-2:
@@ -51,7 +48,6 @@ publisher-2:
 
 	cp examples/thinAdl2.py generated/amot-publisher2/adl.py
 	cp examples/thinConfig2.py generated/amot-publisher2/config.py
-	cp examples/publisher.txt generated/amot-publisher2/versions.txt
 
 
 set:
