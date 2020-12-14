@@ -1,10 +1,6 @@
 import time
 import random as r
 
-# from datetime import datetime
-
-topic = b'temperature'
-
 class App():
     def __init__(self):
         super().__init__()
@@ -12,25 +8,17 @@ class App():
         # self.sensor = dht.DHT11(machine.Pin(2))
 
     def run(self):
+        topic = AmotEngine.config.App['topic']
 
-        # Test publisher application running on the Computer
-        # AmotEngine._times.append(('--app0:', time.time()))
         temp, hum = self.temp_hum_sensor()
-        msg = b'Temperature: %b and Humidity: %b' % (temp, hum)
-        # print(self.count, msg)
-        # print(':::T0:::', datetime.now().timestamp())
-        # AmotEngine.attached(self).run(b'Publish', topic, msg)
-        # AmotEngine.getProxyFor(self).publish(topic, msg)
+        msg = b'Temperature: %b and Humidity: %b @ %b' % (temp, hum, b'lalala')
+
         self.count += 1
-        time.sleep(1)
-        # AmotEngine._times.append(('--app1:', time.time()))
+        time.sleep(5)
+
         print('Publishing on topic [{0}]: {1}'.format(topic, msg))
         AmotEngine.publish(self, topic, msg)
 
-        # Test publisher application running on the device (thing)
-        # temp, hum = self.read_sensor()
-        # msg = 'Temperature: {} and Humidity: {}'.format(temp, hum)
-        # self.publish(topic, msg)
 
     @staticmethod
     def temp_hum_sensor():

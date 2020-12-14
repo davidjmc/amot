@@ -19,3 +19,7 @@ Adaptation = {
     'port': 60010,
     'timeout': 10
 }
+
+App = {
+    'topic': b'temperature'
+}

@@ -14,6 +14,8 @@ class AmotEngine:
     starter = adl.Starter
     adaptability = adl.Adaptability
 
+    config = cfg
+
     server_configs = listen_configs = cfg.Server
     subscriber_configs = cfg.Subscriber
     adaptation_configs = cfg.Adaptation
