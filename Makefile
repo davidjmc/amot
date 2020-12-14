@@ -39,6 +39,7 @@ publisher:
 	cp examples/thinConfig.py generated/amot-publisher/config.py
 	cp examples/publisher.txt generated/amot-publisher/versions.txt
 
+
 publisher-2:
 	mkdir -p generated/amot-publisher2
 	rm -rf generated/amot-publisher2/*
@@ -51,6 +52,7 @@ publisher-2:
 	cp examples/thinAdl2.py generated/amot-publisher2/adl.py
 	cp examples/thinConfig2.py generated/amot-publisher2/config.py
 	cp examples/publisher.txt generated/amot-publisher2/versions.txt
+
 
 set:
 	sed -i "s/'host':.*/'host': b'$(IP)',/g" middleware/examples/*Config.py
