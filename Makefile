@@ -55,7 +55,7 @@ publisher-2:
 
 
 set:
-	sed -i "s/'host':.*/'host': b'$(IP)',/g" middleware/examples/*Config.py
+	sed -i "s/'host':.*/'host': b'$(IP)',/g" examples/*Config.py
 
 
 all:
