@@ -7,9 +7,7 @@ import adl as adl
 
 class AmotEngine:
 
-    _times = []
     components = adl.Components
-    components['Executor'] = 'Executor'
     attachments = adl.Attachments
     starter = adl.Starter
     adaptability = adl.Adaptability
@@ -34,18 +32,17 @@ class AmotEngine:
         # load components
         for component in self.components:
             component_file = self.components.get(component)
-            imported = __import__(component_file)
-            imported.__dict__['AmotEngine'] = self
-            component_instance = getattr(imported, component)
+            namespace = __import__('components.' + component_file)
+            component_module = getattr(namespace, component_file)
+            component_module.__dict__['AmotEngine'] = self
+            component_instance = getattr(component_module, component)
             self.current_components[component] = component_instance()
 
-        self.adaptation_executor = self.current_components['Executor']
-
-        # load versions
-        versions = open('versions.txt', 'r').read()
-        comps_versions = [parts.split('#') for parts in versions.split('\n')]
-        for (comp, ver) in comps_versions:
-            self.components_versions[comp] = ver
+        # # load versions
+        # versions = open('versions.txt', 'r').read()
+        # comps_versions = [parts.split('#') for parts in versions.split('\n')]
+        # for (comp, ver) in comps_versions:
+        #     self.components_versions[comp] = ver
 
         #setting subscriber
         if 'subscriber' in cfg.Component:
@@ -72,13 +69,6 @@ class AmotEngine:
         if AmotEngine.last_adaptation == 0:
             AmotEngine.last_adaptation = time.time()
 
-        # try:
-        #     self.load_components()
-        #     self.set_component_configs()
-
-        # except OSError as e:
-        #     self.restart_and_reconnect()
-
         while True:
             try:
                 for component in self.starter:
@@ -90,7 +80,7 @@ class AmotEngine:
                     and (time.time() - self.last_adaptation) >
                     self.adaptation_configs['timeout']):
                     # it will adapt
-                    self.adaptation_executor.run()
+                    # self.adaptation_executor.run()
                     self.last_adaptation = time.time()
 
 
@@ -103,7 +93,10 @@ class AmotEngine:
         import time
         print('Failed to connect to AMoT broker, Reconnecting...')
         time.sleep(10)
-        # machine.reset()
+        try:
+            machine.reset()
+        except NameError:
+            pass
 
 
 if __name__ == '__main__':

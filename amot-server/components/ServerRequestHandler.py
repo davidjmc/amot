@@ -67,9 +67,7 @@ class ServerRequestHandler():
                 if data:
                     self.message = data
                     # print(self.message, 'aqui!!')
-                    AmotEngine._times.append(('--midApp0', time.time()))
                     response = AmotEngine.attached(self).run(self.message)
-                    AmotEngine._times.append(('--midApp1', time.time()))
                     if not response:
                         response = b'0'
                     s.sendall(response)

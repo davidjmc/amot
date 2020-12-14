@@ -5,8 +5,7 @@ Components = {
     'NotificationConsumer': 'NotificationConsumer',
     'Marshaller': 'Marshaller',
     'Unmarshaller': 'Unmarshaller',
-    'ClientRequestHandler': 'ClientRequestHandler',
-    'SubscriptionManager': 'SubscriptionManager'
+    'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {

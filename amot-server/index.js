@@ -28,8 +28,34 @@ server.on('connection', socket => {
             console.log(comp)
             if (!fs.existsSync(`./components/${comp}.py`))
                 return
-            data = fs.readFileSync(`./components/${comp}.py`)
-            response.push(comp + String.fromCharCode(0x1d) + data)
+            let data = fs.readFileSync(`./components/${comp}.py`)
+            response.push('components/' + comp + String.fromCharCode(0x1d) + data);
+
+            (''+data).split('\n').forEach(loc => {
+                let _import = null
+                let dependency = ''
+
+                _import = loc.match(/import (.*)/)
+                // console.log(_import)
+                if (_import) {
+                    dependency = _import[1]
+                }
+
+                _import = loc.match(/from (?:.*)? import (.*)/)
+                if (_import) {
+                    dependency = _import[1]
+                }
+                if (dependency) {
+                    console.log('dep: ' + dependency)
+                }
+
+                if (!fs.existsSync(`./classes/${dependency}.py`))
+                    return
+
+                let data = fs.readFileSync(`./classes/${dependency}.py`)
+                response.push(dependency + String.fromCharCode(0x1d) + data);
+
+            })
         })
         socket.write(
             response.join(String.fromCharCode(0x1c))

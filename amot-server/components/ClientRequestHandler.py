@@ -37,7 +37,6 @@ class ClientRequestHandler():
         buffer_size = 536
         response = b''
         try:
-            AmotEngine._times.append(('--net0:', time.time()))
             self.socks[addr].sendall(data)
             # print(':::T1:::', datetime.now().timestamp())
             # print('\t{0} data sent, w8ing response'.format(datetime.now()))
@@ -47,7 +46,6 @@ class ClientRequestHandler():
                 if len(part) < buffer_size:
                     break
             # print('\t', response, '<=========CRH')
-            AmotEngine._times.append(('--net1:', time.time()))
             if response == b'0':
                 return True
             elif response == b'':
