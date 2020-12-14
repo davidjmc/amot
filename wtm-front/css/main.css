@@ -1,0 +1,56 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+.font{
+	font-size: 60px;
+	text-transform: uppercase;
+	font-weight: 900;
+	color: #2c3e5036;
+    background-clip: text;
+	-webkit-background-clip:text;
+    animation: water 15s infinite;
+    background-image: url('../images/water.png');
+}
+@keyframes water {
+	from{
+		background-position: left 0 top 0;
+	}
+	to{
+		background-position: left 2000px top 0;
+	}
+}
+
+.radioA, .radioB{
+    height: 100px;
+    color:white;
+    border-radius: 100%;
+    padding-top: 30px;
+    text-align: center;
+    margin-left: 10%;
+    opacity: 0.4;
+}
+.hr{
+    width: 100px;
+    height: 5px;
+    margin: auto;
+    animation: water 15s infinite;
+    background-color: #2c3e5036;
+    background-image: url('../images/water.png');
+}
+.align{
+    margin: auto;
+    text-align: center;
+}
+.top{
+    margin-top: 100px;
+}
+.bg, .bgB{
+    background-image: url("../images/Ativo1.png");
+    background-size: 100% 100%;
+}
+.bgB{
+    filter: grayscale(100%);
+}
+/* @media only screen and (max-width: 768px) {
+} */

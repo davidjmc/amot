@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amot</title>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container">
+            <h4 style="color:white;">AMOT</h4>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="align">
+            <h1 class="mt-5 font">Water Monitoring</h1>
+            <div class="hr"></div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-1 radioA bg-primary top"><h4>A</h4></div>
+            <div class="col-3 ml-3 bg-light top bg">
+            </div>
+            <div class="col-4 ml-1 top">
+                <div class="tank waterTankHere1"></div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-1 radioA bg-dark top"><h4>B</h4></div>
+            <div class="col-3 ml-3 bg-light top bgB" style="height: auto;">
+            </div>
+            <div class="col-4 ml-1 top">
+                <div class="tank waterTankHere2"></div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar fixed-bottom navbar-dark bg-dark justify-content-center" >
+        <h4 style="color:white; text-transform: uppercase;">@Copyright</h4>
+    </nav>
+    <script src="js/jquery-3.5.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/waterTank.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.waterTankHere1').waterTank({
+            width: 173,
+            height: 100,
+            color: '#8bd0ec',
+            level: 0
+        }).ready(function(event) {
+            setInterval(function(){ 
+                console.log($('.waterTankHere1').waterTank(Math.floor(Math.random() * 100) + 0 ));
+            }, 3000);
+        });
+
+        $('.waterTankHere2').waterTank({
+            width: 173,
+            height: 100,
+            color: 'grey',
+            level: 0
+        }).ready(function(event) {
+            // setInterval(function(){ 
+            //     console.log($('.waterTankHere2').waterTank(Math.floor(Math.random() * 100) + 0 ));
+            // }, 1000);
+        });
+
+    });
+    </script>
+</body>
+</html>
