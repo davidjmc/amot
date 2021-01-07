@@ -99,6 +99,3 @@ class AmotEngine:
         except NameError:
             pass
 
-
-if __name__ == '__main__':
-    AmotEngine().run()

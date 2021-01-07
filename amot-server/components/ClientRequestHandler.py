@@ -1,9 +1,6 @@
 import socket
 
 import time
-#from datetime import datetime
-
-
 
 class ClientRequestHandler():
 
@@ -38,8 +35,6 @@ class ClientRequestHandler():
         response = b''
         try:
             self.socks[addr].sendall(data)
-            # print(':::T1:::', datetime.now().timestamp())
-            # print('\t{0} data sent, w8ing response'.format(datetime.now()))
             while True:
                 part = self.socks[addr].recv(buffer_size)
                 response += part

@@ -1,28 +1,22 @@
 Components = {
-    'Client': 'Client',
+    'App': 'TemperatureChecker',
     'QueueProxy': 'QueueProxy',
-    # 'ClientProxy': 'ClientProxy',
-    # 'Requestor': 'Requestor',
     'Marshaller': 'Marshaller',
-    'ClientRequestHandler': 'ClientRequestHandler',
-    'AdaptationProxy': 'AdaptationProxy'
+    'ClientRequestHandler': 'ClientRequestHandler'
 }
 
 Attachments = {
-    'Client': 'QueueProxy',
+    'App': 'QueueProxy',
     'QueueProxy': 'Marshaller',
-    'Marshaller': 'ClientRequestHandler',
-
-    'Executor': 'AdaptationProxy',
-    'AdaptationProxy': 'Marshaller'
+    'Marshaller': 'ClientRequestHandler'
 }
 
 
 Starter = {
-    'Client'
+    'App'
 }
 
 Adaptability = {
-    'kind': b'Evolutive'
-    # 'kind': None
+    # 'kind': b'Evolutive'
+    'kind': None
 }

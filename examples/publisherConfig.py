@@ -16,6 +16,10 @@ Server = {
 
 Adaptation = {
     'host': b'192.168.0.102',
-    'port': 60005,
+    'port': 60010,
     'timeout': 10
+}
+
+App = {
+    'topic': b'temperature'
 }
