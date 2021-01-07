@@ -34,7 +34,8 @@ class AmotEngine:
             component_file = self.components.get(component)
             namespace = __import__('components.' + component_file)
             component_module = getattr(namespace, component_file)
-            component_module.__dict__['AmotEngine'] = self
+            # component_module.__dict__['AmotEngine'] = self
+            setattr(component_module, 'AmotEngine', self)
             component_instance = getattr(component_module, component)
             self.current_components[component] = component_instance()
 

@@ -33,7 +33,8 @@ class AmotAgent:
         # clear directory
         files = os.listdir('components')
         for file in files:
-            if os.path.isfile('components/' + file):
+            # if os.path.isfile('components/' + file):
+            if file in os.listdir('components'):
                 os.remove('components/' + file)
 
         # listing components
