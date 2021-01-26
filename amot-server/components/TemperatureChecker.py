@@ -8,13 +8,13 @@ class App():
         # self.sensor = dht.DHT11(machine.Pin(2))
 
     def run(self):
-        topic = AmotEngine.config.App['topic']
+        [topic] = AmotEngine._app_vars['topics']
 
         temp, hum = self.temp_hum_sensor()
         msg = b'Temperature: %b and Humidity: %b @ %b' % (temp, hum, b'lalala')
 
         self.count += 1
-        time.sleep(5)
+        time.sleep(1)
 
         print('Publishing on topic [{0}]: {1}'.format(topic, msg))
         AmotEngine.publish(self, topic, msg)

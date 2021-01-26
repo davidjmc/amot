@@ -7,7 +7,6 @@ broker:
 	cp AMoTAgent.py generated/amot-broker/
 	cp main.py generated/amot-broker/main.py
 
-	cp examples/serverAdl.py generated/amot-broker/adl.py
 	cp examples/serverConfig.py generated/amot-broker/config.py
 
 
@@ -33,8 +32,7 @@ publisher:
 	cp AMoTAgent.py generated/amot-publisher/
 	cp main.py generated/amot-publisher/main.py
 
-	cp examples/thinAdl.py generated/amot-publisher/adl.py
-	cp examples/thinConfig.py generated/amot-publisher/config.py
+	cp examples/publisherConfig.py generated/amot-publisher/config.py
 
 
 publisher-2:
@@ -46,8 +44,7 @@ publisher-2:
 	cp AMoTAgent.py generated/amot-publisher2/
 	cp main.py generated/amot-publisher2/main.py
 
-	cp examples/thinAdl2.py generated/amot-publisher2/adl.py
-	cp examples/thinConfig2.py generated/amot-publisher2/config.py
+	cp examples/publisherConfig2.py generated/amot-publisher2/config.py
 
 
 set:
@@ -66,7 +63,7 @@ run-broker:
 	cd generated/amot-broker && python3 main.py
 
 run-server:
-	cd amot-server && nodemon index.js
+	cd amot-server && npm install && nodemon index.js
 
 run-subscriber:
 	cd generated/amot-subscriber && python3 main.py

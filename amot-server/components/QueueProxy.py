@@ -6,13 +6,13 @@ class QueueProxy():
 
     def run(self, *args):
         message = None
-        ip = AmotEngine.server_configs['host']
-        port = AmotEngine.server_configs['port']
+        ip = AmotEngine._broker['host']
+        port = AmotEngine._broker['port']
 
         if args[0] == b'Publish':
             message = {'op': args[0], 'topic': args[1], 'msg': args[2]}
         elif args[0] == b'Subscribe':
-            ip_port = AmotEngine.subscriber_configs['host'] + b' ' + AmotEngine.subscriber_configs['port']
+            ip_port = bytes(AmotEngine.ip, 'ascii') + b' ' + AmotEngine._listen['port']
             message = {'op': args[0], 'topic': args[1], 'msg': ip_port}
         elif args[0] == b'Unsubscribe':
             #TODO

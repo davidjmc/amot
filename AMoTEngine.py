@@ -4,6 +4,8 @@ import datetime
 import config as cfg
 import adl as adl
 
+from AMoTAgent import AmotAgent
+
 
 class AmotEngine:
 
@@ -14,21 +16,24 @@ class AmotEngine:
 
     config = cfg
 
-    server_configs = listen_configs = cfg.Server
-    subscriber_configs = cfg.Subscriber
-    adaptation_configs = cfg.Adaptation
-    listen_configs['timeout'] = None
+    ip = None
 
-    components_versions = {}
+    _broker = cfg.broker
+    _server = cfg.server
+    _app_vars = cfg.app_vars
+    _listen = {
+        'timeout': None,
+        'port': cfg.thing.get('listen_port')
+    }
+
     current_components = {}
-
-    thing_id = b'10'
 
     last_adaptation = 0
     adaptation_executor = None
     subscriber = None
 
-    def __init__(self):
+    def __init__(self, self_ip):
+        self.ip = self_ip
         # load components
         for component in self.components:
             component_file = self.components.get(component)
@@ -46,8 +51,7 @@ class AmotEngine:
         #     self.components_versions[comp] = ver
 
         #setting subscriber
-        if 'subscriber' in cfg.Component:
-            self.listen_configs = self.subscriber_configs
+        if 'subscriber' in cfg.app_vars.get('mode'):
             self.subscriber = self.current_components['App']
             self.subscriber.subscribe()
 
@@ -77,11 +81,12 @@ class AmotEngine:
                     component_instance = self.current_components[component]
                     component_instance.run()
                 if (
-                    self.adaptability['kind'] is not None
+                    self.adaptability['type'] is not None
                     and (time.time() - self.last_adaptation) >
                     self.adaptation_configs['timeout']):
                     # it will adapt
                     # self.adaptation_executor.run()
+                    AmotAgent.adapt()
                     self.last_adaptation = time.time()
 
 

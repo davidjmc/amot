@@ -1,5 +1,5 @@
 import config as cfg
-import adl as adl
+# import adl as adl
 import os
 import socket
 
@@ -49,12 +49,14 @@ class AmotAgent:
                pass
 
         # listing components
-        components = [c for c in adl.Components.values()]
-        components.append('AMoTAgent')
+        # components = [c for c in adl.Components.values()]
+        # components.append('AMoTAgent')
 
 
         # sending data
-        data = AmotAgent.send_receive(conn, b'soueu:' + b','.join([bytes(c, 'ascii') for c in components]))
+        # msg = b'START\nThing:soueu\nComponents:' + b','.join([bytes(c, 'ascii') for c in components])
+        msg = b'START\nThing:' + bytes(cfg.thing['id'], 'ascii')
+        data = AmotAgent.send_receive(conn, msg)
 
         data = str(data, 'ascii')
 

@@ -1,5 +1,5 @@
 thing = {
-    'id': '1',
+    'id': '11',
     'location': None
 }
 
@@ -17,5 +17,5 @@ server = {
 
 app_vars = {
     'mode': 'publisher', # or subscriber or sublish_subscriber or broker
-    'topics': [b'temperature'] # and/or other topics
+    'topics': [b'temp'] # and/or other topics
 }

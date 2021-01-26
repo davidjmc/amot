@@ -1,6 +1,26 @@
 from AMoTAgent import AmotAgent
-from AMoTEngine import AmotEngine
 
 AmotAgent.thingStart()
 
-AmotEngine().run()
+import socket
+ip = ''
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+try:
+    # doesn't even have to be reachable
+    s.connect(('10.255.255.255', 1))
+    ip = s.getsockname()[0]
+except:
+    ip = '127.0.0.1'
+finally:
+    s.close()
+
+from AMoTEngine import AmotEngine
+AmotEngine(ip).run()
+# try:
+# except:
+#     print("erro na engine")
+#     try:
+#         machine.reset()
+#     except NameError:
+#         print("cant reset")
+#         pass

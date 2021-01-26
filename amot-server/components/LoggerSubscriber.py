@@ -8,7 +8,7 @@ class App():
 
 
     def subscribe(self):
-        for topic in AmotEngine.subscriber_configs['topics']:
+        for topic in AmotEngine._app_vars['topics']:
             AmotEngine.subscribe(self, topic)
 
 

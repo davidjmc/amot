@@ -23,8 +23,8 @@ class Executor():
             return
 
         data = AmotEngine.attached(self).run(
-            adaptation, thing_data, AmotEngine.adaptation_configs['host'],
-            AmotEngine.adaptation_configs['port'])
+            adaptation, thing_data, AmotEngine._server['host'],
+            AmotEngine._server['port'])
 
 
         if not data or type(data) is not bytes:

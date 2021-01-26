@@ -3,3 +3,4 @@ AMoTSubscriber
 AMoTPublisher
 AMoTPublisherSubscriber
 generated/*
+*node_modules*
