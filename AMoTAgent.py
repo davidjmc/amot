@@ -30,20 +30,28 @@ class AmotAgent:
     @staticmethod
     def thingStart():
         print('running agent')
+        # connecting to server
+        try:
+            conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            conn.connect(socket.getaddrinfo(cfg.server['host'], cfg.server['port'])[0][-1])
+        except:
+            return
+
         # clear directory
         files = os.listdir('components')
         for file in files:
-            # if os.path.isfile('components/' + file):
-            if file in os.listdir('components'):
-                os.remove('components/' + file)
+            path = 'components/' + file
+            try:
+                f = open(path, "r")
+                f.close()
+                os.remove(path)
+            except OSError:
+               pass
 
         # listing components
         components = [c for c in adl.Components.values()]
         components.append('AMoTAgent')
 
-        # connecting to server
-        conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        conn.connect(socket.getaddrinfo(cfg.Adaptation['host'], cfg.Adaptation['port'])[0][-1])
 
         # sending data
         data = AmotAgent.send_receive(conn, b'soueu:' + b','.join([bytes(c, 'ascii') for c in components]))
