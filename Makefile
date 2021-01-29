@@ -7,7 +7,7 @@ broker:
 	cp AMoTAgent.py generated/amot-broker/
 	cp main.py generated/amot-broker/main.py
 
-	cp examples/serverConfig.py generated/amot-broker/config.py
+	cp examples/brokerConfig.py generated/amot-broker/config.py
 
 
 subscriber:
