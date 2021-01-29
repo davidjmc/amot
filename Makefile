@@ -19,7 +19,6 @@ subscriber:
 	cp AMoTAgent.py generated/amot-subscriber/
 	cp main.py generated/amot-subscriber/main.py
 
-	cp examples/subscriberAdl.py generated/amot-subscriber/adl.py
 	cp examples/subscriberConfig.py generated/amot-subscriber/config.py
 
 
