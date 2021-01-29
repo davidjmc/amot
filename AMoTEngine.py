@@ -2,7 +2,12 @@ import time
 
 import datetime
 import config as cfg
-import adl as adl
+
+try:
+    import adl as adl
+except:
+    # fooling the IDE
+    pass
 
 from AMoTAgent import AmotAgent
 
