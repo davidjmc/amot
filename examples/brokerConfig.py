@@ -1,14 +1,14 @@
 thing = {
     'id': 'broker',
     'location': None,
-    'listen_port': b'60000'
+    'listen_port': 60000
 }
 
 broker = {}
 
 server = {
     'host': '192.168.0.102',
-    'port': b'60010',
+    'port': 60010,
     'type': None, # or evolutive or reactive or proactive ## unecessary
     'timeout': None # adaptation interval ## unecessary
 }

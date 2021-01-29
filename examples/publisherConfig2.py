@@ -4,13 +4,13 @@ thing = {
 }
 
 broker = {
-    'host': b'192.168.0.102',
-    'port': b'60000'
+    'host': '192.168.0.102',
+    'port': 60000
 }
 
 server = {
-    'host': b'192.168.0.102',
-    'port': b'60010',
+    'host': '192.168.0.102',
+    'port': 60010,
     'type': None, # or evolutive or reactive or proactive ## unecessary
     'timeout': None # adaptation interval ## unecessary
 }

@@ -14,7 +14,7 @@ class ClientRequestHandler():
         port = args[2]
 
         # addr = socket.getaddrinfo(server, port)[0][-1]
-        addr = b':'.join([server, bytes([int(port) & 0xff])])
+        addr = b':'.join([bytes(server, 'ascii'), bytes([port & 0xff]), bytes([(port >> 8) & 0xff])])
 
         if self.socks.get(addr) is None:
             self.socks[addr] = socket.socket(socket.AF_INET, socket.SOCK_STREAM)

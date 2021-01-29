@@ -20,7 +20,7 @@ class NotificationEngine():
             self.storage.keep_subscribers(topic, subscribers_notified)
         elif operation == b'Subscribe':
             ip_port = message.split(b' ')
-            self.subscribe(topic, ip_port[0], int(ip_port[1]))
+            self.subscribe(topic, str(ip_port[0], 'ascii'), int(ip_port[1]))
         elif operation == b'Unsubscribe':
             # TODO
             pass
