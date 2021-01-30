@@ -29,13 +29,19 @@ server.on('connection', socket => {
         // console.log('thing: ' + thing_id)
         // console.log('components: ' + components)
 
+        let response = '0'
         switch(method) {
             case 'START':
-                let response = functions.startThing(headers)
+                response = functions.startThing(headers)
                 if (!response) {
                     response = "ERROR"
                 }
                 socket.write(response)
+                break
+            case 'ADAPT':
+                response = functions.evolveThing(headers)
+                socket.write(response)
+                break
         }
 
 
