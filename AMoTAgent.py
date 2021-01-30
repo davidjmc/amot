@@ -2,6 +2,7 @@ import config as cfg
 # import adl as adl
 import os
 import socket
+import time
 
 class AmotAgent:
 
@@ -28,13 +29,27 @@ class AmotAgent:
             return False
 
     @staticmethod
+    def adapt():
+        print('adapting...')
+        if self.adaptability['kind'] == b'Evolutive':
+            msg = b'ADAPT\nAdaptation:Evolutive\n'
+
+    @staticmethod
     def thingStart():
         print('running agent')
         # connecting to server
-        try:
-            conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            conn.connect(socket.getaddrinfo(cfg.server['host'], cfg.server['port'])[0][-1])
-        except:
+        conn = None
+        for i in range(5):
+            try:
+                conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                conn.connect(socket.getaddrinfo(cfg.server['host'], cfg.server['port'])[0][-1])
+                break
+            except:
+                conn = None
+                time.sleep(1)
+                print('error')
+
+        if conn is None:
             return
 
         # clear directory
