@@ -2,6 +2,7 @@ import time
 
 import datetime
 import config as cfg
+import sys
 
 try:
     import adl as adl
@@ -88,15 +89,37 @@ class AmotEngine:
                 if (
                     self.adaptability['type'] is not None
                     and (time.time() - self.last_adaptation) >
-                    self.adaptation_configs['timeout']):
+                    self.adaptability['timeout']):
                     # it will adapt
                     # self.adaptation_executor.run()
-                    AmotAgent.adapt()
+                    updated = AmotAgent.adapt()
+                    if updated:
+                        self.reload_components()
                     self.last_adaptation = time.time()
 
 
             except OSError as e:
                 self.restart_and_reconnect()
+
+    def reload_components(self):
+        del sys.modules['adl']
+        module = __import__('adl')
+        sys.modules['adl'] = module
+
+        self.components = adl.Components
+
+        for component in self.components:
+            component_file = self.components.get(component)
+            del sys.modules['components.' + component_file]
+
+            namespace = __import__('components.' + component_file)
+            component_module = getattr(namespace, component_file)
+            # component_module.__dict__['AmotEngine'] = self
+            setattr(component_module, 'AmotEngine', self)
+            component_instance = getattr(component_module, component)
+            self.current_components[component] = component_instance()
+
+
 
 
     @staticmethod

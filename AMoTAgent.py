@@ -29,10 +29,56 @@ class AmotAgent:
             return False
 
     @staticmethod
+    def update_files(data, clear = True): # data should be a string
+        if clear:
+            # clear directory
+            files = os.listdir('components')
+            for file in files:
+                path = 'components/' + file
+                try:
+                    f = open(path, "r")
+                    f.close()
+                    os.remove(path)
+                except OSError:
+                   pass
+
+        # writing files from data
+        files = data.split('\x1c') # FILE SEPARATOR (28)
+        for comp_content in files:
+            compname, content = comp_content.split('\x1d') # GROUP SEPARATOR (29)
+            file = compname + '.py'
+            wr = open(file, 'w')
+            wr.write(content)
+            wr.close()
+
+    @staticmethod
     def adapt():
+        import adl
         print('adapting...')
-        if self.adaptability['kind'] == b'Evolutive':
-            msg = b'ADAPT\nAdaptation:Evolutive\n'
+        try:
+            conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            conn.connect(socket.getaddrinfo(cfg.server['host'], cfg.server['port'])[0][-1])
+        except:
+            print('could not create socket for adaptation')
+            return False
+
+        if adl.Adaptability['type'] == 'evolutive':
+            msg = b'ADAPT\nThing:' + bytes(cfg.thing['id'], 'ascii')
+            data = AmotAgent.send_receive(conn, msg)
+            data = str(data, 'ascii')
+            if data == None:
+                return
+
+            # headers => "instructions" from server
+            # data => files with their names
+            [headers, data] = data.split('\x1e')
+            if len(data) > 0:
+                AmotAgent.update_files(data, False)
+                print('adaptou')
+                return True
+
+        return False
+
 
     @staticmethod
     def thingStart():
@@ -52,36 +98,12 @@ class AmotAgent:
         if conn is None:
             return
 
-        # clear directory
-        files = os.listdir('components')
-        for file in files:
-            path = 'components/' + file
-            try:
-                f = open(path, "r")
-                f.close()
-                os.remove(path)
-            except OSError:
-               pass
-
-        # listing components
-        # components = [c for c in adl.Components.values()]
-        # components.append('AMoTAgent')
-
-
         # sending data
         # msg = b'START\nThing:soueu\nComponents:' + b','.join([bytes(c, 'ascii') for c in components])
         msg = b'START\nThing:' + bytes(cfg.thing['id'], 'ascii')
         data = AmotAgent.send_receive(conn, msg)
 
         data = str(data, 'ascii')
+        AmotAgent.update_files(data)
 
-        files = data.split('\x1c') # FILE SEPARATOR (28)
-        for comp_content in files:
-            compname, content = comp_content.split('\x1d') # GROUP SEPARATOR (29)
-            # compname, compversion = compname_version.split('#')
-            # self.adaptComponent(compname, compversion, content)
-            # file = 'components/' + compname + '.py'
-            file = compname + '.py'
-            wr = open(file, 'w')
-            wr.write(content)
-            wr.close()
+
