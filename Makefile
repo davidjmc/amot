@@ -62,7 +62,7 @@ run-broker:
 	cd generated/amot-broker && python3 main.py
 
 run-server:
-	cd amot-server && npm install && nodemon index.js
+	cd amot-server && npm install && nodemon index.js --ignore 'db.json'
 
 run-subscriber:
 	cd generated/amot-subscriber && python3 main.py
