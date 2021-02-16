@@ -23,6 +23,7 @@ let loadThing = thing_id => {
     if (true || !thing._starter?.[0]?.length) {
         thing._starter = thing.starter.map(s => thing._components.find(c => c.type == s))
     }
+    db.write()
     return thing
 }
 
@@ -81,6 +82,14 @@ let startThing = (headers) => {
      * TODO
      * - Erase 'current' version
      */
+     if (thing._trial?.length > 0) {
+        if (!thing._ignored) {
+            thing._ignored = []
+        }
+        thing._ignored.push(...thing._trial)
+        thing._trial = []
+         db.write()
+     }
 
     adl = `
 Components = {
@@ -120,26 +129,42 @@ let evolveThing = (headers) => {
 
     /*
      * TODO
-     * - Commit 'current' version (check if there is any "current version" and update the "original" versions)
+     * - Commit 'trial' version (check if there is any "trial version" and update the "original" versions)
      */
+     if (thing._trial?.length > 0) {
+        thing._trial.map(trial_comp => {
+            let comp = thing._components.find(c => c.type == trial_comp.type)
+            let comp_index = thing.components.findIndex(c => c == comp.id)
 
-    let newVersions = component => {
+            console.log(comp_index)
+            thing.components[comp_index] = trial_comp.id
+            loadThing(thing_id)
+        })
+        thing._trial = []
+        db.write()
+     }
+
+    let newVersions = (component, ignored) => {
         return db.get('components').filter(comp => {
-            return comp.name == component.name && comp.version > component.version
-        }).sort((c1, c2) => c1.version > c2.version).value()
+            let being_ignored = !!ignored.find(c => c.id == comp.id) // check if component is in the "ignored" list of the thing
+            return comp.name == component.name && comp.version > component.version && !being_ignored
+        }).sort((c1, c2) => c2.version - c1.version).value()
     }
 
     let new_components = thing._components.filter(comp => {
-        return newVersions(comp).length > 0
+        return newVersions(comp, thing._ignored).length > 0
     }).map(comp => {
-        return newVersions(comp)[0]
+        console.log(newVersions(comp, thing._ignored));
+        return newVersions(comp, thing._ignored)[0]
     })
     let files = readComponents(new_components).join(String.fromCharCode(0x1c))
 
     // TODO
     /*
-     * - Update database entry for the thing with the 'current version'
+     * - Update database entry for the thing with the 'trial version'
      */
+    thing._trial = new_components
+    db.write()
 
     let response = ['']
     return response + String.fromCharCode(0x1e) + files
