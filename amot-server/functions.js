@@ -34,7 +34,7 @@ readComponents = components => {
         if (!fs.existsSync(`./components/${comp.file}.py`))
             return
         let data = fs.readFileSync(`./components/${comp.file}.py`)
-        response.push('components/' + comp.name + String.fromCharCode(0x1d) + data);
+        response.push('components/' + comp.file + String.fromCharCode(0x1d) + data);
 
         (''+data).split('\n').forEach(loc => {
             let _import = null
