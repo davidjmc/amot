@@ -133,24 +133,24 @@
             "id": "broker",
             "components": ["ServerRequestHandler-1.0", "NotifierProxy-1.0", "NotificationEngine-1.0", "NotificationConsumer-1.0", "Marshaller-1.0", "Unmarshaller-1.0", "ClientRequestHandler-1.0"],
             "attachments": [
-                {"from": "ServerRequestHandler-1.0", "to": "Unmarshaller-1.0"},
-                {"from": "Unmarshaller-1.0", "to": "NotificationEngine-1.0"},
-                {"from": "NotificationEngine-1.0", "to": "NotificationConsumer-1.0"},
-                {"from": "NotificationConsumer-1.0", "to": "NotifierProxy-1.0"},
-                {"from": "NotifierProxy-1.0", "to": "Marshaller-1.0"},
-                {"from": "Marshaller-1.0", "to": "ClientRequestHandler-1.0"}
+                {"from": "ServerRequestHandler", "to": "Unmarshaller"},
+                {"from": "Unmarshaller", "to": "NotificationEngine"},
+                {"from": "NotificationEngine", "to": "NotificationConsumer"},
+                {"from": "NotificationConsumer", "to": "NotifierProxy"},
+                {"from": "NotifierProxy", "to": "Marshaller"},
+                {"from": "Marshaller", "to": "ClientRequestHandler"}
             ],
-            "starter": ["ServerRequestHandler-1.0"]
+            "starter": ["ServerRequestHandler"]
         },
         {
             "id": "1",
             "components": ["TemperatureChecker-1.0", "QueueProxy-1.0", "Marshaller-1.0", "ClientRequestHandler-1.0"],
             "attachments": [
-                {"from": "TemperatureChecker-1.0", "to": "QueueProxy-1.0"},
-                {"from": "QueueProxy-1.0", "to": "Marshaller-1.0"},
-                {"from": "Marshaller-1.0", "to": "ClientRequestHandler-1.0"}
+                {"from": "App", "to": "QueueProxy"},
+                {"from": "QueueProxy", "to": "Marshaller"},
+                {"from": "Marshaller", "to": "ClientRequestHandler"}
             ],
-            "starter": ["TemperatureChecker-1.0"],
+            "starter": ["App"],
             "adaptability": {
                 "type": "evolutive",
                 "timeout": 5
@@ -160,25 +160,25 @@
             "id": "11",
             "components": ["TemperatureChecker-1.0", "QueueProxy-1.0", "Marshaller-1.0", "ClientRequestHandler-1.0"],
             "attachments": [
-                {"from": "TemperatureChecker-1.0", "to": "QueueProxy-1.0"},
-                {"from": "QueueProxy-1.0", "to": "Marshaller-1.0"},
-                {"from": "Marshaller-1.0", "to": "ClientRequestHandler-1.0"}
+                {"from": "App", "to": "QueueProxy"},
+                {"from": "QueueProxy", "to": "Marshaller"},
+                {"from": "Marshaller", "to": "ClientRequestHandler"}
             ],
-            "starter": ["TemperatureChecker-1.0"],
+            "starter": ["App"],
             "adaptability": null
         },
         {
             "id": "2",
             "components": ["LoggerSubscriber-1.0", "Subscriptor-1.0", "ServerRequestHandler-1.0", "Notifier-1.0", "QueueProxy-1.0", "Marshaller-1.0", "Unmarshaller-1.0", "ClientRequestHandler-1.0"],
             "attachments": [
-                {"from": "ServerRequestHandler-1.0", "to": "Unmarshaller-1.0"},
-                {"from": "Unmarshaller-1.0", "to": "Notifier-1.0"},
-                {"from": "Notifier-1.0", "to": "LoggerSubscriber-1.0"},
-                {"from": "LoggerSubscriber-1.0", "to": "QueueProxy-1.0"},
-                {"from": "QueueProxy-1.0", "to": "Marshaller-1.0"},
-                {"from": "Marshaller-1.0", "to": "ClientRequestHandler-1.0"}
+                {"from": "ServerRequestHandler", "to": "Unmarshaller"},
+                {"from": "Unmarshaller", "to": "Notifier"},
+                {"from": "Notifier", "to": "App"},
+                {"from": "App", "to": "QueueProxy"},
+                {"from": "QueueProxy", "to": "Marshaller"},
+                {"from": "Marshaller", "to": "ClientRequestHandler"}
             ],
-            "starter": ["ServerRequestHandler-1.0"],
+            "starter": ["ServerRequestHandler"],
             "adaptability": null
         }
     ]

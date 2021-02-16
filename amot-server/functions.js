@@ -15,13 +15,13 @@ let loadThing = thing_id => {
     if (true || !thing._attachments?.[0]?.type) {
         thing._attachments = thing.attachments.map(a => {
             return {
-                "from": db.get('components').find({'id': a.from}).value(),
-                "to": db.get('components').find({'id': a.to}).value()
+                "from": thing._components.find(c => c.type == a.from),
+                "to": thing._components.find(c => c.type == a.to)
             }
         })
     }
     if (true || !thing._starter?.[0]?.length) {
-        thing._starter = thing.starter.map(c => db.get('components').find({'id': c}).value())
+        thing._starter = thing.starter.map(s => thing._components.find(c => c.type == s))
     }
     return thing
 }
