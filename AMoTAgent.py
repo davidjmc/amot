@@ -72,6 +72,17 @@ class AmotAgent:
             # headers => "instructions" from server
             # data => files with their names
             [headers, data] = data.split('\x1e')
+            headers = [h for h in headers.split('\n')]
+            for h in headers:
+                print(h)
+                if h[:3] == 'rm:':
+                    # remove a file
+                    file_to_remove = h[3:]
+                    try:
+                        os.remove(file_to_remove)
+                    except Exception as e:
+                        pass
+
             if len(data) > 0:
                 AmotAgent.update_files(data, False)
                 print('adaptou')
