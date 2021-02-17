@@ -99,25 +99,30 @@ class AmotEngine:
 
 
             except OSError as e:
+                print(e)
                 self.restart_and_reconnect()
 
     def reload_components(self):
         del sys.modules['adl']
-        module = __import__('adl')
-        sys.modules['adl'] = module
+        new_adl = __import__('adl')
+        sys.modules['adl'] = new_adl
 
-        self.components = adl.Components
+        self.components = getattr(new_adl, 'Components')
+        self.attachments = getattr(new_adl, 'Attachments')
+        self.starter = getattr(new_adl, 'Starter')
+        self.adaptability = getattr(new_adl, 'Adaptability')
+        for module in [module for module in sys.modules.keys() if module[:11] == 'components.']:
+            del sys.modules[module]
 
         for component in self.components:
             component_file = self.components.get(component)
-            del sys.modules['components.' + component_file]
-
             namespace = __import__('components.' + component_file)
             component_module = getattr(namespace, component_file)
             # component_module.__dict__['AmotEngine'] = self
             setattr(component_module, 'AmotEngine', self)
             component_instance = getattr(component_module, component)
             self.current_components[component] = component_instance()
+        gc.collect()
 
 
 
@@ -131,4 +136,5 @@ class AmotEngine:
             machine.reset()
         except NameError:
             pass
+
 
