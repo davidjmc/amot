@@ -64,32 +64,21 @@ readComponents = components => {
     return response
 }
 
-let startThing = (headers) => {
-    if (!headers['Thing']) {
-        return '0'
-    }
-    let thing_id = headers['Thing']
-    let thing = loadThing(thing_id)
-
-    let adl_components = thing._components.map(c => `'${c.type}': '${c.file}'`)
+let buildAdl = (thing, new_components = []) => {
+    let adl_components = thing._components
+        .map(c => {
+            if (new_components.map(new_c => new_c.type).includes(c.type)) {
+                return new_components.find(new_c => new_c.type == c.type)
+            }
+            return c
+        })
+        .map(c => `'${c.type}': '${c.file}'`)
     // console.log(adl_components)
+    // TODO => change attachments based on parameters of method
     let adl_attachments = thing._attachments.map(a => `'${a.from.type}': '${a.to.type}'`)
     // console.log(adl_attachments)
     let adl_starters = thing._starter.map(c => `'${c.type}'`)
     let adaptability = `'${thing.adaptability?.type ?? 'None'}'`
-
-    /*
-     * TODO
-     * - Erase 'current' version
-     */
-     if (thing._trial?.length > 0) {
-        if (!thing._ignored) {
-            thing._ignored = []
-        }
-        thing._ignored.push(...thing._trial)
-        thing._trial = []
-         db.write()
-     }
 
     adl = `
 Components = {
@@ -109,12 +98,34 @@ Adaptability = {
     'timeout': ${thing.adaptability?.timeout ?? 'None'}
 }
 `
+    return adl
+}
 
-    let response = ['adl' + String.fromCharCode(0x1d) + adl]
+let startThing = (headers) => {
+    if (!headers['Thing']) {
+        return '0'
+    }
+    let thing_id = headers['Thing']
+    let thing = loadThing(thing_id)
+
+    /*
+     * TODO
+     * - Erase 'current' version
+     */
+     if (thing._trial?.length > 0) {
+        if (!thing._ignored) {
+            thing._ignored = []
+        }
+        thing._ignored.push(...thing._trial)
+        thing._trial = []
+         db.write()
+     }
+
 
     // fs.readFile(`./components/${components[0]}.py`, 'ascii', (err, data) => {
     //     socket.write(String.fromCharCode(0x1c))
     // })
+    let response = ['adl' + String.fromCharCode(0x1d) + buildAdl(thing)]
 
     response.push(...readComponents(thing._components))
     return response.join(String.fromCharCode(0x1c))
@@ -157,7 +168,18 @@ let evolveThing = (headers) => {
         console.log(newVersions(comp, thing._ignored));
         return newVersions(comp, thing._ignored)[0]
     })
-    let files = readComponents(new_components).join(String.fromCharCode(0x1c))
+
+    let files = []
+    if (new_components.length > 0) {
+        files = [
+            'adl' + String.fromCharCode(0x1d) + buildAdl(thing, new_components),
+            ...readComponents(new_components)
+        ]
+    }
+
+    let unused_components = thing._components.filter(
+        c => !!new_components.find(nc => nc.type == c.type && nc.file != c.file)
+    )
 
     // TODO
     /*
@@ -166,8 +188,9 @@ let evolveThing = (headers) => {
     thing._trial = new_components
     db.write()
 
-    let response = ['']
-    return response + String.fromCharCode(0x1e) + files
+    let response = ''
+    response += unused_components.map(c => `rm:components/${c.file}.py`).join('\n')
+    return response + String.fromCharCode(0x1e) + files.join(String.fromCharCode(0x1c))
 }
 
 module.exports = {
