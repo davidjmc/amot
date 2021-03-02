@@ -1,0 +1,10 @@
+This is the initial setup from the Amot Front-end to get running.
+ - First thing is the npm, node or nodemon on Server.js server, Ex : $ nodemon server.js, $ node server.js or npm start.
+ - when the server got running, we can open the index.html on browser
+ - after the server running and the index open, we should send data for the app using MonitorSubscriber2.py
+ - once the data are sending , u can see in browser interface screen if u are not see, u can refresh the page and try again.
+
+OBS : Start app before then broker, subscriber and publisher. 
+
+That's it!
+implemented the front-end, websocket server to recive request from the MonitorSubscriber, in the logger i imported the http library and the random number to send to the API
