@@ -4,10 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Amot</title>
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/main.css">
+    <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+    <!-- <link rel="stylesheet" href="css/main.css"> -->
+    <style>
+        body{
+            background-color: #F9F9F9;
+        }
+    </style>
 </head>
-<body>
+<body bg="red">
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <h4 style="color:white;">AMOT</h4>
@@ -42,28 +47,44 @@
     <script src="js/bootstrap.js"></script>
     <script src="js/waterTank.js"></script>
     <script>
-
+        $(document).ready(function() {
+            $('.waterTankHere1').waterTank({
+                width: 173,
+                height: 100,
+                color: '#E37474',
+                level: 30
+                })
+            // $('.waterTankHere2').waterTank({
+            //     width: 173,
+            //     height: 100,
+            //     color: 'grey',
+            //     level: 0
+            // }).ready(function(event) {
+                // setInterval(function(){ 
+                //     console.log($('.waterTankHere2').waterTank(Math.floor(Math.random() * 100) + 0 ));
+                // }, 1000);
+            });
         const socket = new WebSocket('ws://localhost:5000');
         socket.addEventListener('message', function (event) {
-            let jsonData = JSON.parse(event.data); 
-            // console.log(jsonData.water_level);           
-            $(document).ready(function() {
-                $('.waterTankHere1').waterTank({
-                    width: 173,
-                    height: 100,
-                    color: '#8bd0ec',
-                    level: jsonData.water_level
-                 })
-                // $('.waterTankHere2').waterTank({
-                //     width: 173,
-                //     height: 100,
-                //     color: 'grey',
-                //     level: 0
-                // }).ready(function(event) {
-                    // setInterval(function(){ 
-                    //     console.log($('.waterTankHere2').waterTank(Math.floor(Math.random() * 100) + 0 ));
-                    // }, 1000);
-                });
+            // let jsonData = JSON.parse(event.data); 
+            // // console.log(jsonData.water_level);           
+            // $(document).ready(function() {
+            //     $('.waterTankHere1').waterTank({
+            //         width: 173,
+            //         height: 100,
+            //         color: '#E37474',
+            //         level: jsonData.water_level
+            //      })
+            //     // $('.waterTankHere2').waterTank({
+            //     //     width: 173,
+            //     //     height: 100,
+            //     //     color: 'grey',
+            //     //     level: 0
+            //     // }).ready(function(event) {
+            //         // setInterval(function(){ 
+            //         //     console.log($('.waterTankHere2').waterTank(Math.floor(Math.random() * 100) + 0 ));
+            //         // }, 1000);
+            //     });
             });
     </script>
 </body>

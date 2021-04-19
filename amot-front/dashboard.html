@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amot - Water</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&display=swap" rel="stylesheet">  
+    <link rel="icon" href="./images/water-drop 1.svg">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="main-content">
+        <nav class="burger-menu">
+            <h1>AMOT</h1>
+        </nav>
+        <nav class="sidebar">
+            <div class="sidebar-head">
+                <h1>AMOT</h1>    
+            </div>
+            <div class="sidebar-body">
+                <ul>
+                    <li><i><img src="./images/home (1).svg" alt="" width="32" height="32" style=""></i><p>Home</p></li>
+                    <li><i><img src="./images/chart.svg" width="30"  height="30"></i><p>Graphics</p></li>
+                </ul>
+            </div>
+        </nav>
+        <div class="monitoring-area">
+            <h1 class="main-title"><i><img src="./images/water-drop 1.svg" alt=""></i>Water Monitoring</h1>
+            <div class="monitoring-content">               
+            </div>
+        </div>
+    </div>
+    <script src="js/jquery-3.5.1.js"></script>
+    <script src="js/waterTank.js"></script>
+    <script>
+    $(document).ready(function() {
+        $('.waterTankHere1').waterTank({
+            width: 120,
+            height: 80,
+            color: '#A1D8EF',
+            level: 100,
+        });
+    });
+    const socket = new WebSocket('ws://localhost:5100');
+    socket.addEventListener('message', function (event) {
+        const monitoring = document.querySelector('.monitoring-content');
+        monitoring.innerHTML = ""
+        let jsonData = JSON.parse(event.data); 
+        for(let i = 0; i < jsonData.length; i++){
+            const div = document.createElement('div');
+            const divItem = document.createElement('div');
+            const divItem2= document.createElement('div');
+            const divWater = document.createElement('div')
+            const h1 = document.createElement('h1');
+            const p = document.createElement('p');
+            const img = document.createElement('img');
+            img.src = "./images/casa.png"
+            h1.innerHTML = jsonData[i].thing_id;
+            p.innerHTML = "Status: Online";
+            divItem.classList.add('item');
+            divWater.classList.add('waterTankHere'+i)
+            divItem.appendChild(h1);
+            divItem.appendChild(p);
+            divItem2.classList.add('item');
+            divItem2.appendChild(img);
+            divItem2.appendChild(divWater)
+            div.classList.add('monitoring-content-item')
+            monitoring.appendChild(div).appendChild(divItem).parentNode.appendChild(divItem2);
+            $('.waterTankHere'+i).waterTank({
+                width: 70,
+                height: 70,
+                color: '#bae5ff',
+                level: jsonData[i].water_level
+            })
+        }               
+        // $(document).ready(function() {
+
+        //     // $('.waterTankHere2').waterTank({
+        //     //     width: 173,
+        //     //     height: 100,
+        //     //     color: 'grey',
+        //     //     level: 0
+        //     // }).ready(function(event) {
+        //         // setInterval(function(){ 
+        //         //     console.log($('.waterTankHere2').waterTank(Math.floor(Math.random() * 100) + 0 ));
+        //         // }, 1000);
+        //     });
+    });
+    </script>
+</body>
+</html>
