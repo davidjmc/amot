@@ -31,9 +31,9 @@ readComponents = components => {
     let response = []
     components.forEach(comp => {
         // console.log(comp)
-        if (!fs.existsSync(`./components/${comp.file}.py`))
+        if (!fs.existsSync(`./library/components/${comp.file}.py`))
             return
-        let data = fs.readFileSync(`./components/${comp.file}.py`)
+        let data = fs.readFileSync(`./library/components/${comp.file}.py`)
         response.push('components/' + comp.file + String.fromCharCode(0x1d) + data);
 
         (''+data).split('\n').forEach(loc => {
@@ -54,10 +54,10 @@ readComponents = components => {
                 console.log('dep: ' + dependency)
             }
 
-            if (!fs.existsSync(`./classes/${dependency}.py`))
+            if (!fs.existsSync(`./library/classes/${dependency}.py`))
                 return
 
-            let data = fs.readFileSync(`./classes/${dependency}.py`)
+            let data = fs.readFileSync(`./library/classes/${dependency}.py`)
             response.push(dependency + String.fromCharCode(0x1d) + data);
         })
     })
