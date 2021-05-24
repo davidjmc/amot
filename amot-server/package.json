@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "firebase": "^8.6.2",
     "lowdb": "^1.0.0"
   }
 }

@@ -1,3 +1,5 @@
+const Thing = require('./Thing')
+
 class ThingLoader {
     static async load(thingId) {
         if (thingId === false) {

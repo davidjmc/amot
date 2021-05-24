@@ -37,6 +37,7 @@ server.on('connection', socket => {
                     response = "ERROR"
                 }
                 socket.write(response)
+                require('fs').writeFileSync('old.response', response)
                 break
             case 'ADAPT':
                 response = functions.evolveThing(headers)

@@ -16,6 +16,10 @@ class ComponentsCollection {
     getByType(type) {
         return this.components.find(c => c.type == type)
     }
+
+    map(fn) {
+        return this.components.map(fn)
+    }
 }
 
 module.exports = ComponentsCollection

@@ -115,6 +115,10 @@ class AmotAgent:
         data = AmotAgent.send_receive(conn, msg)
 
         data = str(data, 'ascii')
+        try:
+            [headers, data] = data.split('\x1e')
+        except:
+            pass
         AmotAgent.update_files(data)
 
 
