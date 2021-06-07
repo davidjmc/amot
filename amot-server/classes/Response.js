@@ -52,6 +52,24 @@ class Response {
         })
         return response
     }
+
+    static fromAdaptation(adaptation) {
+        let response = new Response()
+        if (!adaptation) {
+            return response
+        }
+        response.addFile('adl', adaptation.adl)
+        adaptation.componentsToAdd.map(component => {
+            response.addFile('components/' + component.filename, component.file.toString())
+        })
+        adaptation.componentsToRemove.map(component => {
+            response.addFunction('rm', 'components/' + component.filename + '.py')
+        })
+
+        // response.addFile('config', adaptation.configFile())
+
+        return response
+    }
 }
 
 module.exports = Response

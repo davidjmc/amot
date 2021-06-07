@@ -26,6 +26,13 @@ class Component {
         return component
     }
 
+    async loadVersions() {
+        // console.log('loadVersions')
+        return await DB.getComponentsByName(this.name)
+        // console.log('loaded')
+        // return comps
+    }
+
     async loadFile() {
         this.file = await DB.getFile(this.filename)
     }
@@ -65,6 +72,8 @@ module.exports = Component
 
 // (async () => {
 //     // console.dir(await Component.load('NotificationConsumer-1.0'), {depth: 2})
-//     console.dir(await Component.load('Executor-1.0'), {depth: 2})
+//     let c = await Component.load('TemperatureChecker-1.0')
+//     console.log(c)
+//     console.dir(await c.loadVersions(), {depth: 2})
 //     process.exit()
 // })()

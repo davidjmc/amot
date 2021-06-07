@@ -13,6 +13,14 @@ class ComponentsCollection {
         return new ComponentsCollection(components)
     }
 
+    replaceByName(newComponent) {
+        let compIndex = this.components.findIndex(comp => comp.name == newComponent.name)
+        if (compIndex == -1) {
+            // component doesn't exist
+        }
+        this.components[compIndex] = newComponent
+    }
+
     getByType(type) {
         return this.components.find(c => c.type == type)
     }
@@ -20,6 +28,10 @@ class ComponentsCollection {
     map(fn) {
         return this.components.map(fn)
     }
+
+    // async mapAsync(fn) {
+    //     return await this.components.map(fn)
+    // }
 }
 
 module.exports = ComponentsCollection

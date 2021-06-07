@@ -122,7 +122,7 @@ class AmotEngine:
             setattr(component_module, 'AmotEngine', self)
             component_instance = getattr(component_module, component)
             self.current_components[component] = component_instance()
-        gc.collect()
+        # gc.collect()
 
 
 
