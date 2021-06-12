@@ -44,6 +44,7 @@ class Response {
     static fromThing(thing) {
         let response = new Response()
         response.addFile('adl', thing.adl())
+        response.addFile('appVars', thing.appVars())
         thing.components.map(component => {
             response.addFile('components/' + component.filename, component.file.toString())
             component.dependencies.map(dep => {
@@ -59,6 +60,7 @@ class Response {
             return response
         }
         response.addFile('adl', adaptation.adl)
+        response.addFile('appVars', adaptation.appVars)
         adaptation.componentsToAdd.map(component => {
             response.addFile('components/' + component.filename, component.file.toString())
         })

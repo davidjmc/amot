@@ -6,6 +6,9 @@ import time
 
 class AmotAgent:
 
+    app_context = {}
+    env_context = {}
+
     @staticmethod
     def send_receive(socket, data):
         buffer_size = 536
@@ -55,15 +58,24 @@ class AmotAgent:
     def adapt():
         import adl
         print('adapting...')
-        try:
-            conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            conn.connect(socket.getaddrinfo(cfg.server['host'], cfg.server['port'])[0][-1])
-        except:
-            print('could not create socket for adaptation')
-            return False
 
-        if adl.Adaptability['type'] == 'evolutive':
+        if adl.Adaptability['type'] not in ['', None]:
+
+            AmotAgent.env_context['battery'] = b'100'
+
+            try:
+                conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                conn.connect(socket.getaddrinfo(cfg.server['host'], cfg.server['port'])[0][-1])
+            except:
+                print('could not create socket for adaptation')
+                return False
+
             msg = b'ADAPT\nThing:' + bytes(cfg.thing['id'], 'ascii')
+            for info in AmotAgent.app_context:
+                msg += b'\n' + bytes(info, 'ascii') + b':' + AmotAgent.app_context[info]
+            for info in AmotAgent.env_context:
+                msg += b'\n' + bytes(info, 'ascii') + b':' + AmotAgent.env_context[info]
+            print(msg)
             data = AmotAgent.send_receive(conn, msg)
             data = str(data, 'ascii')
             if data == None:

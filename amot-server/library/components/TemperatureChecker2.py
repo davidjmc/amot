@@ -18,17 +18,18 @@ class App():
         msg = b'[NEW] Temperature: %b and Humidity: %b @ %b' % (temp, hum, b'lalala')
 
         self.count += 1
-        time.sleep(1)
+        # print('sleeping for ' + str(appVars.sleep_time) + ' second(s)')
+        time.sleep(appVars.sleep_time)
 
         print('Publishing on topic [{0}]: {1}'.format(topic, msg))
-        AmotEngine.publish(self, topic, msg)
+        AmotEngine.publish(self, topic, msg, { 'temperature': temp })
 
 
     @staticmethod
     def temp_hum_sensor():
         try:
-            temp = 30.0 * r.random()
-            hum = 30.0 * r.random()
+            temp = 100.0 * r.random()
+            hum = 100.0 * r.random()
             if (isinstance(temp, float) and isinstance(hum, float)) or (isinstance(temp, int) and isinstance(hum, int)):
                 temp = b'%3.1f' % temp
                 hum = b'%.1f' % hum

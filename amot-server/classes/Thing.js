@@ -4,7 +4,7 @@ const DB = require('./DB')
 const ComponentsCollection = require('./ComponentsCollection')
 
 class Thing {
-    constructor(id, components, attachments, starter, adaptability, trialMode) {
+    constructor(id, components, attachments, starter, adaptability, trialMode, vars) {
         this.id           = id
         this.adaptability = adaptability
         this.attachments  = attachments
@@ -12,6 +12,7 @@ class Thing {
         this.starter      = starter
         this.trialMode    = trialMode
         this.rolledBack   = false
+        this.vars         = vars
     }
 
     adl() {
@@ -28,6 +29,19 @@ class Thing {
             .replace('__STARTER__', starter_str)
             .replace('__ADAPT_TYPE__', adapt_type)
             .replace('__ADAPT_TIMEOUT__', adapt_timeout)
+    }
+
+    // possible data types: object
+    appVars() {
+        let vars = ''
+        for (let v in this.vars) {
+            let data = this.vars[v]
+            if (typeof data == 'string') {
+                data = `'${data}'`
+            }
+            vars += `${v} = ${data}`
+        }
+        return vars
     }
 
     // async getRolledBackVersions() {
@@ -74,8 +88,13 @@ class Thing {
         for (let component of adaptation.componentsToAdd) {
             this.components.replaceByName(component)
         }
+        for (let appVar in adaptation.appVars) {
+            this.vars[appVar] = adaptation.appVars[appVar]
+        }
         await this.update()
+
         adaptation.adl = this.adl()
+        adaptation.appVars = this.appVars()
     }
 
     static async load(id) {
@@ -92,7 +111,8 @@ class Thing {
             attachments,
             starter,
             thing.adaptability,
-            thing.trialMode
+            thing.trialMode,
+            thing.vars
         )
         return obj
         // return new Component(

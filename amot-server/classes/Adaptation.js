@@ -1,9 +1,9 @@
 class Adaptation {
-    constructor(componentsToAdd = [], componentsToRemove = [], config = []) {
+    constructor(componentsToAdd = [], componentsToRemove = [], appVars = null) {
         this.adl = ''
         this.componentsToAdd = componentsToAdd
         this.componentsToRemove = componentsToRemove
-        this.config = config
+        this.appVars = appVars
         // this.newAdl = ''
     }
 
@@ -12,7 +12,7 @@ class Adaptation {
     }
 
     hasChanges() {
-        return this.componentsToAdd.length > 0 || this.componentsToRemove.length > 0
+        return this.componentsToAdd.length > 0 || this.componentsToRemove.length > 0 || this.appVars != null
     }
 }
 

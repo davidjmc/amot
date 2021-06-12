@@ -48,8 +48,9 @@ class DB {
                 to: a.to.type
             })),
             starter: thing.starter.map(c => c.type),
-            trialMode: thing.trialMode
-        }, { depth: 4})
+            trialMode: thing.trialMode,
+            vars: thing.vars
+        }, { depth: 4 })
     }
 
     static async backupThing(id) {

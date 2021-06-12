@@ -6,6 +6,7 @@ import sys
 
 try:
     import adl as adl
+    import appVars as appVars
 except:
     # fooling the IDE
     pass
@@ -47,6 +48,7 @@ class AmotEngine:
             component_module = getattr(namespace, component_file)
             # component_module.__dict__['AmotEngine'] = self
             setattr(component_module, 'AmotEngine', self)
+            setattr(component_module, 'appVars', appVars)
             component_instance = getattr(component_module, component)
             self.current_components[component] = component_instance()
 
@@ -62,7 +64,8 @@ class AmotEngine:
             self.subscriber.subscribe()
 
     @staticmethod
-    def publish(app, topic, message):
+    def publish(app, topic, message, context = {}):
+        AmotAgent.app_context = context
         AmotEngine.attached(app).run(b'Publish', topic, message)
 
     @staticmethod
@@ -104,8 +107,11 @@ class AmotEngine:
 
     def reload_components(self):
         del sys.modules['adl']
+        del sys.modules['appVars']
         new_adl = __import__('adl')
+        new_appVars = __import__('appVars')
         sys.modules['adl'] = new_adl
+        sys.modules['appVars'] = new_appVars
 
         self.components = getattr(new_adl, 'Components')
         self.attachments = getattr(new_adl, 'Attachments')
@@ -120,6 +126,7 @@ class AmotEngine:
             component_module = getattr(namespace, component_file)
             # component_module.__dict__['AmotEngine'] = self
             setattr(component_module, 'AmotEngine', self)
+            setattr(component_module, 'appVars', new_appVars)
             component_instance = getattr(component_module, component)
             self.current_components[component] = component_instance()
         # gc.collect()
