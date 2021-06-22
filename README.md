@@ -1,6 +1,7 @@
 # SWE - Smart Water Environments
 An Self-Adaptive IoT Solution that combines a modular software stack and an IoT platform for Smart Water Environments
 
+(https://github.com/davidjmc/amot/blob/master/phd/team/sw.jpg)
 
 # AMoT - Adaptive Middleware of Things
 Adaptive Middleware of Things
