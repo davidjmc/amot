@@ -23,13 +23,19 @@ Adaptive Middleware of Things
 
 ### Setup
 
->  now set
+>  TODO
 
 ## Running the AMoT
 
 - Change to the amot middleware directory cloned earlier
 
 > On the computer
+
+TODO
+
+> On the thing
+
+TODO
 
 ## Team
 
