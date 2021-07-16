@@ -2,6 +2,12 @@ import socket
 
 import time
 
+try:
+    import utime
+except:
+    pass
+
+
 class ClientRequestHandler():
 
     def __init__(self):
@@ -34,6 +40,14 @@ class ClientRequestHandler():
         buffer_size = 536
         response = b''
         try:
+
+
+            try:
+                net0 = utime.ticks_us()
+            except:
+                pass
+
+
             self.socks[addr].sendall(data)
             while True:
                 part = self.socks[addr].recv(buffer_size)
@@ -41,6 +55,12 @@ class ClientRequestHandler():
                 if len(part) < buffer_size:
                     break
             # print('\t', response, '<=========CRH')
+
+            try:
+                AmotEngine._times.append(('Net: ', utime.ticks_us()-net0))
+            except:
+                pass
+
             if response == b'0':
                 return True
             elif response == b'':
