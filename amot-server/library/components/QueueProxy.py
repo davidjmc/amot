@@ -10,10 +10,10 @@ class QueueProxy():
         port = AmotEngine._broker['port']
 
         if args[0] == b'Publish':
-            message = {'op': args[0], 'topic': args[1], 'msg': args[2]}
+            message = {'op': args[0], 'topic': args[1], 'thing': args[2], 'msg': args[3]}
         elif args[0] == b'Subscribe':
             ip_port = bytes(AmotEngine.ip, 'ascii') + b' ' + bytes(str(AmotEngine._listen['port']), 'ascii')
-            message = {'op': args[0], 'topic': args[1], 'msg': ip_port}
+            message = {'op': args[0], 'topic': args[1], 'thing': args[2], 'msg': ip_port}
         elif args[0] == b'Unsubscribe':
             #TODO
             pass

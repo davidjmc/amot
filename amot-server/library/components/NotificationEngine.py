@@ -13,10 +13,11 @@ class NotificationEngine():
         message = args[0]
         operation = message['op']
         topic = message['topic']
+        thing   = message['thing']
         message = message['msg']
 
         if operation == b'Publish':
-            subscribers_notified = AmotEngine.attached(self).run(topic, message, self.storage)
+            subscribers_notified = AmotEngine.attached(self).run(topic, message, thing, self.storage)
             self.storage.keep_subscribers(topic, subscribers_notified)
         elif operation == b'Subscribe':
             ip_port = message.split(b' ')

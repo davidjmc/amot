@@ -66,11 +66,11 @@ class AmotEngine:
     @staticmethod
     def publish(app, topic, message, context = {}):
         AmotAgent.app_context = context
-        AmotEngine.attached(app).run(b'Publish', topic, message)
+        AmotEngine.attached(app).run(b'Publish', topic, bytes(cfg.thing['id'], 'ascii'), message)
 
     @staticmethod
     def subscribe(app, topic):
-        AmotEngine.attached(app).run(b'Subscribe', topic)
+        AmotEngine.attached(app).run(b'Subscribe', topic, bytes(cfg.thing['id'], 'ascii'))
 
     @staticmethod
     def attached(component):

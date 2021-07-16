@@ -9,6 +9,7 @@ class Unmarshaller():
         attrs = {
             b'Op': None,
             b'Topic': None,
+            b'Thing': None,
             b'Subscriber_addr': None,
             b'message': None,
         }
@@ -50,6 +51,7 @@ class Unmarshaller():
         message_obj = {
             'op': attrs[b'Op'],
             'topic': attrs[b'Topic'],
+            'thing': attrs[b'Thing'],
             'msg': attrs[b'message'],
             'subs_addr': attrs[b'Subscriber_addr']
         }
