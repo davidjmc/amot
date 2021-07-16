@@ -89,10 +89,10 @@ class AmotEngine:
                     # print('Engine running component ', component)
                     component_instance = self.current_components[component]
                     component_instance.run()
+
                 if (
-                    self.adaptability['type'] is not None
-                    and (time.time() - self.last_adaptation) >
-                    self.adaptability['timeout']):
+                    self.adaptability['type'] != ''
+                    and (time.time() - self.last_adaptation) > self.adaptability['timeout']):
                     # it will adapt
                     # self.adaptation_executor.run()
                     updated = AmotAgent.adapt()
