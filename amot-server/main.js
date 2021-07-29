@@ -31,6 +31,7 @@ server.on('connection', socket => {
 
     socket.on('data', async data => {
         console.log(`data received: ${data}`)
+        console.log(new Date())
 
         console.log('REQUEST: ' + data.toString('ascii'))
         let request = new Request(data.toString('ascii'))

@@ -3,7 +3,7 @@ const fs = require('fs')
 
 class DB {
     static async getComponent(id) {
-        let component = await components.doc(id).get()
+        let component = await components().doc(id).get()
         if (!component.exists) {
             throw `Component ${id} does not exist`
         }
@@ -12,7 +12,7 @@ class DB {
 
     static async getComponentsByName(name) {
         // console.log('getting components for ' + name)
-        let snapshot = await components.where('name', '==', name).get()
+        let snapshot = await components().where('name', '==', name).get()
         // console.log(snapshot)
         let list = []
         await snapshot.forEach(c => {
@@ -24,7 +24,7 @@ class DB {
     }
 
     static async getThing(id) {
-        let thing = await things.doc(id).get()
+        let thing = await things().doc(id).get()
         if (!thing.exists) {
             throw `Thing ${id} does not exist`
         }
@@ -32,7 +32,7 @@ class DB {
     }
 
     // static async getThingRolledBack(id) {
-    //     let thingDoc = await things.doc(id)
+    //     let thingDoc = await things().doc(id)
     //     if (!(await thingDoc.get()).exists) {
     //         throw `Thing ${id} does not exist`
     //     }
@@ -41,7 +41,7 @@ class DB {
     // }
 
     static async saveThing(thing) {
-        await things.doc(thing.id).update({
+        await things().doc(thing.id).update({
             components: thing.components.map(c => c.id),
             attachments: thing.attachments.map(a => ({
                 from: a.from.type,
@@ -54,12 +54,12 @@ class DB {
     }
 
     static async backupThing(id) {
-        let thingDoc = await things.doc(id)
+        let thingDoc = await things().doc(id)
         if (!(await thingDoc.get()).exists) {
             throw `Thing ${id} does not exist`
         }
         let thing = (await thingDoc.get()).data()
-        await things.doc(id).update({
+        await things().doc(id).update({
             'backup': {
                 'components': thing.components,
                 'attachments': thing.attachments,
@@ -69,7 +69,7 @@ class DB {
     }
 
     static async rollbackThing(id) {
-        let thingDoc = await things.doc(id)
+        let thingDoc = await things().doc(id)
         if (!(await thingDoc.get()).exists) {
             throw `Thing ${id} does not exist`
         }

@@ -13,8 +13,22 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 const db = firebase.firestore()
-const things = db.collection('things')
-const components = db.collection('components')
+// db.enablePersistence()
+
+// const things = db.collection('things')
+// const components = db.collection('components')
+
+const things = () => {
+    // firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore()
+    return db.collection('things')
+}
+
+const components = () => {
+    // firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore()
+    return db.collection('components')
+}
 
 
 module.exports = {

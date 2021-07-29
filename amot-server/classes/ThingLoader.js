@@ -6,7 +6,11 @@ class ThingLoader {
             // thing cant be loaded
             return new Response('0')
         }
-        return await Thing.load(thingId)
+        try {
+            return await Thing.load(thingId)
+        } catch (e) {
+            console.dir(e)
+        }
     }
 }
 

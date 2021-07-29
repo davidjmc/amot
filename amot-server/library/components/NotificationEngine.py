@@ -11,6 +11,7 @@ class NotificationEngine():
 
     def run(self, *args):
         message = args[0]
+        print(message)
         operation = message['op']
         topic = message['topic']
         thing   = message['thing']
