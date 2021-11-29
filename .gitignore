@@ -4,3 +4,4 @@ AMoTPublisher
 AMoTPublisherSubscriber
 generated/*
 *node_modules*
+**/*.pyc
