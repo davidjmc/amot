@@ -17,8 +17,14 @@ class Request {
         return [method, headers]
     }
 
+    /* @TODO - remove this */
+    isNewModel() {
+        return this.method == 'START_NEW'
+    }
+    /* END */
+
     isStart() {
-        return this.method == 'START'
+        return this.method == 'START' || this.method == 'START_NEW'
     }
 
     isAdapt() {

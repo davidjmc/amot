@@ -12,7 +12,7 @@ const ThingController = require('./classes/ThingController')
 
 (async () => {
     // let request = new Request('START\nThing:1')
-    let request = new Request('ADAPT\nThing:1\ntemperature:30')
+    let request = new Request('START_NEW\nThing:1-new\ntemperature:30')
     let response = await ThingController.getResponseFor(request)
     console.log(response.toString())
     process.exit()

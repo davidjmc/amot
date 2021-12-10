@@ -1,0 +1,52 @@
+{
+  "components": [
+    {
+      "id": "NewClientRequestHandler-1.0",
+      "version": 1,
+      "name": "ClientRequestHandler",
+      "type": "ClientRequestHandler",
+      "file": "NewClientRequestHandler"
+    },
+    {
+      "id": "NewMarshaller-1.0",
+      "version": 1,
+      "name": "Marshaller",
+      "type": "Marshaller",
+      "file": "NewMarshaller"
+    },
+    {
+      "id": "NewQueueProxy-1.0",
+      "version": 1,
+      "name": "QueueProxy",
+      "type": "QueueProxy",
+      "file": "NewQueueProxy"
+    }
+  ],
+  "things": [
+    {
+      "id": "1-new",
+      "components": [
+        "NewQueueProxy-1.0",
+        "NewMarshaller-1.0",
+        "NewClientRequestHandler-1.0"
+      ],
+      "attachments": [
+        {
+          "from": "QueueProxy",
+          "to": "Marshaller"
+        },
+        {
+          "from": "Marshaller",
+          "to": "ClientRequestHandler"
+        }
+      ],
+      "starter": [
+        "QueueProxy"
+      ],
+      "adaptability": {
+        "type": "evolutive",
+        "timeout": 5
+      }
+    }
+  ]
+}

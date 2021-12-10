@@ -12,29 +12,30 @@ var firebaseConfig = {
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
 
-const our = require('./db.json')
+const our = require('./db2.json')
 // console.log(our)
 
 const db = firebase.firestore()
 const _things = db.collection('things')
 const _components = db.collection('components')
 
-// for (component of our.components) {
-//     let { version, name, type, file } = component
-//     _components.doc(component.id).set({
-//         version, name, type, file
-//     })
-//     console.log('added')
-// }
-for (thing of our.things) {
-    let { components, attachments, starter } = thing
-    adaptability = {'adaptability': {}}
-    if (thing.adaptability) {
-        adaptability = thing.adaptability
-        adaptability.type = [adaptability.type]
-    }
-    _things.doc(thing.id).set({
-        components, attachments, starter, adaptability
+for (component of our.components) {
+    let { version, name, type, file } = component
+    _components.doc(component.id).set({
+        version, name, type, file
     })
-    break
+    console.log('added')
 }
+// for (thing of our.things) {
+//     let { components, attachments, starter } = thing
+//     adaptability = {'adaptability': {}}
+//     if (thing.adaptability) {
+//         adaptability = thing.adaptability
+//         adaptability.type = [adaptability.type]
+//     }
+//     // console.log(thing.id, components, attachments, starter, adaptability)
+//     _things.doc(thing.id).set({
+//         components, attachments, starter, adaptability
+//     })
+//     break
+// }

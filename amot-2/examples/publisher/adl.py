@@ -1,11 +1,11 @@
 adl = {
     'components': {
+        # ClassName: FileName
         'QueueProxy': 'QueueProxy',
         'Marshaller': 'Marshaller',
         'ClientRequestHandler': 'ClientRequestHandler'
     },
     'attachments': {
-        'App':'QueueProxy',
         'QueueProxy':'Marshaller',
         'Marshaller':'ClientRequestHandler'
     },

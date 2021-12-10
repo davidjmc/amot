@@ -5,16 +5,6 @@ class Marshaller():
         super().__init__()
 
     def run(self, invArg):
-        if invArg.get('DATA') is None: # complex data
-            invocation = self.marshaller(invArg)
-            response = Amot.attached(self).run(invocation)
-            return self.unmarshaller(response)
-        else: # bytes
-            invocation = self.unmarshaller(invArg)
-            response = Amot.attached(self).run(invocation)
-            return self.marshaller(response)
-
-    def marshaller(self, invArg):
         def toBytes(data):
             if type(data) is bytes:
                 return data
@@ -32,6 +22,12 @@ class Marshaller():
         msg = invArg['MSG']
         thing_id = invArg['THING_ID']
 
+        # serialized = b'OP:' + op + b'\n'
+        # serialized += b'TOPICS:' + b'\0x1F'.join(topics) + b'\n'
+        # serialized += b'THING_ID:' + thing_id + b'\n'
+        # serialized += b'\n'
+        # serialized += msg
+
         serialized = b'Op:' + op + b'\n'
         serialized += b'Topic:' + topics[0] + b'\n'
         serialized += b'Thing:' + thing_id + b'\n'
@@ -42,10 +38,7 @@ class Marshaller():
             'DATA': serialized
         }
 
-        return invocation
-
-    def unmarshaller(self, invArg):
-        pass
+        return Amot.attached(self).run(invocation)
 
         return
         message_obj, ip, port = args

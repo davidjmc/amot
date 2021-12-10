@@ -13,10 +13,16 @@ class Thing {
         this.trialMode    = trialMode
         this.rolledBack   = false
         this.vars         = vars
+        this.isNewModel   = false // @TODO - remove this
     }
 
     adl() {
         let adl = fs.readFileSync(path.join(__dirname, 'adl.template')).toString()
+        /* @TODO - remove this */
+        if (this.isNewModel) {
+            adl = fs.readFileSync(path.join(__dirname, 'adl.new.template')).toString()
+        }
+        /* END*/
         let components_str = this.components.map(c => `'${c.type}': '${c.filename}'`).join(', ')
         let attachments_str = this.attachments.map(a => `'${a.from.type}':'${a.to.type}'`).join(',')
         let starter_str = `'${this.starter[0].type}'`

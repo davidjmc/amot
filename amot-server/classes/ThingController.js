@@ -7,6 +7,13 @@ class ThingController {
     static async getResponseFor(request) {
         console.log(`loading thing ${request.getThingId()}`)
         let thing = await ThingLoader.load(request.getThingId())
+
+        /* @TODO - remove this */
+        if (request.isNewModel()) {
+            thing.isNewModel = true
+        }
+        /* END */
+
         console.log(`thing loaded, preparing response`)
 
         if (request.isStart()) {
