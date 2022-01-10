@@ -1,0 +1,34 @@
+adl = {
+    'components': {
+        # ClassName: FileName
+        'BrokerProxy': 'BrokerProxy',
+        'ListenProxy': 'ListenProxy',
+        'NotifyProxy': 'NotifyProxy',
+
+        'Marshaller': 'Marshaller',
+        'UnMarshaller': 'UnMarshaller', # gambiarra
+
+        'ClientRequestHandler': 'ClientRequestHandler',
+        'BrokerEngine': 'BrokerEngine',
+        'NotificationConsumer': 'NotificationConsumer'
+    },
+    'attachments': {
+        # 'ListenProxy -> ServerRequestHandler -> Marshaller -> BrokerEngine',
+        # 'NotifyProxy -> Marshaller -> NotificationConsumer'
+
+        'ListenProxy': 'ServerRequestHandler',
+        'ServerRequestHandler': 'UnMarshaller',
+        'UnMarshaller': 'BrokerEngine',
+
+        'NotifyProxy': 'Marshaller',
+        'Marshaller': 'NotificationConsumer'
+    },
+    'configuration': {
+        'starters': 'BrokerProxy',
+        'adaptability': {
+            'type': 'evolutive',
+            'timeout': 420
+        },
+        'scalability': {}
+    }
+}

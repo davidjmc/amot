@@ -15,7 +15,8 @@ class App:
     topics = Amot.config('topics')
 
     temp, hum = self.temp_hum_sensor()
-    msg = 'Temperature: %s and Humidity: %s @ %s' % (temp, hum, 'lalala')
+    # msg = 'Temperature: %s and Humidity: %s @ %s' % (temp, hum, 'lalala')
+    msg = [temp, hum, ['test', 'oi,virgula']]
 
     self.count += 1
 

@@ -24,16 +24,24 @@ class QueueProxy():
         }
         return Amot.attached(self).run(invocation)
 
-    def subscribe(self, topic):
+    def subscribe(self, topics):
+        if not type(topics) is list:
+            topics = [topics]
+        invocation = {
+            'OP': 'Subscribe',
+            'TOPICS': topics,
+            'THING_ID': Amot.env('THING_ID')
+        }
+        return Amot.attached(self).run(invocation)
         pass
 
     def unsubscribe(self, topic):
         pass
 
-    def checkMsg(self, topic):
+    def checkMsg(self):
         msg = {
-            'op':'chk',
-            'topic': topic
+            'OP':'CheckMsg',
+            'THING_ID': Amot.env('THING_ID')
         }
         return Amot.attached(self).run(msg)
         pass

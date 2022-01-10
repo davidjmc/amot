@@ -26,16 +26,18 @@ for (component of our.components) {
     })
     console.log('added')
 }
-// for (thing of our.things) {
-//     let { components, attachments, starter } = thing
-//     adaptability = {'adaptability': {}}
-//     if (thing.adaptability) {
-//         adaptability = thing.adaptability
-//         adaptability.type = [adaptability.type]
-//     }
-//     // console.log(thing.id, components, attachments, starter, adaptability)
-//     _things.doc(thing.id).set({
-//         components, attachments, starter, adaptability
-//     })
-//     break
-// }
+for (thing of our.things) {
+    let { components, attachments, starter } = thing
+    // console.log(thing)
+    adaptability = {'adaptability': {}}
+    if (thing.adaptability) {
+        adaptability = thing.adaptability
+        adaptability.type = [adaptability.type]
+    }
+    // console.log(thing.id, components, attachments, starter, adaptability)
+    _things.doc(thing.id).set({
+        components, attachments, starter, adaptability
+    })
+    console.log('thing updated')
+    // break
+}
